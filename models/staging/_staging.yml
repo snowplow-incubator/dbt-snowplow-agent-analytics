@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: incremental_manifest
+    description: >
+      Incremental manifest. One row per manifest-tracked model, storing first_success /
+      last_success load_tstamp watermarks. Updated by the on-run-end hook only for models
+      that succeeded, so a failed model's watermark never advances.
+
+  - name: base_new_event_limits
+    description: >
+      Scratch table computing the lower/upper load_tstamp limits for this run from the
+      incremental manifest. Rebuilt each run.
+
+  - name: base_events_this_run
+    description: >
+      Scratch table rebuilt each run. Selects only new rows since the last successful run
+      (bounded by the incremental manifest), deduplicates them (event_id for client,
+      coalesce(event_fingerprint, event_id) for CDN), and tags each row with is_bot and
+      raw_source_channel. The only model that reads raw atomic events.
+    columns:
+      - name: is_bot
+        description: "true = agent, false = human, null = bot detection context missing. From the bot detection enrichment."
+      - name: raw_source_channel
+        description: "'cdn' or 'client'. Determined by filter match; CDN wins when both apply."
+
+  - name: base_events
+    description: >
+      Durable base table. Receives inserts from base_events_this_run; single source of
+      truth for all downstream models. No model downstream of this point reads raw events.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - event_id
+              - raw_source_channel
+          config:
+            severity: warn
+    columns:
+      - name: raw_source_channel
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['cdn', 'client']
+      - name: load_tstamp
+        description: >
+          Inherited from raw events. Used by the base_create_snowplow_events_this_run_t
+          macro for scan filtering (modern loaders partition/cluster on this column).
+          Retained for diagnostics.
+
+  - name: int_agent_source_lookup
+    description: >
+      Per-agent JS-capability lookup. One row per agent_name; decides whether the agent
+      is counted from CDN or client events. Grows monotonically; once an agent is seen
+      client-side its source_channel is 'client' and never flips back.
+    columns:
+      - name: agent_name
+        data_tests:
+          - unique
+          - not_null
+      - name: agent_runs_js
+        description: True when the agent has ever been observed firing client-side events.
+      - name: source_channel
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['cdn', 'client']
+      - name: last_seen_tstamp
+        description: Latest collector_tstamp across all observations of this agent.
+
+  - name: int_agent_pageviews_unified
+    description: >
+      Unified agent page views. Each agent is counted from exactly one source channel,
+      per int_agent_source_lookup, to avoid double-counting JS-capable agents.

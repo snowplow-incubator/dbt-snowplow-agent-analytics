@@ -1,0 +1,127 @@
+version: 2
+
+models:
+  - name: agent_pageviews_daily
+    description: >
+      Bot fact table at day grain. Source of truth for arbitrary slicing of agent traffic.
+      Grain: (event_date, agent_name, agent_operator, agent_purpose, source_channel,
+      page_url_host_path).
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - event_date
+              - agent_name
+              - agent_operator
+              - agent_purpose
+              - source_channel
+              - page_url_host_path
+    columns:
+      - name: event_date
+        data_tests:
+          - not_null
+      - name: agent_name
+        data_tests:
+          - not_null
+      - name: agent_operator
+        description: >
+          From agent_classification.operator; 'unknown' when the classification
+          context is missing (keeps merge keys and grouping NULL-free downstream).
+        data_tests:
+          - not_null
+      - name: agent_purpose
+        description: From agent_classification.purpose. NULL when unclassified.
+      - name: purpose_group
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['AI', 'SEARCH', 'OTHER']
+      - name: source_channel
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['cdn', 'client']
+      - name: hits
+        data_tests:
+          - not_null
+
+  - name: human_pageviews_daily
+    description: >
+      Human fact table. Pre-aggregated human page views at day x page grain.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - event_date
+              - page_url_host_path
+    columns:
+      - name: event_date
+        data_tests:
+          - not_null
+      - name: human_pageviews
+        data_tests:
+          - not_null
+
+  - name: human_referrals_daily
+    description: >
+      AI-referred human page views at day x operator x page grain. Referral attribution
+      prefers the utm_referrer entity over refr_* fields, joined against the
+      operator_referral_sources seed.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - event_date
+              - referring_operator
+              - page_url_host_path
+    columns:
+      - name: referring_operator
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('operator_referral_sources')
+                field: operator
+      - name: referred_sessions
+        description: >
+          Distinct domain_sessionid per day x operator x page. Exact within a day;
+          summing across days over-counts sessions that span multiple days.
+
+  - name: page_summary
+    description: >
+      Page-centric AEO scorecard. Answers "how is this URL doing with AI?".
+      Grain: (page_url_host_path, as_of_date). Snapshot cadence is controlled by
+      var('summary_snapshot_mode'). All windows end at as_of_date (inclusive), so
+      a weekly snapshot is stable once its Monday's data has loaded.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - page_url_host_path
+              - as_of_date
+    columns:
+      - name: as_of_date
+        data_tests:
+          - not_null
+      - name: cite_through_rate_proxy_30d
+        description: >
+          ai_referral_pageviews_30d / (ai_user_fetch_hits_30d + ai_search_index_hits_30d).
+          Named _proxy deliberately - this is not real attribution.
+
+  - name: operator_summary
+    description: >
+      Operator-centric scorecard. Answers "for each AI operator, are they crawling more
+      than they refer?". Grain: (agent_operator, as_of_date). All windows end at
+      as_of_date (inclusive), so a weekly snapshot is stable once its Monday's data
+      has loaded.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - agent_operator
+              - as_of_date
+    columns:
+      - name: crawl_to_referral_ratio_30d
+        description: >
+          crawl_hits_30d / referred_sessions_30d. High = takes more than gives. Uses
+          sessions (not pageviews) for a fairer comparison.

@@ -1,0 +1,8 @@
+packages:
+  - name: snowplow_utils
+    package: snowplow/snowplow_utils
+    version: 1.0.1
+  - name: dbt_utils
+    package: dbt-labs/dbt_utils
+    version: 1.4.1
+sha1_hash: 9aac702b16bccb7befbfc2ff4f0023d76556679f

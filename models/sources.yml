@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: snowplow
+    database: "{{ var('snowplow__database', target.database) }}"
+    schema: "{{ var('snowplow__atomic_schema', 'atomic') }}"
+    description: >
+      Snowplow atomic events. Contains both client-side tracker events (platform = 'web')
+      and CDN/edge-collected events (app_id in var('cdn_app_ids')).
+    tables:
+      - name: events
+        identifier: "{{ var('snowplow__events_table', 'events') }}"
+        description: Snowplow atomic events table. Scanned exactly once per run, by base_events_this_run.

@@ -1,0 +1,5 @@
+packages:
+  - package: snowplow/snowplow_utils
+    version: [">=1.0.1", "<2.0.0"]
+  - package: dbt-labs/dbt_utils
+    version: [">=1.1.0", "<2.0.0"]

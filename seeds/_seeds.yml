@@ -1,0 +1,22 @@
+version: 2
+
+seeds:
+  - name: operator_referral_sources
+    description: >
+      Maps operators to referral source and medium values used for human referral
+      attribution. Ships with sensible defaults; override for site-specific UTM
+      conventions. operator values must match exactly the agent_operator values
+      produced by the agent classification enrichment.
+    columns:
+      - name: operator
+        description: Operator name, matching agent_classification.operator.
+        data_tests:
+          - not_null
+      - name: source_value
+        description: utm_source / refr_source value to match (case-insensitive).
+        data_tests:
+          - not_null
+      - name: medium_value
+        description: >
+          utm_medium / refr_medium value to match (case-insensitive). NULL matches
+          any medium.
