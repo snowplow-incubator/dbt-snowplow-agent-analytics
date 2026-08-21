@@ -18,12 +18,12 @@
 
 with new_bot_agents as (
   select
-    {{ agent_name('e') }} as agent_name,
+    e.agent_name,
     e.raw_source_channel,
     max(e.collector_tstamp) as last_seen_tstamp
   from {{ ref('base_events_this_run') }} e
   where e.is_bot = true
-    and {{ agent_name('e') }} is not null
+    and e.agent_name is not null
   group by 1, 2
 ),
 
@@ -45,8 +45,25 @@ new_lookup as (
     case when seen_in_client then 'client' else 'cdn' end as source_channel,
     last_seen_tstamp
   from agent_channels
-  -- Only include agents seen in CDN or already in client (which implies prior CDN presence)
-  where seen_in_cdn or seen_in_client
+  -- Two guards, both resting on the fact that CDN-side bot detection has only the user
+  -- agent string to work with.
+  --
+  -- seen_in_cdn: both flags are computed over is_bot = true rows, so this means "was
+  -- bot-flagged in CDN", which on the CDN side can only have happened via the UA. An
+  -- agent detected solely client-side was caught by asnLookups or clientSideDetection
+  -- (datacenter IP ranges, automation markers) rather than by its UA, so it has no
+  -- reliable identity and would enter here under a generic browser name.
+  --
+  -- ignore list: the failsafe for agent_ua_overrides being incomplete. A masquerading UA
+  -- with no override still gets bot-flagged in CDN, which would set seen_in_cdn for e.g.
+  -- 'Chrome' -- and that single row would then drag every client-side datacenter-Chrome
+  -- event into the agent marts under the same name.
+  where seen_in_cdn
+    and agent_name not in (
+      select agent_name
+      from {{ ref('agent_name_ignore_list') }}
+      where agent_name is not null   -- a NULL would make `not in` match nothing at all
+    )
 )
 
 {% if is_incremental() %}

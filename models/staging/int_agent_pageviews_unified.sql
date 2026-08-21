@@ -11,7 +11,7 @@ with client_side as (
   select 'client' as source_channel, e.*
   from {{ ref('base_events') }} e
   join {{ ref('int_agent_source_lookup') }} l
-    on {{ agent_name('e') }} = l.agent_name
+    on e.agent_name = l.agent_name
    and l.source_channel = 'client'
   where e.is_bot = true
     and e.raw_source_channel = 'client'
@@ -21,7 +21,7 @@ cdn_side as (
   select 'cdn' as source_channel, e.*
   from {{ ref('base_events') }} e
   join {{ ref('int_agent_source_lookup') }} l
-    on {{ agent_name('e') }} = l.agent_name
+    on e.agent_name = l.agent_name
    and l.source_channel = 'cdn'
   where e.is_bot = true
     and e.raw_source_channel = 'cdn'

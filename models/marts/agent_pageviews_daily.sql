@@ -20,10 +20,10 @@
 with source as (
   select
     date(u.derived_tstamp) as event_date,
-    {{ agent_name('u') }} as agent_name,
-    coalesce({{ agent_operator('u') }}, 'unknown') as agent_operator,
-    {{ agent_purpose('u') }} as agent_purpose,
-    {{ purpose_group_case(agent_purpose('u')) }} as purpose_group,
+    u.agent_name,
+    coalesce(u.agent_operator, 'unknown') as agent_operator,
+    u.agent_purpose,
+    {{ purpose_group_case('u.agent_purpose') }} as purpose_group,
     u.source_channel,
     {{ page_url_host_path('u') }} as page_url_host_path,
     u.derived_tstamp

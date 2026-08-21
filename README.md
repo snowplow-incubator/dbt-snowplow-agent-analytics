@@ -37,7 +37,8 @@ Raw `atomic.events` is scanned **exactly once per run**:
    (`app_id in var('cdn_app_ids')`, every request is a "hit") and client page views
    (`platform = 'web' and event_name = 'page_view'`), deduplicates
    (client: `event_id`; CDN: `coalesce(event_fingerprint, event_id)`), and tags rows with
-   `is_bot` and `raw_source_channel`.
+   `is_bot` and `raw_source_channel`. It also resolves `agent_name` / `agent_operator` /
+   `agent_purpose` (see [Agent identity](#agent-identity)).
 3. `base_events` (durable, idempotent `delete+insert` keyed on `event_id`) receives the batch.
    Everything downstream reads from it or from its pre-aggregated daily descendants. Note the
    spec's `insert_overwrite` is not used because on Snowflake it truncates the whole table rather
@@ -50,6 +51,42 @@ Agents that run JS fire events in both subsets. `int_agent_source_lookup` assign
 source channel — `client` once it has ever been seen client-side (better fidelity for SPAs), and
 that assignment never flips back — and `int_agent_pageviews_unified` applies it so no agent is
 double-counted.
+
+## Agent identity
+
+`agent_name` is the join key for the whole agent side of the package, and yauaa's
+`agentName` alone is not a safe one. yauaa reports a browser-masquerading crawler as the
+browser it imitates: a request sent as
+
+```
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) \
+  Chrome/145.0.0.0 Safari/537.36 (compatible; meta-externalagent/1.1; +https://...)
+```
+
+arrives with `agentName = 'Chrome'`. The `agent_classification` enrichment reads yauaa, so
+those rows also come through with a NULL `operator` and `purpose` — nothing downstream can
+recover the identity on its own. Two seeds handle this:
+
+| Seed | Purpose |
+|------|---------|
+| `agent_ua_overrides` | Repairs `agent_name` (and fills `operator` / `purpose`) by matching `useragent` with `ILIKE`. Add a row per misattributed crawler. |
+| `agent_name_ignore_list` | `agent_name` values too generic to identify anything. Excluded from `int_agent_source_lookup`, so they never reach the agent marts. |
+
+The ignore list is the failsafe for the override seed being incomplete: a masquerading UA
+with no override still gets bot-flagged on the CDN side, which would mark `Chrome` as a
+CDN-seen agent — and that one row would then pull every client-side datacenter-IP Chrome
+event into the agent marts under the same name.
+
+`int_agent_source_lookup` admits an agent only if it was **bot-flagged in CDN** at some
+point. CDN-side detection has only the user agent string available, so a CDN bot flag is
+evidence the agent is identifiable; an agent flagged solely client-side was caught by
+`asnLookups` or `clientSideDetection` (datacenter IP ranges, automation markers) and has no
+reliable identity.
+
+Overrides are a workaround for a gap in the yauaa rules, so it is worth reporting
+misattributed crawlers upstream as well — the enrichment is where this really belongs. The
+seed fills `operator` / `purpose` only when the enrichment left them NULL, so it becomes a
+no-op by itself once the enrichment handles the agent.
 
 ## Configuration
 

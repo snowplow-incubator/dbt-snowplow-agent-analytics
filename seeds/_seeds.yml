@@ -20,3 +20,62 @@ seeds:
         description: >
           utm_medium / refr_medium value to match (case-insensitive). NULL matches
           any medium.
+
+  - name: agent_ua_overrides
+    description: >
+      Repairs agent identity for crawlers that yauaa mis-parses. yauaa collapses a
+      browser-masquerading crawler UA to the browser it imitates -- a request sent as
+      "Mozilla/5.0 ... Chrome/145.0.0.0 Safari/537.36 (compatible; meta-externalagent/1.1)"
+      is reported as agentName 'Chrome' -- and because the agent_classification enrichment
+      reads yauaa, those rows also lose their operator and purpose. Matched in
+      base_events_this_run against the raw useragent, which is unaffected.
+
+      Add a row per crawler you see misattributed. agent_name always wins over yauaa
+      (yauaa's value is non-null but wrong); agent_operator and agent_purpose only fill
+      gaps, so this seed can never overwrite the enrichment and goes dormant by itself if
+      the enrichment later handles the agent.
+
+      Keep patterns specific to a crawler token. A broad pattern such as '%chrome%' would
+      rename real browser traffic.
+    columns:
+      - name: ua_pattern
+        description: >
+          Pattern matched against useragent with ILIKE, so wildcards are '%'. When several
+          patterns match one event the longest wins, ties broken alphabetically.
+        data_tests:
+          - not_null
+          - unique
+      - name: agent_name
+        description: Replaces the yauaa agentName on matching events.
+        data_tests:
+          - not_null
+      - name: agent_operator
+        description: >
+          Fills agent_classification.operator when the enrichment left it NULL. Leave
+          blank if the operator is unknown. Must match the operator spelling used in
+          operator_referral_sources, or crawl and referral rows will not join in
+          operator_summary.
+      - name: agent_purpose
+        description: >
+          Fills agent_classification.purpose when the enrichment left it NULL. Leave blank
+          if unknown; blank groups into purpose_group 'OTHER'.
+
+  - name: agent_name_ignore_list
+    description: >
+      agent_name values too generic to identify an agent. Excluded from
+      int_agent_source_lookup, so events carrying them never reach the agent marts.
+
+      This is the failsafe for agent_ua_overrides being incomplete. A masquerading UA with
+      no override still gets bot-flagged on the CDN side, which would mark e.g. 'Chrome' as
+      a CDN-seen agent -- and that one row would then pull every client-side
+      datacenter-IP Chrome event into the agent marts under the same name.
+
+      Browser and layout-engine names only, by default. Unidentified tooling names such as
+      'Go http client' or 'Lychee' are candidates too, but they are left out because they
+      are at least distinct, and excluding them drops real CDN crawl volume.
+    columns:
+      - name: agent_name
+        description: Exact agent_name to exclude. Compared case-sensitively.
+        data_tests:
+          - not_null
+          - unique

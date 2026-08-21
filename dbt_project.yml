@@ -36,6 +36,15 @@ seeds:
         operator: varchar
         source_value: varchar
         medium_value: varchar
+    agent_ua_overrides:
+      +column_types:
+        ua_pattern: varchar
+        agent_name: varchar
+        agent_operator: varchar
+        agent_purpose: varchar
+    agent_name_ignore_list:
+      +column_types:
+        agent_name: varchar
 
 vars:
   snowplow_agent_analytics:

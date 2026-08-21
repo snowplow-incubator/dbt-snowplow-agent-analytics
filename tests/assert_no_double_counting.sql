@@ -7,7 +7,7 @@
 with expected as (
   select
     date(u.derived_tstamp) as event_date,
-    {{ agent_name('u') }} as agent_name,
+    u.agent_name,
     count(*) as expected_hits
   from {{ ref('int_agent_pageviews_unified') }} u
   where date(u.derived_tstamp) >= dateadd(day, -{{ var('late_data_window_days', 3) }}, current_date)

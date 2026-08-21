@@ -1,0 +1,5 @@
+ua_pattern,agent_name,agent_operator,agent_purpose
+%meta-externalagent%,Meta-Externalagent,Meta,AI_TRAINING
+%claude-user%,Claude-User,Anthropic,AI_USER_FETCH
+%qualifiedbot%,QualifiedBot,,
+%compatible; Artemis%,Artemis,,

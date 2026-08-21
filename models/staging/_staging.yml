@@ -23,6 +23,21 @@ models:
         description: "true = agent, false = human, null = bot detection context missing. From the bot detection enrichment."
       - name: raw_source_channel
         description: "'cdn' or 'client'. Determined by filter match; CDN wins when both apply."
+      - name: agent_name
+        description: >
+          Resolved agent identity: the agent_ua_overrides match on useragent when there is
+          one, otherwise yauaa's agentName. The override is needed because yauaa reports a
+          browser-masquerading crawler UA as the browser it imitates. This column, not the
+          yauaa context, is the join key for the agent side of the package.
+      - name: agent_operator
+        description: >
+          agent_classification.operator, falling back to agent_ua_overrides when the
+          enrichment left it NULL (which it does for every UA yauaa mis-parses, since the
+          enrichment reads yauaa).
+      - name: agent_purpose
+        description: >
+          agent_classification.purpose, with the same agent_ua_overrides fallback as
+          agent_operator.
 
   - name: base_events
     description: >
@@ -53,6 +68,14 @@ models:
       Per-agent JS-capability lookup. One row per agent_name; decides whether the agent
       is counted from CDN or client events. Grows monotonically; once an agent is seen
       client-side its source_channel is 'client' and never flips back.
+
+      Admission is deliberately narrow. An agent must have been bot-flagged in CDN at
+      some point, and must not appear in agent_name_ignore_list. CDN-side detection has
+      only the user agent string to go on, so a CDN bot flag is evidence the agent is
+      identifiable; an agent flagged solely client-side was caught by asnLookups or
+      clientSideDetection (datacenter IPs, automation markers) and carries no reliable
+      identity. Events whose agent is not admitted here never reach the agent marts,
+      because int_agent_pageviews_unified inner joins against this table.
     columns:
       - name: agent_name
         data_tests:

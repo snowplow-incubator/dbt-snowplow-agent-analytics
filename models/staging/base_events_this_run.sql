@@ -64,8 +64,50 @@ cdn_deduped as (
     partition by coalesce(event_fingerprint, event_id)
     order by collector_tstamp
   ) = 1
+),
+
+deduped as (
+  select * from client_deduped
+  union all
+  select * from cdn_deduped
+),
+
+{# Identity repair.
+
+   yauaa's agentName is the join key for the entire agent side of this package, but it
+   collapses browser-masquerading crawler UAs down to the browser: a request sent as
+   "Mozilla/5.0 ... Chrome/145.0.0.0 Safari/537.36 (compatible; meta-externalagent/1.1)"
+   is reported as agentName 'Chrome'. Because the agent_classification enrichment reads
+   yauaa, those rows also arrive with a NULL operator and purpose, so nothing downstream
+   can recover the identity. agent_ua_overrides repairs both from the raw useragent, which
+   is always intact.
+
+   agent_name takes the override whenever a pattern matches, because yauaa's value is
+   non-null but wrong. operator and purpose only FILL GAPS -- the enrichment is coalesced
+   first -- so the seed can never overwrite good enrichment output, and it quietly becomes
+   a no-op if the enrichment starts classifying these agents on its own. #}
+overrides as (
+  select ua_pattern, agent_name, agent_operator, agent_purpose
+  from {{ ref('agent_ua_overrides') }}
+),
+
+resolved as (
+  select
+    d.*,
+    coalesce(o.agent_name, {{ agent_name('d') }}) as agent_name,
+    coalesce({{ agent_operator('d') }}, o.agent_operator) as agent_operator,
+    coalesce({{ agent_purpose('d') }}, o.agent_purpose) as agent_purpose
+  from deduped d
+  left join overrides o
+    on d.useragent ilike o.ua_pattern
+  {# A UA can match more than one pattern, and without this the left join would duplicate
+     the event. event_id is unique here (the snowplow-utils macro dedups on it before the
+     passes above), so this keeps exactly one override per row: most specific pattern
+     (longest) wins, ties broken alphabetically so the choice is deterministic. #}
+  qualify row_number() over (
+    partition by d.event_id, d.raw_source_channel
+    order by length(o.ua_pattern) desc nulls last, o.ua_pattern
+  ) = 1
 )
 
-select * from client_deduped
-union all
-select * from cdn_deduped
+select * from resolved
