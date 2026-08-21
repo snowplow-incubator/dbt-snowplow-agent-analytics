@@ -67,6 +67,11 @@ vars:
     # snapshot behavior for summary tables
     summary_snapshot_mode: 'weekly'     # latest | weekly | daily
     summary_snapshot_retention_weeks: 26
+    # snowplow__as_of_date:             # pin the summary snapshot date (YYYY-MM-DD).
+                                        # Overrides summary_snapshot_mode. Set it to make
+                                        # the 7/30/90d windows reproducible: a backfill or
+                                        # replay wants them anchored to the date being
+                                        # rebuilt, not to whenever the run executes.
 
     # AEO indicator thresholds
     orphan_agent_hits_threshold: 10

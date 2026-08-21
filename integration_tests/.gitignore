@@ -1,0 +1,11 @@
+
+target/
+dbt_modules/
+dbt_packages/
+logs/
+dbt_internal_packages/
+.user.yml
+
+# Fixture build inputs and the resampling script: local-only.
+# The committed fixture is data/source/snowplow_agent_analytics_events.csv.
+fixtures/

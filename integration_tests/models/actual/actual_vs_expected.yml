@@ -1,0 +1,145 @@
+version: 2
+
+models:
+  - name: int_agent_source_lookup_actual
+    description: >
+      One row per agent name with its assigned source channel. The fixture has 15 agents
+      seen client-side and 44 seen only in CDN events; the "never flip back" invariant
+      means a later CDN-only batch must not move a client agent back to cdn.
+    tests:
+      - dbt_utils.equal_rowcount:
+          arguments:
+            compare_model: ref('int_agent_source_lookup_expected_stg')
+      - dbt_utils.equality:
+          arguments:
+            compare_model: ref('int_agent_source_lookup_expected_stg')
+            compare_columns:
+              - agent_name
+              - agent_runs_js
+              - source_channel
+              - last_seen_tstamp
+
+  - name: agent_pageviews_daily_actual
+    tests:
+      - dbt_utils.equal_rowcount:
+          arguments:
+            compare_model: ref('agent_pageviews_daily_expected_stg')
+      - dbt_utils.equality:
+          arguments:
+            compare_model: ref('agent_pageviews_daily_expected_stg')
+            compare_columns:
+              - event_date
+              - agent_name
+              - agent_operator
+              - agent_purpose
+              - purpose_group
+              - source_channel
+              - page_url_host_path
+              - hits
+              - first_seen_tstamp
+              - last_seen_tstamp
+
+  - name: human_pageviews_daily_actual
+    tests:
+      - dbt_utils.equal_rowcount:
+          arguments:
+            compare_model: ref('human_pageviews_daily_expected_stg')
+      - dbt_utils.equality:
+          arguments:
+            compare_model: ref('human_pageviews_daily_expected_stg')
+            compare_columns:
+              - event_date
+              - page_url_host_path
+              - human_pageviews
+              - first_seen_tstamp
+              - last_seen_tstamp
+
+  - name: human_referrals_daily_actual
+    tests:
+      - dbt_utils.equal_rowcount:
+          arguments:
+            compare_model: ref('human_referrals_daily_expected_stg')
+      - dbt_utils.equality:
+          arguments:
+            compare_model: ref('human_referrals_daily_expected_stg')
+            compare_columns:
+              - event_date
+              - referring_operator
+              - page_url_host_path
+              - referred_pageviews
+              - referred_sessions
+              - first_seen_tstamp
+              - last_seen_tstamp
+
+  - name: page_summary_actual
+    description: >
+      Windows are anchored on the pinned snowplow__as_of_date (2026-08-17), so the 7/30/90d
+      columns are reproducible. The fixture is built so 8 pages are flagged
+      is_orphaned_agent_interest and 8 have both a referral numerator and an
+      AI_USER_FETCH/AI_SEARCH_INDEX denominator for cite_through_rate_proxy_30d.
+    tests:
+      - dbt_utils.equal_rowcount:
+          arguments:
+            compare_model: ref('page_summary_expected_stg')
+      - dbt_utils.equality:
+          arguments:
+            compare_model: ref('page_summary_expected_stg')
+            compare_columns:
+              - page_url_host_path
+              - as_of_date
+              - agent_hits_7d
+              - agent_hits_30d
+              - agent_hits_90d
+              - distinct_agent_operators_30d
+              - distinct_agent_names_30d
+              - ai_training_hits_30d
+              - ai_user_fetch_hits_30d
+              - ai_search_index_hits_30d
+              - search_index_hits_30d
+              - first_agent_visit_tstamp
+              - last_agent_visit_tstamp
+              - human_pageviews_7d
+              - human_pageviews_30d
+              - human_pageviews_90d
+              - ai_referral_pageviews_30d
+              - ai_referral_sessions_30d
+              - is_orphaned_agent_interest
+              - cite_through_rate_proxy_30d
+
+  - name: operator_summary_actual
+    description: >
+      The fixture deliberately contains crawl-only operators, referral-only operators
+      (xAI never crawls) and operators doing both, so the FULL OUTER JOIN is exercised
+      in all three directions.
+    tests:
+      - dbt_utils.equal_rowcount:
+          arguments:
+            compare_model: ref('operator_summary_expected_stg')
+      - dbt_utils.equality:
+          arguments:
+            compare_model: ref('operator_summary_expected_stg')
+            compare_columns:
+              - agent_operator
+              - as_of_date
+              - crawl_hits_7d
+              - crawl_hits_30d
+              - crawl_hits_90d
+              - distinct_agent_names_30d
+              - distinct_pages_crawled_30d
+              - ai_training_hits_30d
+              - ai_user_fetch_hits_30d
+              - ai_search_index_hits_30d
+              - other_purpose_hits_30d
+              - referred_pageviews_7d
+              - referred_pageviews_30d
+              - referred_pageviews_90d
+              - referred_sessions_7d
+              - referred_sessions_30d
+              - referred_sessions_90d
+              - distinct_referred_pages_30d
+              - crawl_to_referral_ratio_30d
+              - first_crawl_tstamp
+              - last_crawl_tstamp
+              - first_referral_tstamp
+              - last_referral_tstamp
+              - is_new_operator_7d

@@ -105,6 +105,7 @@ Set under `vars: snowplow_agent_analytics:` in your project:
 | `dbt_start_date` | `2024-01-01` | Earliest event date in the daily tables |
 | `summary_snapshot_mode` | `weekly` | `latest` (rebuild, current date only) \| `weekly` (snapshot per Monday) \| `daily` |
 | `summary_snapshot_retention_weeks` | `26` | Snapshot retention for the summary tables |
+| `snowplow__as_of_date` | unset | Pins the summary snapshot date (`YYYY-MM-DD`), overriding `summary_snapshot_mode`. Set it to make the 7/30/90d windows reproducible — a backfill or replay wants them anchored to the date being rebuilt rather than to whenever the run executes. Used by the integration tests. |
 | `orphan_agent_hits_threshold` | `10` | Agent hits (30d) above which a page can be flagged orphaned |
 | `orphan_human_pageviews_threshold` | `5` | Human pageviews (30d) below which a page can be flagged orphaned |
 

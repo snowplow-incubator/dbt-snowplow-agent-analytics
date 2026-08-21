@@ -1,0 +1,17 @@
+
+# HEY! This file is used in the snowplow_agent_analytics integration tests.
+# You should __NEVER__ check credentials into version control. Thanks for reading :)
+
+integration_tests:
+  target: "{{ env_var('DEFAULT_TARGET', 'snowflake') }}"
+  outputs:
+    snowflake:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_TEST_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_TEST_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_TEST_PASSWORD') }}"
+      role: "{{ env_var('SNOWFLAKE_TEST_ROLE') }}"
+      database: "{{ env_var('SNOWFLAKE_TEST_DATABASE') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_TEST_WAREHOUSE') }}"
+      schema: "gh_sp_agent_analytics_dbt_{{ env_var('SCHEMA_SUFFIX') }}"
+      threads: 4

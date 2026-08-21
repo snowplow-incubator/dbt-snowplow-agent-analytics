@@ -1,0 +1,237 @@
+name: 'snowplow_agent_analytics_integration_tests'
+version: '0.1.0'
+config-version: 2
+
+profile: 'integration_tests'
+
+dispatch:
+  - macro_namespace: dbt
+    search_order: ['snowplow_utils', 'dbt']
+
+model-paths: ['models']
+analysis-paths: ['analysis']
+test-paths: ['tests']
+seed-paths: ['data']
+macro-paths: ['macros']
+clean-targets:
+  - 'target'
+  - 'dbt_modules'
+  - 'dbt_packages'
+
+quoting:
+  identifier: false
+  schema: false
+
+models:
+  snowplow_agent_analytics_integration_tests:
+    +materialized: table
+    +schema: 'snplw_agent_analytics_int_tests'
+    source:
+      snowflake:
+        +enabled: '{{ (target.type == "snowflake") | as_bool() }}'
+    +bind: false
+
+seeds:
+  snowplow_agent_analytics_integration_tests:
+    +schema: 'snplw_agent_analytics_int_tests'
+    source:
+      snowplow_agent_analytics_events:
+        +column_types:
+          # Copied from dbt-snowplow-media-player: the atomic columns where agate's
+          # type inference would otherwise guess wrong. The four self-describing
+          # entity columns stay varchar here and are parse_json'd by the stg model.
+          app_id: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          etl_tstamp: timestamp
+          collector_tstamp: timestamp
+          dvce_created_tstamp: timestamp
+          user_fingerprint: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          user_id: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          ip_isp: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          ip_organization: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          ip_domain: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          ip_netspeed: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          page_urlfragment: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          refr_urlfragment: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          refr_medium: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          refr_source: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          refr_term: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          mkt_term: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          mkt_content: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          se_label: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          se_property: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          se_value: "{{ 'float64' if target.type in ['bigquery'] else 'float' }}"
+          tr_orderid: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          tr_affiliation: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          tr_total: "{{ 'float64' if target.type in ['bigquery'] else 'float' }}"
+          tr_tax: "{{ 'float64' if target.type in ['bigquery'] else 'float' }}"
+          tr_shipping: "{{ 'float64' if target.type in ['bigquery'] else 'float' }}"
+          tr_city: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          tr_state: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          tr_country: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          ti_orderid: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          ti_sku: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          ti_name: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          ti_category: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          ti_price: "{{ 'float64' if target.type in ['bigquery'] else 'float' }}"
+          br_name: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          br_family: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          br_version: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          br_type: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          br_renderengine: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          br_colordepth: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          os_name: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          os_family: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          os_manufacturer: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          dvce_type: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          dvce_ismobile: boolean
+          tr_currency: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          tr_total_base: "{{ 'float64' if target.type in ['bigquery'] else 'float' }}"
+          tr_tax_base: "{{ 'float64' if target.type in ['bigquery'] else 'float' }}"
+          tr_shipping_base: "{{ 'float64' if target.type in ['bigquery'] else 'float' }}"
+          ti_currency: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          ti_price_base: "{{ 'float64' if target.type in ['bigquery'] else 'float' }}"
+          base_currency: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          etl_tags: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          dvce_sent_tstamp: timestamp
+          refr_dvce_tstamp: timestamp
+          derived_tstamp: timestamp
+          true_tstamp: timestamp
+          load_tstamp: timestamp
+          contexts_nl_basjes_yauaa_context_1: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          contexts_com_snowplowanalytics_snowplow_agent_classification_1: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          contexts_com_snowplowanalytics_snowplow_bot_detection_1: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+          contexts_com_snowplowanalytics_snowplow_utm_referrer_1: '{{ "string" if target.type in ["bigquery", "databricks", "spark"] else "varchar" }}'
+
+    expected:
+      agent_pageviews_daily_expected:
+        +column_types:
+          event_date: date
+          agent_name: varchar
+          agent_operator: varchar
+          agent_purpose: varchar
+          purpose_group: varchar
+          source_channel: varchar
+          page_url_host_path: varchar
+          hits: integer
+          first_seen_tstamp: timestamp
+          last_seen_tstamp: timestamp
+
+      human_pageviews_daily_expected:
+        +column_types:
+          event_date: date
+          page_url_host_path: varchar
+          human_pageviews: integer
+          first_seen_tstamp: timestamp
+          last_seen_tstamp: timestamp
+
+      human_referrals_daily_expected:
+        +column_types:
+          event_date: date
+          referring_operator: varchar
+          page_url_host_path: varchar
+          referred_pageviews: integer
+          referred_sessions: integer
+          first_seen_tstamp: timestamp
+          last_seen_tstamp: timestamp
+
+      int_agent_source_lookup_expected:
+        +column_types:
+          agent_name: varchar
+          agent_runs_js: boolean
+          source_channel: varchar
+          last_seen_tstamp: timestamp
+
+      page_summary_expected:
+        +column_types:
+          page_url_host_path: varchar
+          as_of_date: date
+          agent_hits_7d: integer
+          agent_hits_30d: integer
+          agent_hits_90d: integer
+          distinct_agent_operators_30d: integer
+          distinct_agent_names_30d: integer
+          ai_training_hits_30d: integer
+          ai_user_fetch_hits_30d: integer
+          ai_search_index_hits_30d: integer
+          search_index_hits_30d: integer
+          first_agent_visit_tstamp: timestamp
+          last_agent_visit_tstamp: timestamp
+          human_pageviews_7d: integer
+          human_pageviews_30d: integer
+          human_pageviews_90d: integer
+          ai_referral_pageviews_30d: integer
+          ai_referral_sessions_30d: integer
+          is_orphaned_agent_interest: boolean
+          cite_through_rate_proxy_30d: float
+
+      operator_summary_expected:
+        +column_types:
+          agent_operator: varchar
+          as_of_date: date
+          crawl_hits_7d: integer
+          crawl_hits_30d: integer
+          crawl_hits_90d: integer
+          distinct_agent_names_30d: integer
+          distinct_pages_crawled_30d: integer
+          ai_training_hits_30d: integer
+          ai_user_fetch_hits_30d: integer
+          ai_search_index_hits_30d: integer
+          other_purpose_hits_30d: integer
+          referred_pageviews_7d: integer
+          referred_pageviews_30d: integer
+          referred_pageviews_90d: integer
+          referred_sessions_7d: integer
+          referred_sessions_30d: integer
+          referred_sessions_90d: integer
+          distinct_referred_pages_30d: integer
+          crawl_to_referral_ratio_30d: float
+          first_crawl_tstamp: timestamp
+          last_crawl_tstamp: timestamp
+          first_referral_tstamp: timestamp
+          last_referral_tstamp: timestamp
+          is_new_operator_7d: boolean
+
+vars:
+  snowplow_agent_analytics:
+    # The redirect to the seeded + parse_json'd stg model is NOT done here. The package's
+    # sources.yml branches on project_name and composes target.schema inline, because var()
+    # substitutes a variable's raw text without re-rendering the Jinja inside it -- passing
+    # '{{ target.schema }}_...' through a var lands that placeholder in the compiled SQL
+    # verbatim. These two are inert, kept only to mirror dbt-snowplow-media-player.
+    snowplow__atomic_schema: '{{ target.schema }}_snplw_agent_analytics_int_tests'
+    snowplow__events_table: 'snowplow_agent_analytics_events_stg'
+
+    # The fixture's CDN events use app_id 'docs-cloudflare', not the package default 'cdn'.
+    cdn_app_ids: ['docs-cloudflare']
+
+    # The fixture's load_tstamp spans 2026-05-11 .. 2026-08-18 (100 days). With the
+    # default 30-day backfill limit that needs four catch-up runs; the test script does
+    # them, then raises the limit to confirm a caught-up run is a no-op.
+    snowplow__start_date: '2026-05-01'
+    snowplow__backfill_limit_days: 30
+    snowplow__allow_refresh: true
+
+    # dbt_start_date stays at the package default so the ~20 fixture rows carrying
+    # device-clock skew (derived_tstamp months before collector_tstamp) are kept and
+    # exercise the daily tables' lower bound.
+    dbt_start_date: '2024-01-01'
+    late_data_window_days: 3
+
+    # Determinism. page_summary / operator_summary compute their 7/30/90d windows from
+    # as_of_date(), which is normally date_trunc('week', current_date) -- so expected
+    # values would change every week. Pinning it to the Monday inside the fixture's
+    # window makes both summaries reproducible forever.
+    summary_snapshot_mode: 'weekly'
+    snowplow__as_of_date: '2026-08-17'
+    # The post-hook prune compares as_of_date against current_date, so a pinned
+    # as_of_date would be pruned once real time moves 26 weeks past it.
+    summary_snapshot_retention_weeks: 99999
+
+    orphan_agent_hits_threshold: 10
+    orphan_human_pageviews_threshold: 5
+
+# The package's on-run-start / on-run-end hooks (manifest advance) come from its own
+# dbt_project.yml and fire while it is installed as a dependency, so they are not
+# repeated here. `flags` is not inherited from a package, so it is.
+flags:
+  require_generic_test_arguments_property: true
