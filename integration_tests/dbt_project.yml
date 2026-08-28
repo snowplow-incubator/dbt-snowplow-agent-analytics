@@ -204,6 +204,10 @@ vars:
     # The fixture's CDN events use app_id 'docs-cloudflare', not the package default 'cdn'.
     cdn_app_ids: ['docs-cloudflare']
 
+    # Every client-side fixture row uses app_id 'docs2', so listing it exercises the
+    # client_app_ids restriction without changing any expected output.
+    client_app_ids: ['docs2']
+
     # The fixture's load_tstamp spans 2026-05-11 .. 2026-08-18 (100 days). With the
     # default 30-day backfill limit that needs four catch-up runs; the test script does
     # them, then raises the limit to confirm a caught-up run is a no-op.

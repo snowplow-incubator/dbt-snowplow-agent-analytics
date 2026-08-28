@@ -53,6 +53,8 @@ vars:
     snowplow__events_table: 'events'    # name of the Snowplow events table
     # snowplow__database:               # only set if not using target.database
     cdn_app_ids: ['cdn']                # app_id values identifying CDN/edge events
+    client_app_ids: []                  # app_id values to restrict client-side events to
+                                        # (empty = every app_id)
 
     # incremental manifest (safe incremental processing)
     snowplow__start_date: '2024-01-01'  # earliest date to process on first run

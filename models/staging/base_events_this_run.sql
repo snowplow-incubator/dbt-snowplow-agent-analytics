@@ -5,11 +5,20 @@
   )
 }}
 
-{# Single quotes in app_ids are escaped so a value like "o'reilly" cannot break the
-   generated SQL. (Values containing '--' are still rejected by the macro's unsafe-SQL
-   check on custom_filter.) #}
+{# Row admission. CDN events are identified by app_id; client events by platform and
+   event name, optionally narrowed to a set of app_ids as well (client_app_ids, empty =
+   every app_id). Each list renders through app_id_filter, which escapes the values and
+   returns none for an empty list -- an empty cdn_app_ids therefore means "no CDN channel"
+   rather than a spurious app_id in (''). #}
 {%- set cdn_app_ids = var('cdn_app_ids', ['cdn']) -%}
-{%- set cdn_app_ids_csv = "'" ~ cdn_app_ids | map('replace', "'", "''") | join("', '") ~ "'" -%}
+{%- set client_app_ids = var('client_app_ids', []) -%}
+
+{%- set cdn_match = snowplow_agent_analytics.app_id_filter('app_id', cdn_app_ids) or 'false' -%}
+{%- set client_match = "platform = 'web' and event_name = 'page_view'" -%}
+{%- set client_app_id_match = snowplow_agent_analytics.app_id_filter('app_id', client_app_ids) -%}
+{%- if client_app_id_match -%}
+  {%- set client_match = client_match ~ ' and ' ~ client_app_id_match -%}
+{%- endif -%}
 
 {# The source() lookup keeps lineage real: the _t macro below addresses the events
    table by database/schema/identifier strings, so without this the source would
@@ -29,7 +38,7 @@
     snowplow_events_schema=events_source.schema,
     snowplow_events_table=events_source.identifier,
     event_names=[],
-    custom_filter="(app_id in (" ~ cdn_app_ids_csv ~ ") or (platform = 'web' and event_name = 'page_view'))"
+    custom_filter='(' ~ cdn_match ~ ' or (' ~ client_match ~ '))'
 ) -%}
 
 with raw_events as (
@@ -41,7 +50,7 @@ source_events as (
     e.*,
     {{ bot_flag('e') }} as is_bot,
     case
-      when e.app_id in ({{ cdn_app_ids_csv }}) then 'cdn'
+      when {{ snowplow_agent_analytics.app_id_filter('e.app_id', cdn_app_ids) or 'false' }} then 'cdn'
       when e.platform = 'web' then 'client'
     end as raw_source_channel
   from raw_events e

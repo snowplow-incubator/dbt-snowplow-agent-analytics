@@ -4,6 +4,8 @@ import csv, json, re, collections, datetime as dt
 import os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/"
 CDN_APP_ID = "docs-cloudflare"
+# mirrors client_app_ids in dbt_project.yml; empty set = no app_id restriction
+CLIENT_APP_IDS = {"docs2"}
 TODAY = dt.date(2026, 8, 18)
 AS_OF = TODAY - dt.timedelta(days=TODAY.weekday())      # date_trunc('week', current_date)
 csv.field_size_limit(1 << 30)
@@ -62,6 +64,8 @@ rows = [{k.upper(): v for k, v in r.items()}
 seen, base = set(), []
 for r in rows:
     cdn = r["APP_ID"] == CDN_APP_ID
+    if not cdn and CLIENT_APP_IDS and r["APP_ID"] not in CLIENT_APP_IDS:
+        continue
     k = ("cdn", r["EVENT_FINGERPRINT"] or r["EVENT_ID"]) if cdn else ("web", r["EVENT_ID"])
     if k in seen:
         continue

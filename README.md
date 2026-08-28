@@ -35,7 +35,8 @@ Raw `atomic.events` is scanned **exactly once per run**:
    [dbt-snowplow-identities](https://github.com/snowplow-incubator/dbt-snowplow-identities)).
 2. `base_events_this_run` (scratch, rebuilt each run) reads only the new rows, keeps CDN events
    (`app_id in var('cdn_app_ids')`, every request is a "hit") and client page views
-   (`platform = 'web' and event_name = 'page_view'`), deduplicates
+   (`platform = 'web' and event_name = 'page_view'`, narrowed to `var('client_app_ids')`
+   when that list is non-empty), deduplicates
    (client: `event_id`; CDN: `coalesce(event_fingerprint, event_id)`), and tags rows with
    `is_bot` and `raw_source_channel`. It also resolves `agent_name` / `agent_operator` /
    `agent_purpose` (see [Agent identity](#agent-identity)).
@@ -98,6 +99,7 @@ Set under `vars: snowplow_agent_analytics:` in your project:
 | `snowplow__events_table` | `events` | Events table name |
 | `snowplow__database` | `target.database` | Database holding the events table |
 | `cdn_app_ids` | `['cdn']` | `app_id` values identifying CDN/edge events |
+| `client_app_ids` | `[]` (all) | `app_id` values to restrict client-side events to. Empty means every `app_id`; set it when the pipeline carries client-side trackers for other properties you do not want in this package. |
 | `snowplow__start_date` | `2024-01-01` | Earliest date to process on first run |
 | `snowplow__backfill_limit_days` | `30` | Max days processed per run during backfill |
 | `snowplow__allow_refresh` | `false` | Allow `--full-refresh` to drop the incremental manifest |
