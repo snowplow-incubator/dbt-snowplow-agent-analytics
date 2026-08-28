@@ -1,7 +1,7 @@
 operator,source_value,medium_value
 OpenAI,ChatGPT,chatbot
 Anthropic,Claude,chatbot
-Perplexity,Perplexity,chatbot
+Perplexity AI,Perplexity,chatbot
 Google,Gemini,chatbot
 Microsoft,Copilot,chatbot
 Meta,Meta AI,chatbot

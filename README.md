@@ -115,6 +115,11 @@ The `operator_referral_sources` seed maps operators to referral `source`/`medium
 (`utm_referrer` entity preferred, `refr_source`/`refr_medium` fallback). Override it with your
 site's UTM conventions; `operator` values must match the agent classification enrichment exactly.
 
+`assert_no_orphan_operators` warns when an AI-purpose operator crawls the site but is missing
+from that seed, since its referrals then cannot be attributed. Some operators run crawlers and
+no product that sends readers back — Amazon and Common Crawl, for instance — so there is nothing
+to map; list those in `operators_without_referrals` to exempt them from the warning.
+
 ## Running
 
 ```bash

@@ -1,7 +1,7 @@
 page_url_host_path,as_of_date,agent_hits_7d,agent_hits_30d,agent_hits_90d,distinct_agent_operators_30d,distinct_agent_names_30d,ai_training_hits_30d,ai_user_fetch_hits_30d,ai_search_index_hits_30d,search_index_hits_30d,first_agent_visit_tstamp,last_agent_visit_tstamp,human_pageviews_7d,human_pageviews_30d,human_pageviews_90d,ai_referral_pageviews_30d,ai_referral_sessions_30d,is_orphaned_agent_interest,cite_through_rate_proxy_30d
 docs.snowplow.io/,2026-08-17,5,20,55,4,6,3,3,2,0,2026-06-03 16:08:56.675000,2026-08-15 06:19:17.587000,0,1,2,0,0,true,0.000000
 docs.snowplow.io/docs,2026-08-17,0,0,0,0,0,0,0,0,0,,,0,6,12,0,0,false,
-docs.snowplow.io/docs/,2026-08-17,10,11,51,4,5,3,2,3,0,2026-06-06 16:13:20.956000,2026-08-14 10:15:38.918000,0,1,2,0,0,true,0.000000
+docs.snowplow.io/docs/,2026-08-17,10,10,50,4,4,3,2,3,0,2026-06-06 16:13:20.956000,2026-08-14 10:15:38.918000,0,1,2,0,0,true,0.000000
 docs.snowplow.io/docs/api-reference/iglu/iglu-repositories/static-repo/,2026-08-17,0,2,6,2,2,0,0,0,1,2026-06-01 16:06:57.104000,2026-08-05 07:55:59.722000,0,3,8,2,1,false,
 docs.snowplow.io/docs/api-reference/loaders-storage-targets/elasticsearch/,2026-08-17,0,2,6,1,2,0,0,0,0,2026-06-03 16:08:46.655000,2026-08-07 08:06:55.877000,0,3,6,2,1,false,
 docs.snowplow.io/docs/api-reference/loaders-storage-targets/lake-loader/,2026-08-17,0,2,6,2,2,1,0,0,0,2026-06-02 16:07:54.125000,2026-08-06 08:03:46.591000,0,4,9,3,1,false,
@@ -23,14 +23,14 @@ docs.snowplow.io/docs/modeling-your-data/modeling-your-data-with-dbt/dbt-models/
 docs.snowplow.io/docs/modeling-your-data/modeling-your-data-with-dbt/dbt-models/legacy/dbt-web-data-model/,2026-08-17,0,2,6,2,2,0,1,0,0,2026-05-31 16:03:49.075000,2026-08-04 07:09:41.343000,0,2,11,1,0,false,1.000000
 docs.snowplow.io/docs/monitoring/,2026-08-17,0,2,6,2,2,0,0,1,0,2026-06-02 16:08:09.416000,2026-08-06 08:06:47.225000,0,3,6,2,1,false,2.000000
 docs.snowplow.io/docs/sources/,2026-08-17,0,0,0,0,0,0,0,0,0,,,0,5,21,0,0,false,
-docs.snowplow.io/docs/sources/collecting-from-own-applications/javascript-trackers/,2026-08-17,0,10,52,2,2,0,0,0,1,2026-05-20 05:29:31.159000,2026-07-23 02:42:21.859000,0,1,2,0,0,true,
+docs.snowplow.io/docs/sources/collecting-from-own-applications/javascript-trackers/,2026-08-17,0,10,51,2,2,0,0,0,1,2026-05-21 05:48:50.040000,2026-07-23 02:42:21.859000,0,1,2,0,0,true,
 docs.snowplow.io/docs/sources/java-tracker/,2026-08-17,0,1,6,1,1,0,0,0,0,2026-05-31 16:04:57.817000,2026-08-03 07:00:44.779000,0,2,6,1,0,false,
 docs.snowplow.io/docs/sources/python-tracker/intialization/,2026-08-17,0,1,6,1,1,0,0,0,0,2026-05-29 16:02:07.304000,2026-08-02 06:52:41.379000,1,3,8,1,0,false,
 docs.snowplow.io/docs/sources/python-tracker/tracking-specific-events/,2026-08-17,0,2,6,2,2,0,1,0,0,2026-06-01 16:06:44.907000,2026-08-05 07:19:40.272000,0,4,13,3,1,false,3.000000
 docs.snowplow.io/docs/sources/react-native-tracker/,2026-08-17,0,4,19,3,3,0,0,1,1,2026-05-27 15:57:22.115000,2026-08-07 17:51:47.005000,4,16,37,8,3,false,8.000000
 docs.snowplow.io/docs/sources/trackers/javascript-trackers/,2026-08-17,0,0,0,0,0,0,0,0,0,,,0,5,15,0,0,false,
 docs.snowplow.io/docs/sources/trackers/web-trackers,2026-08-17,0,3,16,1,1,0,0,0,0,2026-05-22 11:24:29.743000,2026-07-24 02:52:32.306000,6,13,39,9,2,false,
-docs.snowplow.io/docs/sources/web-trackers/,2026-08-17,9,15,57,4,9,5,4,0,0,2026-05-19 08:36:05.840000,2026-08-17 11:26:24.497000,0,1,2,0,0,true,0.000000
+docs.snowplow.io/docs/sources/web-trackers/,2026-08-17,9,14,56,4,8,5,4,0,0,2026-05-19 08:36:05.840000,2026-08-17 11:26:24.497000,0,1,2,0,0,true,0.000000
 docs.snowplow.io/docs/sources/web-trackers/cookies-and-local-storage/,2026-08-17,0,0,0,0,0,0,0,0,0,,,0,5,20,0,0,false,
 docs.snowplow.io/docs/sources/web-trackers/quick-start-guide/,2026-08-17,0,1,6,1,1,0,1,0,0,2026-05-29 16:00:34.760000,2026-08-01 05:42:24.640000,1,3,7,1,0,false,1.000000
 docs.snowplow.io/docs/sources/web-trackers/tracking-events/,2026-08-17,0,3,18,1,1,0,0,0,0,2026-05-25 15:53:19.488000,2026-07-28 03:33:51.156000,4,14,43,10,3,false,

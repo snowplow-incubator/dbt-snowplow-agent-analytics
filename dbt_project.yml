@@ -45,6 +45,9 @@ seeds:
     agent_name_ignore_list:
       +column_types:
         agent_name: varchar
+    operators_without_referrals:
+      +column_types:
+        operator: varchar
 
 vars:
   snowplow_agent_analytics:

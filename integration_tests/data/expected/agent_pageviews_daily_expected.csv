@@ -25,7 +25,6 @@ event_date,agent_name,agent_operator,agent_purpose,purpose_group,source_channel,
 2026-05-19,SemrushBot,unknown,,OTHER,cdn,docs.snowplow.io/docs/sources/web-trackers/,1,2026-05-19 08:36:05.840000,2026-05-19 08:36:05.840000
 2026-05-20,Amazonbot,Amazon,AI_TRAINING,AI,cdn,docs.snowplow.io/docs/sources/web-trackers/,1,2026-05-20 11:55:39.493000,2026-05-20 11:55:39.493000
 2026-05-20,ChatGPT-User,OpenAI,AI_USER_FETCH,AI,cdn,docs.snowplow.io/docs/sources/web-trackers/,1,2026-05-20 11:40:06.673000,2026-05-20 11:40:06.673000
-2026-05-20,HubSpot Crawler,unknown,,OTHER,client,docs.snowplow.io/docs/sources/collecting-from-own-applications/javascript-trackers/,1,2026-05-20 05:29:31.159000,2026-05-20 05:29:31.159000
 2026-05-20,ShapBot,unknown,,OTHER,cdn,docs.snowplow.io/docs/sources/web-trackers/,1,2026-05-20 12:27:22.190000,2026-05-20 12:27:22.190000
 2026-05-21,ChatGPT-User,OpenAI,AI_USER_FETCH,AI,cdn,docs.snowplow.io/docs/sources/collecting-from-own-applications/javascript-trackers/,1,2026-05-21 14:41:06.736000,2026-05-21 14:41:06.736000
 2026-05-21,Facebot Twitterbot,unknown,,OTHER,cdn,docs.snowplow.io/docs/sources/web-trackers/,1,2026-05-21 15:06:16.562000,2026-05-21 15:06:16.562000
@@ -318,12 +317,10 @@ event_date,agent_name,agent_operator,agent_purpose,purpose_group,source_channel,
 2026-07-24,Claude-User,Anthropic,AI_USER_FETCH,AI,cdn,docs.snowplow.io/docs/testing/snowplow-micro/,1,2026-07-24 02:47:10.684000,2026-07-24 02:47:10.684000
 2026-07-24,SiteAuditBot,unknown,,OTHER,cdn,docs.snowplow.io/docs/sources/trackers/web-trackers,1,2026-07-24 02:52:32.306000,2026-07-24 02:52:32.306000
 2026-07-24,SiteAuditBot,unknown,,OTHER,cdn,docs.snowplow.io/docs/testing/snowplow-micro/,1,2026-07-24 02:46:06.541000,2026-07-24 02:46:06.541000
-2026-07-25,HubSpot Crawler,unknown,,OTHER,client,docs.snowplow.io/docs/,1,2026-07-25 04:37:03.429000,2026-07-25 04:37:03.429000
 2026-07-25,SiteAuditBot,unknown,,OTHER,cdn,docs.snowplow.io/docs/fundamentals/,2,2026-07-25 03:07:57.557000,2026-07-25 03:16:15.820000
 2026-07-25,SiteAuditBot,unknown,,OTHER,cdn,docs.snowplow.io/docs/testing/snowplow-micro/,1,2026-07-25 03:10:24.262000,2026-07-25 03:10:24.262000
 2026-07-26,SiteAuditBot,unknown,,OTHER,cdn,docs.snowplow.io/docs/fundamentals/,1,2026-07-26 03:16:52.379000,2026-07-26 03:16:52.379000
 2026-07-26,SiteAuditBot,unknown,,OTHER,cdn,docs.snowplow.io/docs/fundamentals/events/,1,2026-07-26 03:17:55.499000,2026-07-26 03:17:55.499000
-2026-07-27,HubSpot Crawler,unknown,,OTHER,client,docs.snowplow.io/docs/sources/web-trackers/,1,2026-07-27 07:03:05.515000,2026-07-27 07:03:05.515000
 2026-07-27,SiteAuditBot,unknown,,OTHER,cdn,docs.snowplow.io/docs/fundamentals/events/,2,2026-07-27 03:26:40.529000,2026-07-27 03:30:16.073000
 2026-07-27,SiteAuditBot,unknown,,OTHER,cdn,docs.snowplow.io/docs/sources/web-trackers/tracking-events/,1,2026-07-27 03:28:50.515000,2026-07-27 03:28:50.515000
 2026-07-28,SiteAuditBot,unknown,,OTHER,cdn,docs.snowplow.io/docs/events/ootb-data/user-and-session-identification/,1,2026-07-28 03:35:53.423000,2026-07-28 03:35:53.423000

@@ -79,3 +79,22 @@ seeds:
         data_tests:
           - not_null
           - unique
+
+  - name: operators_without_referrals
+    description: >
+      Operators that run AI crawlers but have no product that sends readers back, so they
+      will never appear in operator_referral_sources. Listing them here exempts them from
+      assert_no_orphan_operators, which otherwise warns about every AI-purpose operator
+      missing from that seed -- the warning is meant to catch a mapping you forgot, not an
+      operator that has nothing to map.
+
+      Their operator_summary rows still show crawl hits with no referrals, and
+      crawl_to_referral_ratio_30d stays NULL. That is the honest answer for them.
+    columns:
+      - name: operator
+        description: >
+          Operator name, matching agent_classification.operator. Must not also appear in
+          operator_referral_sources.
+        data_tests:
+          - not_null
+          - unique
