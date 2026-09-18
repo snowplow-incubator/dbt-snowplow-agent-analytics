@@ -27,6 +27,10 @@ models:
       +materialized: table
     marts:
       +materialized: incremental
+    semantic:
+      # Conformed dimensions. Portable SQL; the Snowflake-only semantic view lives in
+      # snowflake/ and gates itself on target.type.
+      +materialized: table
 
 seeds:
   snowplow_agent_analytics:
@@ -77,6 +81,11 @@ vars:
                                         # the 7/30/90d windows reproducible: a backfill or
                                         # replay wants them anchored to the date being
                                         # rebuilt, not to whenever the run executes.
+
+    # semantic layer (Snowflake semantic views for Cortex Analyst)
+    enable_semantic_views: false        # build dim_date/dim_page/dim_operator and the
+                                        # Snowflake semantic view. Requires the
+                                        # Snowflake-Labs/dbt_semantic_view package.
 
     # AEO indicator thresholds
     orphan_agent_hits_threshold: 10

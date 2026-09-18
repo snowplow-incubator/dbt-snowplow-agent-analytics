@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: >
+      Conformed date dimension. Union of event_date values present in the three daily
+      fact tables, so every fact row has a parent and no calendar gaps are invented.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - event_date
+    columns:
+      - name: event_date
+        data_tests:
+          - not_null
+
+  - name: dim_page
+    description: >
+      Conformed page dimension: the join bridge between agent traffic, human pageviews and
+      referrals.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - page_url_host_path
+    columns:
+      - name: page_url_host_path
+        data_tests:
+          - not_null
+      - name: page_section
+        description: First path segment ('docs' for /docs/setup). Empty at the site root.
+
+  - name: dim_operator
+    description: >
+      Conformed operator dimension. Unions both fact sides with both operator seeds, so
+      operators that only crawl, only refer, or are merely known all get a row.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - operator
+    columns:
+      - name: operator
+        data_tests:
+          - not_null
+      - name: has_referral_sources
+        description: >
+          False means no referral sources are configured, so referral figures read zero
+          regardless of reality. Lets a consumer tell a seed gap from a finding.
+      - name: is_known_non_referring
+        description: Operators documented as never sending referral traffic.
+
+  - name: agent_analytics_semantic_view
+    description: >
+      Snowflake semantic view over the three daily fact tables, joined through the
+      conformed dimensions. Snowflake-only and opt-in: gated on
+      var('enable_semantic_views') and target.type == 'snowflake'. Requires the
+      Snowflake-Labs/dbt_semantic_view package.
