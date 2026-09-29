@@ -1,0 +1,4495 @@
+{
+  "metadata": {
+    "dbt_schema_version": "https://schemas.getdbt.com/dbt/catalog/v1.json",
+    "dbt_version": "1.12.3",
+    "generated_at": "2026-09-29T13:07:40.472795Z",
+    "invocation_id": "f12baa54-dee6-44e4-8565-a54f4c1315ed",
+    "invocation_started_at": "2026-09-29T13:07:19.938860Z",
+    "env": {}
+  },
+  "nodes": {
+    "seed.snowplow_agent_analytics.agent_ua_overrides": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "AGENT_UA_OVERRIDES",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "UA_PATTERN": {
+          "type": "TEXT",
+          "index": 1,
+          "name": "UA_PATTERN",
+          "comment": null
+        },
+        "AGENT_NAME": {
+          "type": "TEXT",
+          "index": 2,
+          "name": "AGENT_NAME",
+          "comment": null
+        },
+        "AGENT_OPERATOR": {
+          "type": "TEXT",
+          "index": 3,
+          "name": "AGENT_OPERATOR",
+          "comment": null
+        },
+        "AGENT_PURPOSE": {
+          "type": "TEXT",
+          "index": 4,
+          "name": "AGENT_PURPOSE",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 4,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:06UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 1536,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "seed.snowplow_agent_analytics.agent_ua_overrides"
+    },
+    "model.snowplow_agent_analytics.int_agent_pageviews_unified": {
+      "metadata": {
+        "type": "VIEW",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "INT_AGENT_PAGEVIEWS_UNIFIED",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "SOURCE_CHANNEL": {
+          "type": "TEXT",
+          "index": 1,
+          "name": "SOURCE_CHANNEL",
+          "comment": null
+        },
+        "APP_ID": {
+          "type": "TEXT",
+          "index": 2,
+          "name": "APP_ID",
+          "comment": null
+        },
+        "PLATFORM": {
+          "type": "TEXT",
+          "index": 3,
+          "name": "PLATFORM",
+          "comment": null
+        },
+        "ETL_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 4,
+          "name": "ETL_TSTAMP",
+          "comment": null
+        },
+        "COLLECTOR_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 5,
+          "name": "COLLECTOR_TSTAMP",
+          "comment": null
+        },
+        "DVCE_CREATED_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 6,
+          "name": "DVCE_CREATED_TSTAMP",
+          "comment": null
+        },
+        "EVENT": {
+          "type": "TEXT",
+          "index": 7,
+          "name": "EVENT",
+          "comment": null
+        },
+        "EVENT_ID": {
+          "type": "TEXT",
+          "index": 8,
+          "name": "EVENT_ID",
+          "comment": null
+        },
+        "TXN_ID": {
+          "type": "NUMBER",
+          "index": 9,
+          "name": "TXN_ID",
+          "comment": null
+        },
+        "NAME_TRACKER": {
+          "type": "TEXT",
+          "index": 10,
+          "name": "NAME_TRACKER",
+          "comment": null
+        },
+        "V_TRACKER": {
+          "type": "TEXT",
+          "index": 11,
+          "name": "V_TRACKER",
+          "comment": null
+        },
+        "V_COLLECTOR": {
+          "type": "TEXT",
+          "index": 12,
+          "name": "V_COLLECTOR",
+          "comment": null
+        },
+        "V_ETL": {
+          "type": "TEXT",
+          "index": 13,
+          "name": "V_ETL",
+          "comment": null
+        },
+        "USER_ID": {
+          "type": "TEXT",
+          "index": 14,
+          "name": "USER_ID",
+          "comment": null
+        },
+        "USER_IPADDRESS": {
+          "type": "NUMBER",
+          "index": 15,
+          "name": "USER_IPADDRESS",
+          "comment": null
+        },
+        "USER_FINGERPRINT": {
+          "type": "TEXT",
+          "index": 16,
+          "name": "USER_FINGERPRINT",
+          "comment": null
+        },
+        "DOMAIN_USERID": {
+          "type": "NUMBER",
+          "index": 17,
+          "name": "DOMAIN_USERID",
+          "comment": null
+        },
+        "DOMAIN_SESSIONIDX": {
+          "type": "NUMBER",
+          "index": 18,
+          "name": "DOMAIN_SESSIONIDX",
+          "comment": null
+        },
+        "NETWORK_USERID": {
+          "type": "NUMBER",
+          "index": 19,
+          "name": "NETWORK_USERID",
+          "comment": null
+        },
+        "GEO_COUNTRY": {
+          "type": "TEXT",
+          "index": 20,
+          "name": "GEO_COUNTRY",
+          "comment": null
+        },
+        "GEO_REGION": {
+          "type": "NUMBER",
+          "index": 21,
+          "name": "GEO_REGION",
+          "comment": null
+        },
+        "GEO_CITY": {
+          "type": "NUMBER",
+          "index": 22,
+          "name": "GEO_CITY",
+          "comment": null
+        },
+        "GEO_ZIPCODE": {
+          "type": "NUMBER",
+          "index": 23,
+          "name": "GEO_ZIPCODE",
+          "comment": null
+        },
+        "GEO_LATITUDE": {
+          "type": "NUMBER",
+          "index": 24,
+          "name": "GEO_LATITUDE",
+          "comment": null
+        },
+        "GEO_LONGITUDE": {
+          "type": "NUMBER",
+          "index": 25,
+          "name": "GEO_LONGITUDE",
+          "comment": null
+        },
+        "GEO_REGION_NAME": {
+          "type": "NUMBER",
+          "index": 26,
+          "name": "GEO_REGION_NAME",
+          "comment": null
+        },
+        "IP_ISP": {
+          "type": "TEXT",
+          "index": 27,
+          "name": "IP_ISP",
+          "comment": null
+        },
+        "IP_ORGANIZATION": {
+          "type": "TEXT",
+          "index": 28,
+          "name": "IP_ORGANIZATION",
+          "comment": null
+        },
+        "IP_DOMAIN": {
+          "type": "TEXT",
+          "index": 29,
+          "name": "IP_DOMAIN",
+          "comment": null
+        },
+        "IP_NETSPEED": {
+          "type": "TEXT",
+          "index": 30,
+          "name": "IP_NETSPEED",
+          "comment": null
+        },
+        "PAGE_URL": {
+          "type": "TEXT",
+          "index": 31,
+          "name": "PAGE_URL",
+          "comment": null
+        },
+        "PAGE_TITLE": {
+          "type": "TEXT",
+          "index": 32,
+          "name": "PAGE_TITLE",
+          "comment": null
+        },
+        "PAGE_REFERRER": {
+          "type": "NUMBER",
+          "index": 33,
+          "name": "PAGE_REFERRER",
+          "comment": null
+        },
+        "PAGE_URLSCHEME": {
+          "type": "TEXT",
+          "index": 34,
+          "name": "PAGE_URLSCHEME",
+          "comment": null
+        },
+        "PAGE_URLHOST": {
+          "type": "TEXT",
+          "index": 35,
+          "name": "PAGE_URLHOST",
+          "comment": null
+        },
+        "PAGE_URLPORT": {
+          "type": "NUMBER",
+          "index": 36,
+          "name": "PAGE_URLPORT",
+          "comment": null
+        },
+        "PAGE_URLPATH": {
+          "type": "TEXT",
+          "index": 37,
+          "name": "PAGE_URLPATH",
+          "comment": null
+        },
+        "PAGE_URLQUERY": {
+          "type": "NUMBER",
+          "index": 38,
+          "name": "PAGE_URLQUERY",
+          "comment": null
+        },
+        "PAGE_URLFRAGMENT": {
+          "type": "TEXT",
+          "index": 39,
+          "name": "PAGE_URLFRAGMENT",
+          "comment": null
+        },
+        "REFR_URLSCHEME": {
+          "type": "NUMBER",
+          "index": 40,
+          "name": "REFR_URLSCHEME",
+          "comment": null
+        },
+        "REFR_URLHOST": {
+          "type": "NUMBER",
+          "index": 41,
+          "name": "REFR_URLHOST",
+          "comment": null
+        },
+        "REFR_URLPORT": {
+          "type": "NUMBER",
+          "index": 42,
+          "name": "REFR_URLPORT",
+          "comment": null
+        },
+        "REFR_URLPATH": {
+          "type": "NUMBER",
+          "index": 43,
+          "name": "REFR_URLPATH",
+          "comment": null
+        },
+        "REFR_URLQUERY": {
+          "type": "NUMBER",
+          "index": 44,
+          "name": "REFR_URLQUERY",
+          "comment": null
+        },
+        "REFR_URLFRAGMENT": {
+          "type": "TEXT",
+          "index": 45,
+          "name": "REFR_URLFRAGMENT",
+          "comment": null
+        },
+        "REFR_MEDIUM": {
+          "type": "TEXT",
+          "index": 46,
+          "name": "REFR_MEDIUM",
+          "comment": null
+        },
+        "REFR_SOURCE": {
+          "type": "TEXT",
+          "index": 47,
+          "name": "REFR_SOURCE",
+          "comment": null
+        },
+        "REFR_TERM": {
+          "type": "TEXT",
+          "index": 48,
+          "name": "REFR_TERM",
+          "comment": null
+        },
+        "MKT_MEDIUM": {
+          "type": "NUMBER",
+          "index": 49,
+          "name": "MKT_MEDIUM",
+          "comment": null
+        },
+        "MKT_SOURCE": {
+          "type": "NUMBER",
+          "index": 50,
+          "name": "MKT_SOURCE",
+          "comment": null
+        },
+        "MKT_TERM": {
+          "type": "TEXT",
+          "index": 51,
+          "name": "MKT_TERM",
+          "comment": null
+        },
+        "MKT_CONTENT": {
+          "type": "TEXT",
+          "index": 52,
+          "name": "MKT_CONTENT",
+          "comment": null
+        },
+        "MKT_CAMPAIGN": {
+          "type": "NUMBER",
+          "index": 53,
+          "name": "MKT_CAMPAIGN",
+          "comment": null
+        },
+        "SE_CATEGORY": {
+          "type": "NUMBER",
+          "index": 54,
+          "name": "SE_CATEGORY",
+          "comment": null
+        },
+        "SE_ACTION": {
+          "type": "NUMBER",
+          "index": 55,
+          "name": "SE_ACTION",
+          "comment": null
+        },
+        "SE_LABEL": {
+          "type": "TEXT",
+          "index": 56,
+          "name": "SE_LABEL",
+          "comment": null
+        },
+        "SE_PROPERTY": {
+          "type": "TEXT",
+          "index": 57,
+          "name": "SE_PROPERTY",
+          "comment": null
+        },
+        "SE_VALUE": {
+          "type": "FLOAT",
+          "index": 58,
+          "name": "SE_VALUE",
+          "comment": null
+        },
+        "TR_ORDERID": {
+          "type": "TEXT",
+          "index": 59,
+          "name": "TR_ORDERID",
+          "comment": null
+        },
+        "TR_AFFILIATION": {
+          "type": "TEXT",
+          "index": 60,
+          "name": "TR_AFFILIATION",
+          "comment": null
+        },
+        "TR_TOTAL": {
+          "type": "FLOAT",
+          "index": 61,
+          "name": "TR_TOTAL",
+          "comment": null
+        },
+        "TR_TAX": {
+          "type": "FLOAT",
+          "index": 62,
+          "name": "TR_TAX",
+          "comment": null
+        },
+        "TR_SHIPPING": {
+          "type": "FLOAT",
+          "index": 63,
+          "name": "TR_SHIPPING",
+          "comment": null
+        },
+        "TR_CITY": {
+          "type": "TEXT",
+          "index": 64,
+          "name": "TR_CITY",
+          "comment": null
+        },
+        "TR_STATE": {
+          "type": "TEXT",
+          "index": 65,
+          "name": "TR_STATE",
+          "comment": null
+        },
+        "TR_COUNTRY": {
+          "type": "TEXT",
+          "index": 66,
+          "name": "TR_COUNTRY",
+          "comment": null
+        },
+        "TI_ORDERID": {
+          "type": "TEXT",
+          "index": 67,
+          "name": "TI_ORDERID",
+          "comment": null
+        },
+        "TI_SKU": {
+          "type": "TEXT",
+          "index": 68,
+          "name": "TI_SKU",
+          "comment": null
+        },
+        "TI_NAME": {
+          "type": "TEXT",
+          "index": 69,
+          "name": "TI_NAME",
+          "comment": null
+        },
+        "TI_CATEGORY": {
+          "type": "TEXT",
+          "index": 70,
+          "name": "TI_CATEGORY",
+          "comment": null
+        },
+        "TI_PRICE": {
+          "type": "FLOAT",
+          "index": 71,
+          "name": "TI_PRICE",
+          "comment": null
+        },
+        "TI_QUANTITY": {
+          "type": "NUMBER",
+          "index": 72,
+          "name": "TI_QUANTITY",
+          "comment": null
+        },
+        "PP_XOFFSET_MIN": {
+          "type": "NUMBER",
+          "index": 73,
+          "name": "PP_XOFFSET_MIN",
+          "comment": null
+        },
+        "PP_XOFFSET_MAX": {
+          "type": "NUMBER",
+          "index": 74,
+          "name": "PP_XOFFSET_MAX",
+          "comment": null
+        },
+        "PP_YOFFSET_MIN": {
+          "type": "NUMBER",
+          "index": 75,
+          "name": "PP_YOFFSET_MIN",
+          "comment": null
+        },
+        "PP_YOFFSET_MAX": {
+          "type": "NUMBER",
+          "index": 76,
+          "name": "PP_YOFFSET_MAX",
+          "comment": null
+        },
+        "USERAGENT": {
+          "type": "TEXT",
+          "index": 77,
+          "name": "USERAGENT",
+          "comment": null
+        },
+        "BR_NAME": {
+          "type": "TEXT",
+          "index": 78,
+          "name": "BR_NAME",
+          "comment": null
+        },
+        "BR_FAMILY": {
+          "type": "TEXT",
+          "index": 79,
+          "name": "BR_FAMILY",
+          "comment": null
+        },
+        "BR_VERSION": {
+          "type": "TEXT",
+          "index": 80,
+          "name": "BR_VERSION",
+          "comment": null
+        },
+        "BR_TYPE": {
+          "type": "TEXT",
+          "index": 81,
+          "name": "BR_TYPE",
+          "comment": null
+        },
+        "BR_RENDERENGINE": {
+          "type": "TEXT",
+          "index": 82,
+          "name": "BR_RENDERENGINE",
+          "comment": null
+        },
+        "BR_LANG": {
+          "type": "TEXT",
+          "index": 83,
+          "name": "BR_LANG",
+          "comment": null
+        },
+        "BR_FEATURES_PDF": {
+          "type": "NUMBER",
+          "index": 84,
+          "name": "BR_FEATURES_PDF",
+          "comment": null
+        },
+        "BR_FEATURES_FLASH": {
+          "type": "NUMBER",
+          "index": 85,
+          "name": "BR_FEATURES_FLASH",
+          "comment": null
+        },
+        "BR_FEATURES_JAVA": {
+          "type": "NUMBER",
+          "index": 86,
+          "name": "BR_FEATURES_JAVA",
+          "comment": null
+        },
+        "BR_FEATURES_DIRECTOR": {
+          "type": "NUMBER",
+          "index": 87,
+          "name": "BR_FEATURES_DIRECTOR",
+          "comment": null
+        },
+        "BR_FEATURES_QUICKTIME": {
+          "type": "NUMBER",
+          "index": 88,
+          "name": "BR_FEATURES_QUICKTIME",
+          "comment": null
+        },
+        "BR_FEATURES_REALPLAYER": {
+          "type": "NUMBER",
+          "index": 89,
+          "name": "BR_FEATURES_REALPLAYER",
+          "comment": null
+        },
+        "BR_FEATURES_WINDOWSMEDIA": {
+          "type": "NUMBER",
+          "index": 90,
+          "name": "BR_FEATURES_WINDOWSMEDIA",
+          "comment": null
+        },
+        "BR_FEATURES_GEARS": {
+          "type": "NUMBER",
+          "index": 91,
+          "name": "BR_FEATURES_GEARS",
+          "comment": null
+        },
+        "BR_FEATURES_SILVERLIGHT": {
+          "type": "NUMBER",
+          "index": 92,
+          "name": "BR_FEATURES_SILVERLIGHT",
+          "comment": null
+        },
+        "BR_COOKIES": {
+          "type": "BOOLEAN",
+          "index": 93,
+          "name": "BR_COOKIES",
+          "comment": null
+        },
+        "BR_COLORDEPTH": {
+          "type": "TEXT",
+          "index": 94,
+          "name": "BR_COLORDEPTH",
+          "comment": null
+        },
+        "BR_VIEWWIDTH": {
+          "type": "NUMBER",
+          "index": 95,
+          "name": "BR_VIEWWIDTH",
+          "comment": null
+        },
+        "BR_VIEWHEIGHT": {
+          "type": "NUMBER",
+          "index": 96,
+          "name": "BR_VIEWHEIGHT",
+          "comment": null
+        },
+        "OS_NAME": {
+          "type": "TEXT",
+          "index": 97,
+          "name": "OS_NAME",
+          "comment": null
+        },
+        "OS_FAMILY": {
+          "type": "TEXT",
+          "index": 98,
+          "name": "OS_FAMILY",
+          "comment": null
+        },
+        "OS_MANUFACTURER": {
+          "type": "TEXT",
+          "index": 99,
+          "name": "OS_MANUFACTURER",
+          "comment": null
+        },
+        "OS_TIMEZONE": {
+          "type": "TEXT",
+          "index": 100,
+          "name": "OS_TIMEZONE",
+          "comment": null
+        },
+        "DVCE_TYPE": {
+          "type": "TEXT",
+          "index": 101,
+          "name": "DVCE_TYPE",
+          "comment": null
+        },
+        "DVCE_ISMOBILE": {
+          "type": "BOOLEAN",
+          "index": 102,
+          "name": "DVCE_ISMOBILE",
+          "comment": null
+        },
+        "DVCE_SCREENWIDTH": {
+          "type": "NUMBER",
+          "index": 103,
+          "name": "DVCE_SCREENWIDTH",
+          "comment": null
+        },
+        "DVCE_SCREENHEIGHT": {
+          "type": "NUMBER",
+          "index": 104,
+          "name": "DVCE_SCREENHEIGHT",
+          "comment": null
+        },
+        "DOC_CHARSET": {
+          "type": "TEXT",
+          "index": 105,
+          "name": "DOC_CHARSET",
+          "comment": null
+        },
+        "DOC_WIDTH": {
+          "type": "NUMBER",
+          "index": 106,
+          "name": "DOC_WIDTH",
+          "comment": null
+        },
+        "DOC_HEIGHT": {
+          "type": "NUMBER",
+          "index": 107,
+          "name": "DOC_HEIGHT",
+          "comment": null
+        },
+        "TR_CURRENCY": {
+          "type": "TEXT",
+          "index": 108,
+          "name": "TR_CURRENCY",
+          "comment": null
+        },
+        "TR_TOTAL_BASE": {
+          "type": "FLOAT",
+          "index": 109,
+          "name": "TR_TOTAL_BASE",
+          "comment": null
+        },
+        "TR_TAX_BASE": {
+          "type": "FLOAT",
+          "index": 110,
+          "name": "TR_TAX_BASE",
+          "comment": null
+        },
+        "TR_SHIPPING_BASE": {
+          "type": "FLOAT",
+          "index": 111,
+          "name": "TR_SHIPPING_BASE",
+          "comment": null
+        },
+        "TI_CURRENCY": {
+          "type": "TEXT",
+          "index": 112,
+          "name": "TI_CURRENCY",
+          "comment": null
+        },
+        "TI_PRICE_BASE": {
+          "type": "FLOAT",
+          "index": 113,
+          "name": "TI_PRICE_BASE",
+          "comment": null
+        },
+        "BASE_CURRENCY": {
+          "type": "TEXT",
+          "index": 114,
+          "name": "BASE_CURRENCY",
+          "comment": null
+        },
+        "GEO_TIMEZONE": {
+          "type": "NUMBER",
+          "index": 115,
+          "name": "GEO_TIMEZONE",
+          "comment": null
+        },
+        "MKT_CLICKID": {
+          "type": "NUMBER",
+          "index": 116,
+          "name": "MKT_CLICKID",
+          "comment": null
+        },
+        "MKT_NETWORK": {
+          "type": "NUMBER",
+          "index": 117,
+          "name": "MKT_NETWORK",
+          "comment": null
+        },
+        "ETL_TAGS": {
+          "type": "TEXT",
+          "index": 118,
+          "name": "ETL_TAGS",
+          "comment": null
+        },
+        "DVCE_SENT_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 119,
+          "name": "DVCE_SENT_TSTAMP",
+          "comment": null
+        },
+        "REFR_DOMAIN_USERID": {
+          "type": "NUMBER",
+          "index": 120,
+          "name": "REFR_DOMAIN_USERID",
+          "comment": null
+        },
+        "REFR_DVCE_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 121,
+          "name": "REFR_DVCE_TSTAMP",
+          "comment": null
+        },
+        "DOMAIN_SESSIONID": {
+          "type": "TEXT",
+          "index": 122,
+          "name": "DOMAIN_SESSIONID",
+          "comment": null
+        },
+        "DERIVED_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 123,
+          "name": "DERIVED_TSTAMP",
+          "comment": null
+        },
+        "EVENT_VENDOR": {
+          "type": "TEXT",
+          "index": 124,
+          "name": "EVENT_VENDOR",
+          "comment": null
+        },
+        "EVENT_NAME": {
+          "type": "TEXT",
+          "index": 125,
+          "name": "EVENT_NAME",
+          "comment": null
+        },
+        "EVENT_FORMAT": {
+          "type": "TEXT",
+          "index": 126,
+          "name": "EVENT_FORMAT",
+          "comment": null
+        },
+        "EVENT_VERSION": {
+          "type": "TEXT",
+          "index": 127,
+          "name": "EVENT_VERSION",
+          "comment": null
+        },
+        "EVENT_FINGERPRINT": {
+          "type": "TEXT",
+          "index": 128,
+          "name": "EVENT_FINGERPRINT",
+          "comment": null
+        },
+        "TRUE_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 129,
+          "name": "TRUE_TSTAMP",
+          "comment": null
+        },
+        "LOAD_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 130,
+          "name": "LOAD_TSTAMP",
+          "comment": null
+        },
+        "CONTEXTS_NL_BASJES_YAUAA_CONTEXT_1": {
+          "type": "VARIANT",
+          "index": 131,
+          "name": "CONTEXTS_NL_BASJES_YAUAA_CONTEXT_1",
+          "comment": null
+        },
+        "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_AGENT_CLASSIFICATION_1": {
+          "type": "VARIANT",
+          "index": 132,
+          "name": "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_AGENT_CLASSIFICATION_1",
+          "comment": null
+        },
+        "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_BOT_DETECTION_1": {
+          "type": "VARIANT",
+          "index": 133,
+          "name": "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_BOT_DETECTION_1",
+          "comment": null
+        },
+        "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_UTM_REFERRER_1": {
+          "type": "VARIANT",
+          "index": 134,
+          "name": "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_UTM_REFERRER_1",
+          "comment": null
+        },
+        "IS_BOT": {
+          "type": "BOOLEAN",
+          "index": 135,
+          "name": "IS_BOT",
+          "comment": null
+        },
+        "RAW_SOURCE_CHANNEL": {
+          "type": "TEXT",
+          "index": 136,
+          "name": "RAW_SOURCE_CHANNEL",
+          "comment": null
+        },
+        "AGENT_NAME": {
+          "type": "TEXT",
+          "index": 137,
+          "name": "AGENT_NAME",
+          "comment": null
+        },
+        "AGENT_OPERATOR": {
+          "type": "TEXT",
+          "index": 138,
+          "name": "AGENT_OPERATOR",
+          "comment": null
+        },
+        "AGENT_PURPOSE": {
+          "type": "TEXT",
+          "index": 139,
+          "name": "AGENT_PURPOSE",
+          "comment": null
+        }
+      },
+      "stats": {
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": false,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "model.snowplow_agent_analytics.int_agent_pageviews_unified"
+    },
+    "model.snowplow_agent_analytics.base_new_event_limits": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "BASE_NEW_EVENT_LIMITS",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "LOWER_LIMIT": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 1,
+          "name": "LOWER_LIMIT",
+          "comment": null
+        },
+        "UPPER_LIMIT": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 2,
+          "name": "UPPER_LIMIT",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 1,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:06UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 1024,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "model.snowplow_agent_analytics.base_new_event_limits"
+    },
+    "seed.snowplow_agent_analytics.operators_without_referrals": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "OPERATORS_WITHOUT_REFERRALS",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "OPERATOR": {
+          "type": "TEXT",
+          "index": 1,
+          "name": "OPERATOR",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 5,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:06UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 1024,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "seed.snowplow_agent_analytics.operators_without_referrals"
+    },
+    "model.snowplow_agent_analytics.operator_summary": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "OPERATOR_SUMMARY",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "AGENT_OPERATOR": {
+          "type": "TEXT",
+          "index": 1,
+          "name": "AGENT_OPERATOR",
+          "comment": null
+        },
+        "AS_OF_DATE": {
+          "type": "DATE",
+          "index": 2,
+          "name": "AS_OF_DATE",
+          "comment": null
+        },
+        "CRAWL_HITS_7D": {
+          "type": "NUMBER",
+          "index": 3,
+          "name": "CRAWL_HITS_7D",
+          "comment": null
+        },
+        "CRAWL_HITS_30D": {
+          "type": "NUMBER",
+          "index": 4,
+          "name": "CRAWL_HITS_30D",
+          "comment": null
+        },
+        "CRAWL_HITS_90D": {
+          "type": "NUMBER",
+          "index": 5,
+          "name": "CRAWL_HITS_90D",
+          "comment": null
+        },
+        "DISTINCT_AGENT_NAMES_30D": {
+          "type": "NUMBER",
+          "index": 6,
+          "name": "DISTINCT_AGENT_NAMES_30D",
+          "comment": null
+        },
+        "DISTINCT_PAGES_CRAWLED_30D": {
+          "type": "NUMBER",
+          "index": 7,
+          "name": "DISTINCT_PAGES_CRAWLED_30D",
+          "comment": null
+        },
+        "AI_TRAINING_HITS_30D": {
+          "type": "NUMBER",
+          "index": 8,
+          "name": "AI_TRAINING_HITS_30D",
+          "comment": null
+        },
+        "AI_USER_FETCH_HITS_30D": {
+          "type": "NUMBER",
+          "index": 9,
+          "name": "AI_USER_FETCH_HITS_30D",
+          "comment": null
+        },
+        "AI_SEARCH_INDEX_HITS_30D": {
+          "type": "NUMBER",
+          "index": 10,
+          "name": "AI_SEARCH_INDEX_HITS_30D",
+          "comment": null
+        },
+        "OTHER_PURPOSE_HITS_30D": {
+          "type": "NUMBER",
+          "index": 11,
+          "name": "OTHER_PURPOSE_HITS_30D",
+          "comment": null
+        },
+        "REFERRED_PAGEVIEWS_7D": {
+          "type": "NUMBER",
+          "index": 12,
+          "name": "REFERRED_PAGEVIEWS_7D",
+          "comment": null
+        },
+        "REFERRED_PAGEVIEWS_30D": {
+          "type": "NUMBER",
+          "index": 13,
+          "name": "REFERRED_PAGEVIEWS_30D",
+          "comment": null
+        },
+        "REFERRED_PAGEVIEWS_90D": {
+          "type": "NUMBER",
+          "index": 14,
+          "name": "REFERRED_PAGEVIEWS_90D",
+          "comment": null
+        },
+        "REFERRED_SESSIONS_7D": {
+          "type": "NUMBER",
+          "index": 15,
+          "name": "REFERRED_SESSIONS_7D",
+          "comment": null
+        },
+        "REFERRED_SESSIONS_30D": {
+          "type": "NUMBER",
+          "index": 16,
+          "name": "REFERRED_SESSIONS_30D",
+          "comment": null
+        },
+        "REFERRED_SESSIONS_90D": {
+          "type": "NUMBER",
+          "index": 17,
+          "name": "REFERRED_SESSIONS_90D",
+          "comment": null
+        },
+        "DISTINCT_REFERRED_PAGES_30D": {
+          "type": "NUMBER",
+          "index": 18,
+          "name": "DISTINCT_REFERRED_PAGES_30D",
+          "comment": null
+        },
+        "CRAWL_TO_REFERRAL_RATIO_30D": {
+          "type": "NUMBER",
+          "index": 19,
+          "name": "CRAWL_TO_REFERRAL_RATIO_30D",
+          "comment": null
+        },
+        "FIRST_CRAWL_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 20,
+          "name": "FIRST_CRAWL_TSTAMP",
+          "comment": null
+        },
+        "LAST_CRAWL_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 21,
+          "name": "LAST_CRAWL_TSTAMP",
+          "comment": null
+        },
+        "FIRST_REFERRAL_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 22,
+          "name": "FIRST_REFERRAL_TSTAMP",
+          "comment": null
+        },
+        "LAST_REFERRAL_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 23,
+          "name": "LAST_REFERRAL_TSTAMP",
+          "comment": null
+        },
+        "IS_NEW_OPERATOR_7D": {
+          "type": "BOOLEAN",
+          "index": 24,
+          "name": "IS_NEW_OPERATOR_7D",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 19,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:07UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 3584,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "model.snowplow_agent_analytics.operator_summary"
+    },
+    "seed.snowplow_agent_analytics.agent_name_ignore_list": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "AGENT_NAME_IGNORE_LIST",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "AGENT_NAME": {
+          "type": "TEXT",
+          "index": 1,
+          "name": "AGENT_NAME",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 12,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:06UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 1024,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "seed.snowplow_agent_analytics.agent_name_ignore_list"
+    },
+    "seed.snowplow_agent_analytics.operator_referral_sources": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "OPERATOR_REFERRAL_SOURCES",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "OPERATOR": {
+          "type": "TEXT",
+          "index": 1,
+          "name": "OPERATOR",
+          "comment": null
+        },
+        "SOURCE_VALUE": {
+          "type": "TEXT",
+          "index": 2,
+          "name": "SOURCE_VALUE",
+          "comment": null
+        },
+        "MEDIUM_VALUE": {
+          "type": "TEXT",
+          "index": 3,
+          "name": "MEDIUM_VALUE",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 7,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:06UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 1024,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "seed.snowplow_agent_analytics.operator_referral_sources"
+    },
+    "model.snowplow_agent_analytics.int_agent_source_lookup": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "INT_AGENT_SOURCE_LOOKUP",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "AGENT_NAME": {
+          "type": "TEXT",
+          "index": 1,
+          "name": "AGENT_NAME",
+          "comment": null
+        },
+        "AGENT_RUNS_JS": {
+          "type": "BOOLEAN",
+          "index": 2,
+          "name": "AGENT_RUNS_JS",
+          "comment": null
+        },
+        "SOURCE_CHANNEL": {
+          "type": "TEXT",
+          "index": 3,
+          "name": "SOURCE_CHANNEL",
+          "comment": null
+        },
+        "LAST_SEEN_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 4,
+          "name": "LAST_SEEN_TSTAMP",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 47,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:07UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 2048,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "model.snowplow_agent_analytics.int_agent_source_lookup"
+    },
+    "model.snowplow_agent_analytics.base_events": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "BASE_EVENTS",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "APP_ID": {
+          "type": "TEXT",
+          "index": 1,
+          "name": "APP_ID",
+          "comment": null
+        },
+        "PLATFORM": {
+          "type": "TEXT",
+          "index": 2,
+          "name": "PLATFORM",
+          "comment": null
+        },
+        "ETL_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 3,
+          "name": "ETL_TSTAMP",
+          "comment": null
+        },
+        "COLLECTOR_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 4,
+          "name": "COLLECTOR_TSTAMP",
+          "comment": null
+        },
+        "DVCE_CREATED_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 5,
+          "name": "DVCE_CREATED_TSTAMP",
+          "comment": null
+        },
+        "EVENT": {
+          "type": "TEXT",
+          "index": 6,
+          "name": "EVENT",
+          "comment": null
+        },
+        "EVENT_ID": {
+          "type": "TEXT",
+          "index": 7,
+          "name": "EVENT_ID",
+          "comment": null
+        },
+        "TXN_ID": {
+          "type": "NUMBER",
+          "index": 8,
+          "name": "TXN_ID",
+          "comment": null
+        },
+        "NAME_TRACKER": {
+          "type": "TEXT",
+          "index": 9,
+          "name": "NAME_TRACKER",
+          "comment": null
+        },
+        "V_TRACKER": {
+          "type": "TEXT",
+          "index": 10,
+          "name": "V_TRACKER",
+          "comment": null
+        },
+        "V_COLLECTOR": {
+          "type": "TEXT",
+          "index": 11,
+          "name": "V_COLLECTOR",
+          "comment": null
+        },
+        "V_ETL": {
+          "type": "TEXT",
+          "index": 12,
+          "name": "V_ETL",
+          "comment": null
+        },
+        "USER_ID": {
+          "type": "TEXT",
+          "index": 13,
+          "name": "USER_ID",
+          "comment": null
+        },
+        "USER_IPADDRESS": {
+          "type": "NUMBER",
+          "index": 14,
+          "name": "USER_IPADDRESS",
+          "comment": null
+        },
+        "USER_FINGERPRINT": {
+          "type": "TEXT",
+          "index": 15,
+          "name": "USER_FINGERPRINT",
+          "comment": null
+        },
+        "DOMAIN_USERID": {
+          "type": "NUMBER",
+          "index": 16,
+          "name": "DOMAIN_USERID",
+          "comment": null
+        },
+        "DOMAIN_SESSIONIDX": {
+          "type": "NUMBER",
+          "index": 17,
+          "name": "DOMAIN_SESSIONIDX",
+          "comment": null
+        },
+        "NETWORK_USERID": {
+          "type": "NUMBER",
+          "index": 18,
+          "name": "NETWORK_USERID",
+          "comment": null
+        },
+        "GEO_COUNTRY": {
+          "type": "TEXT",
+          "index": 19,
+          "name": "GEO_COUNTRY",
+          "comment": null
+        },
+        "GEO_REGION": {
+          "type": "NUMBER",
+          "index": 20,
+          "name": "GEO_REGION",
+          "comment": null
+        },
+        "GEO_CITY": {
+          "type": "NUMBER",
+          "index": 21,
+          "name": "GEO_CITY",
+          "comment": null
+        },
+        "GEO_ZIPCODE": {
+          "type": "NUMBER",
+          "index": 22,
+          "name": "GEO_ZIPCODE",
+          "comment": null
+        },
+        "GEO_LATITUDE": {
+          "type": "NUMBER",
+          "index": 23,
+          "name": "GEO_LATITUDE",
+          "comment": null
+        },
+        "GEO_LONGITUDE": {
+          "type": "NUMBER",
+          "index": 24,
+          "name": "GEO_LONGITUDE",
+          "comment": null
+        },
+        "GEO_REGION_NAME": {
+          "type": "NUMBER",
+          "index": 25,
+          "name": "GEO_REGION_NAME",
+          "comment": null
+        },
+        "IP_ISP": {
+          "type": "TEXT",
+          "index": 26,
+          "name": "IP_ISP",
+          "comment": null
+        },
+        "IP_ORGANIZATION": {
+          "type": "TEXT",
+          "index": 27,
+          "name": "IP_ORGANIZATION",
+          "comment": null
+        },
+        "IP_DOMAIN": {
+          "type": "TEXT",
+          "index": 28,
+          "name": "IP_DOMAIN",
+          "comment": null
+        },
+        "IP_NETSPEED": {
+          "type": "TEXT",
+          "index": 29,
+          "name": "IP_NETSPEED",
+          "comment": null
+        },
+        "PAGE_URL": {
+          "type": "TEXT",
+          "index": 30,
+          "name": "PAGE_URL",
+          "comment": null
+        },
+        "PAGE_TITLE": {
+          "type": "TEXT",
+          "index": 31,
+          "name": "PAGE_TITLE",
+          "comment": null
+        },
+        "PAGE_REFERRER": {
+          "type": "NUMBER",
+          "index": 32,
+          "name": "PAGE_REFERRER",
+          "comment": null
+        },
+        "PAGE_URLSCHEME": {
+          "type": "TEXT",
+          "index": 33,
+          "name": "PAGE_URLSCHEME",
+          "comment": null
+        },
+        "PAGE_URLHOST": {
+          "type": "TEXT",
+          "index": 34,
+          "name": "PAGE_URLHOST",
+          "comment": null
+        },
+        "PAGE_URLPORT": {
+          "type": "NUMBER",
+          "index": 35,
+          "name": "PAGE_URLPORT",
+          "comment": null
+        },
+        "PAGE_URLPATH": {
+          "type": "TEXT",
+          "index": 36,
+          "name": "PAGE_URLPATH",
+          "comment": null
+        },
+        "PAGE_URLQUERY": {
+          "type": "NUMBER",
+          "index": 37,
+          "name": "PAGE_URLQUERY",
+          "comment": null
+        },
+        "PAGE_URLFRAGMENT": {
+          "type": "TEXT",
+          "index": 38,
+          "name": "PAGE_URLFRAGMENT",
+          "comment": null
+        },
+        "REFR_URLSCHEME": {
+          "type": "NUMBER",
+          "index": 39,
+          "name": "REFR_URLSCHEME",
+          "comment": null
+        },
+        "REFR_URLHOST": {
+          "type": "NUMBER",
+          "index": 40,
+          "name": "REFR_URLHOST",
+          "comment": null
+        },
+        "REFR_URLPORT": {
+          "type": "NUMBER",
+          "index": 41,
+          "name": "REFR_URLPORT",
+          "comment": null
+        },
+        "REFR_URLPATH": {
+          "type": "NUMBER",
+          "index": 42,
+          "name": "REFR_URLPATH",
+          "comment": null
+        },
+        "REFR_URLQUERY": {
+          "type": "NUMBER",
+          "index": 43,
+          "name": "REFR_URLQUERY",
+          "comment": null
+        },
+        "REFR_URLFRAGMENT": {
+          "type": "TEXT",
+          "index": 44,
+          "name": "REFR_URLFRAGMENT",
+          "comment": null
+        },
+        "REFR_MEDIUM": {
+          "type": "TEXT",
+          "index": 45,
+          "name": "REFR_MEDIUM",
+          "comment": null
+        },
+        "REFR_SOURCE": {
+          "type": "TEXT",
+          "index": 46,
+          "name": "REFR_SOURCE",
+          "comment": null
+        },
+        "REFR_TERM": {
+          "type": "TEXT",
+          "index": 47,
+          "name": "REFR_TERM",
+          "comment": null
+        },
+        "MKT_MEDIUM": {
+          "type": "NUMBER",
+          "index": 48,
+          "name": "MKT_MEDIUM",
+          "comment": null
+        },
+        "MKT_SOURCE": {
+          "type": "NUMBER",
+          "index": 49,
+          "name": "MKT_SOURCE",
+          "comment": null
+        },
+        "MKT_TERM": {
+          "type": "TEXT",
+          "index": 50,
+          "name": "MKT_TERM",
+          "comment": null
+        },
+        "MKT_CONTENT": {
+          "type": "TEXT",
+          "index": 51,
+          "name": "MKT_CONTENT",
+          "comment": null
+        },
+        "MKT_CAMPAIGN": {
+          "type": "NUMBER",
+          "index": 52,
+          "name": "MKT_CAMPAIGN",
+          "comment": null
+        },
+        "SE_CATEGORY": {
+          "type": "NUMBER",
+          "index": 53,
+          "name": "SE_CATEGORY",
+          "comment": null
+        },
+        "SE_ACTION": {
+          "type": "NUMBER",
+          "index": 54,
+          "name": "SE_ACTION",
+          "comment": null
+        },
+        "SE_LABEL": {
+          "type": "TEXT",
+          "index": 55,
+          "name": "SE_LABEL",
+          "comment": null
+        },
+        "SE_PROPERTY": {
+          "type": "TEXT",
+          "index": 56,
+          "name": "SE_PROPERTY",
+          "comment": null
+        },
+        "SE_VALUE": {
+          "type": "FLOAT",
+          "index": 57,
+          "name": "SE_VALUE",
+          "comment": null
+        },
+        "TR_ORDERID": {
+          "type": "TEXT",
+          "index": 58,
+          "name": "TR_ORDERID",
+          "comment": null
+        },
+        "TR_AFFILIATION": {
+          "type": "TEXT",
+          "index": 59,
+          "name": "TR_AFFILIATION",
+          "comment": null
+        },
+        "TR_TOTAL": {
+          "type": "FLOAT",
+          "index": 60,
+          "name": "TR_TOTAL",
+          "comment": null
+        },
+        "TR_TAX": {
+          "type": "FLOAT",
+          "index": 61,
+          "name": "TR_TAX",
+          "comment": null
+        },
+        "TR_SHIPPING": {
+          "type": "FLOAT",
+          "index": 62,
+          "name": "TR_SHIPPING",
+          "comment": null
+        },
+        "TR_CITY": {
+          "type": "TEXT",
+          "index": 63,
+          "name": "TR_CITY",
+          "comment": null
+        },
+        "TR_STATE": {
+          "type": "TEXT",
+          "index": 64,
+          "name": "TR_STATE",
+          "comment": null
+        },
+        "TR_COUNTRY": {
+          "type": "TEXT",
+          "index": 65,
+          "name": "TR_COUNTRY",
+          "comment": null
+        },
+        "TI_ORDERID": {
+          "type": "TEXT",
+          "index": 66,
+          "name": "TI_ORDERID",
+          "comment": null
+        },
+        "TI_SKU": {
+          "type": "TEXT",
+          "index": 67,
+          "name": "TI_SKU",
+          "comment": null
+        },
+        "TI_NAME": {
+          "type": "TEXT",
+          "index": 68,
+          "name": "TI_NAME",
+          "comment": null
+        },
+        "TI_CATEGORY": {
+          "type": "TEXT",
+          "index": 69,
+          "name": "TI_CATEGORY",
+          "comment": null
+        },
+        "TI_PRICE": {
+          "type": "FLOAT",
+          "index": 70,
+          "name": "TI_PRICE",
+          "comment": null
+        },
+        "TI_QUANTITY": {
+          "type": "NUMBER",
+          "index": 71,
+          "name": "TI_QUANTITY",
+          "comment": null
+        },
+        "PP_XOFFSET_MIN": {
+          "type": "NUMBER",
+          "index": 72,
+          "name": "PP_XOFFSET_MIN",
+          "comment": null
+        },
+        "PP_XOFFSET_MAX": {
+          "type": "NUMBER",
+          "index": 73,
+          "name": "PP_XOFFSET_MAX",
+          "comment": null
+        },
+        "PP_YOFFSET_MIN": {
+          "type": "NUMBER",
+          "index": 74,
+          "name": "PP_YOFFSET_MIN",
+          "comment": null
+        },
+        "PP_YOFFSET_MAX": {
+          "type": "NUMBER",
+          "index": 75,
+          "name": "PP_YOFFSET_MAX",
+          "comment": null
+        },
+        "USERAGENT": {
+          "type": "TEXT",
+          "index": 76,
+          "name": "USERAGENT",
+          "comment": null
+        },
+        "BR_NAME": {
+          "type": "TEXT",
+          "index": 77,
+          "name": "BR_NAME",
+          "comment": null
+        },
+        "BR_FAMILY": {
+          "type": "TEXT",
+          "index": 78,
+          "name": "BR_FAMILY",
+          "comment": null
+        },
+        "BR_VERSION": {
+          "type": "TEXT",
+          "index": 79,
+          "name": "BR_VERSION",
+          "comment": null
+        },
+        "BR_TYPE": {
+          "type": "TEXT",
+          "index": 80,
+          "name": "BR_TYPE",
+          "comment": null
+        },
+        "BR_RENDERENGINE": {
+          "type": "TEXT",
+          "index": 81,
+          "name": "BR_RENDERENGINE",
+          "comment": null
+        },
+        "BR_LANG": {
+          "type": "TEXT",
+          "index": 82,
+          "name": "BR_LANG",
+          "comment": null
+        },
+        "BR_FEATURES_PDF": {
+          "type": "NUMBER",
+          "index": 83,
+          "name": "BR_FEATURES_PDF",
+          "comment": null
+        },
+        "BR_FEATURES_FLASH": {
+          "type": "NUMBER",
+          "index": 84,
+          "name": "BR_FEATURES_FLASH",
+          "comment": null
+        },
+        "BR_FEATURES_JAVA": {
+          "type": "NUMBER",
+          "index": 85,
+          "name": "BR_FEATURES_JAVA",
+          "comment": null
+        },
+        "BR_FEATURES_DIRECTOR": {
+          "type": "NUMBER",
+          "index": 86,
+          "name": "BR_FEATURES_DIRECTOR",
+          "comment": null
+        },
+        "BR_FEATURES_QUICKTIME": {
+          "type": "NUMBER",
+          "index": 87,
+          "name": "BR_FEATURES_QUICKTIME",
+          "comment": null
+        },
+        "BR_FEATURES_REALPLAYER": {
+          "type": "NUMBER",
+          "index": 88,
+          "name": "BR_FEATURES_REALPLAYER",
+          "comment": null
+        },
+        "BR_FEATURES_WINDOWSMEDIA": {
+          "type": "NUMBER",
+          "index": 89,
+          "name": "BR_FEATURES_WINDOWSMEDIA",
+          "comment": null
+        },
+        "BR_FEATURES_GEARS": {
+          "type": "NUMBER",
+          "index": 90,
+          "name": "BR_FEATURES_GEARS",
+          "comment": null
+        },
+        "BR_FEATURES_SILVERLIGHT": {
+          "type": "NUMBER",
+          "index": 91,
+          "name": "BR_FEATURES_SILVERLIGHT",
+          "comment": null
+        },
+        "BR_COOKIES": {
+          "type": "BOOLEAN",
+          "index": 92,
+          "name": "BR_COOKIES",
+          "comment": null
+        },
+        "BR_COLORDEPTH": {
+          "type": "TEXT",
+          "index": 93,
+          "name": "BR_COLORDEPTH",
+          "comment": null
+        },
+        "BR_VIEWWIDTH": {
+          "type": "NUMBER",
+          "index": 94,
+          "name": "BR_VIEWWIDTH",
+          "comment": null
+        },
+        "BR_VIEWHEIGHT": {
+          "type": "NUMBER",
+          "index": 95,
+          "name": "BR_VIEWHEIGHT",
+          "comment": null
+        },
+        "OS_NAME": {
+          "type": "TEXT",
+          "index": 96,
+          "name": "OS_NAME",
+          "comment": null
+        },
+        "OS_FAMILY": {
+          "type": "TEXT",
+          "index": 97,
+          "name": "OS_FAMILY",
+          "comment": null
+        },
+        "OS_MANUFACTURER": {
+          "type": "TEXT",
+          "index": 98,
+          "name": "OS_MANUFACTURER",
+          "comment": null
+        },
+        "OS_TIMEZONE": {
+          "type": "TEXT",
+          "index": 99,
+          "name": "OS_TIMEZONE",
+          "comment": null
+        },
+        "DVCE_TYPE": {
+          "type": "TEXT",
+          "index": 100,
+          "name": "DVCE_TYPE",
+          "comment": null
+        },
+        "DVCE_ISMOBILE": {
+          "type": "BOOLEAN",
+          "index": 101,
+          "name": "DVCE_ISMOBILE",
+          "comment": null
+        },
+        "DVCE_SCREENWIDTH": {
+          "type": "NUMBER",
+          "index": 102,
+          "name": "DVCE_SCREENWIDTH",
+          "comment": null
+        },
+        "DVCE_SCREENHEIGHT": {
+          "type": "NUMBER",
+          "index": 103,
+          "name": "DVCE_SCREENHEIGHT",
+          "comment": null
+        },
+        "DOC_CHARSET": {
+          "type": "TEXT",
+          "index": 104,
+          "name": "DOC_CHARSET",
+          "comment": null
+        },
+        "DOC_WIDTH": {
+          "type": "NUMBER",
+          "index": 105,
+          "name": "DOC_WIDTH",
+          "comment": null
+        },
+        "DOC_HEIGHT": {
+          "type": "NUMBER",
+          "index": 106,
+          "name": "DOC_HEIGHT",
+          "comment": null
+        },
+        "TR_CURRENCY": {
+          "type": "TEXT",
+          "index": 107,
+          "name": "TR_CURRENCY",
+          "comment": null
+        },
+        "TR_TOTAL_BASE": {
+          "type": "FLOAT",
+          "index": 108,
+          "name": "TR_TOTAL_BASE",
+          "comment": null
+        },
+        "TR_TAX_BASE": {
+          "type": "FLOAT",
+          "index": 109,
+          "name": "TR_TAX_BASE",
+          "comment": null
+        },
+        "TR_SHIPPING_BASE": {
+          "type": "FLOAT",
+          "index": 110,
+          "name": "TR_SHIPPING_BASE",
+          "comment": null
+        },
+        "TI_CURRENCY": {
+          "type": "TEXT",
+          "index": 111,
+          "name": "TI_CURRENCY",
+          "comment": null
+        },
+        "TI_PRICE_BASE": {
+          "type": "FLOAT",
+          "index": 112,
+          "name": "TI_PRICE_BASE",
+          "comment": null
+        },
+        "BASE_CURRENCY": {
+          "type": "TEXT",
+          "index": 113,
+          "name": "BASE_CURRENCY",
+          "comment": null
+        },
+        "GEO_TIMEZONE": {
+          "type": "NUMBER",
+          "index": 114,
+          "name": "GEO_TIMEZONE",
+          "comment": null
+        },
+        "MKT_CLICKID": {
+          "type": "NUMBER",
+          "index": 115,
+          "name": "MKT_CLICKID",
+          "comment": null
+        },
+        "MKT_NETWORK": {
+          "type": "NUMBER",
+          "index": 116,
+          "name": "MKT_NETWORK",
+          "comment": null
+        },
+        "ETL_TAGS": {
+          "type": "TEXT",
+          "index": 117,
+          "name": "ETL_TAGS",
+          "comment": null
+        },
+        "DVCE_SENT_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 118,
+          "name": "DVCE_SENT_TSTAMP",
+          "comment": null
+        },
+        "REFR_DOMAIN_USERID": {
+          "type": "NUMBER",
+          "index": 119,
+          "name": "REFR_DOMAIN_USERID",
+          "comment": null
+        },
+        "REFR_DVCE_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 120,
+          "name": "REFR_DVCE_TSTAMP",
+          "comment": null
+        },
+        "DOMAIN_SESSIONID": {
+          "type": "TEXT",
+          "index": 121,
+          "name": "DOMAIN_SESSIONID",
+          "comment": null
+        },
+        "DERIVED_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 122,
+          "name": "DERIVED_TSTAMP",
+          "comment": null
+        },
+        "EVENT_VENDOR": {
+          "type": "TEXT",
+          "index": 123,
+          "name": "EVENT_VENDOR",
+          "comment": null
+        },
+        "EVENT_NAME": {
+          "type": "TEXT",
+          "index": 124,
+          "name": "EVENT_NAME",
+          "comment": null
+        },
+        "EVENT_FORMAT": {
+          "type": "TEXT",
+          "index": 125,
+          "name": "EVENT_FORMAT",
+          "comment": null
+        },
+        "EVENT_VERSION": {
+          "type": "TEXT",
+          "index": 126,
+          "name": "EVENT_VERSION",
+          "comment": null
+        },
+        "EVENT_FINGERPRINT": {
+          "type": "TEXT",
+          "index": 127,
+          "name": "EVENT_FINGERPRINT",
+          "comment": null
+        },
+        "TRUE_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 128,
+          "name": "TRUE_TSTAMP",
+          "comment": null
+        },
+        "LOAD_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 129,
+          "name": "LOAD_TSTAMP",
+          "comment": null
+        },
+        "CONTEXTS_NL_BASJES_YAUAA_CONTEXT_1": {
+          "type": "VARIANT",
+          "index": 130,
+          "name": "CONTEXTS_NL_BASJES_YAUAA_CONTEXT_1",
+          "comment": null
+        },
+        "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_AGENT_CLASSIFICATION_1": {
+          "type": "VARIANT",
+          "index": 131,
+          "name": "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_AGENT_CLASSIFICATION_1",
+          "comment": null
+        },
+        "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_BOT_DETECTION_1": {
+          "type": "VARIANT",
+          "index": 132,
+          "name": "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_BOT_DETECTION_1",
+          "comment": null
+        },
+        "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_UTM_REFERRER_1": {
+          "type": "VARIANT",
+          "index": 133,
+          "name": "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_UTM_REFERRER_1",
+          "comment": null
+        },
+        "IS_BOT": {
+          "type": "BOOLEAN",
+          "index": 134,
+          "name": "IS_BOT",
+          "comment": null
+        },
+        "RAW_SOURCE_CHANNEL": {
+          "type": "TEXT",
+          "index": 135,
+          "name": "RAW_SOURCE_CHANNEL",
+          "comment": null
+        },
+        "AGENT_NAME": {
+          "type": "TEXT",
+          "index": 136,
+          "name": "AGENT_NAME",
+          "comment": null
+        },
+        "AGENT_OPERATOR": {
+          "type": "TEXT",
+          "index": 137,
+          "name": "AGENT_OPERATOR",
+          "comment": null
+        },
+        "AGENT_PURPOSE": {
+          "type": "TEXT",
+          "index": 138,
+          "name": "AGENT_PURPOSE",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 1455,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:07UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 354816,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "model.snowplow_agent_analytics.base_events"
+    },
+    "model.snowplow_agent_analytics.base_events_this_run": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "BASE_EVENTS_THIS_RUN",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "APP_ID": {
+          "type": "TEXT",
+          "index": 1,
+          "name": "APP_ID",
+          "comment": null
+        },
+        "PLATFORM": {
+          "type": "TEXT",
+          "index": 2,
+          "name": "PLATFORM",
+          "comment": null
+        },
+        "ETL_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 3,
+          "name": "ETL_TSTAMP",
+          "comment": null
+        },
+        "COLLECTOR_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 4,
+          "name": "COLLECTOR_TSTAMP",
+          "comment": null
+        },
+        "DVCE_CREATED_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 5,
+          "name": "DVCE_CREATED_TSTAMP",
+          "comment": null
+        },
+        "EVENT": {
+          "type": "TEXT",
+          "index": 6,
+          "name": "EVENT",
+          "comment": null
+        },
+        "EVENT_ID": {
+          "type": "TEXT",
+          "index": 7,
+          "name": "EVENT_ID",
+          "comment": null
+        },
+        "TXN_ID": {
+          "type": "NUMBER",
+          "index": 8,
+          "name": "TXN_ID",
+          "comment": null
+        },
+        "NAME_TRACKER": {
+          "type": "TEXT",
+          "index": 9,
+          "name": "NAME_TRACKER",
+          "comment": null
+        },
+        "V_TRACKER": {
+          "type": "TEXT",
+          "index": 10,
+          "name": "V_TRACKER",
+          "comment": null
+        },
+        "V_COLLECTOR": {
+          "type": "TEXT",
+          "index": 11,
+          "name": "V_COLLECTOR",
+          "comment": null
+        },
+        "V_ETL": {
+          "type": "TEXT",
+          "index": 12,
+          "name": "V_ETL",
+          "comment": null
+        },
+        "USER_ID": {
+          "type": "TEXT",
+          "index": 13,
+          "name": "USER_ID",
+          "comment": null
+        },
+        "USER_IPADDRESS": {
+          "type": "NUMBER",
+          "index": 14,
+          "name": "USER_IPADDRESS",
+          "comment": null
+        },
+        "USER_FINGERPRINT": {
+          "type": "TEXT",
+          "index": 15,
+          "name": "USER_FINGERPRINT",
+          "comment": null
+        },
+        "DOMAIN_USERID": {
+          "type": "NUMBER",
+          "index": 16,
+          "name": "DOMAIN_USERID",
+          "comment": null
+        },
+        "DOMAIN_SESSIONIDX": {
+          "type": "NUMBER",
+          "index": 17,
+          "name": "DOMAIN_SESSIONIDX",
+          "comment": null
+        },
+        "NETWORK_USERID": {
+          "type": "NUMBER",
+          "index": 18,
+          "name": "NETWORK_USERID",
+          "comment": null
+        },
+        "GEO_COUNTRY": {
+          "type": "TEXT",
+          "index": 19,
+          "name": "GEO_COUNTRY",
+          "comment": null
+        },
+        "GEO_REGION": {
+          "type": "NUMBER",
+          "index": 20,
+          "name": "GEO_REGION",
+          "comment": null
+        },
+        "GEO_CITY": {
+          "type": "NUMBER",
+          "index": 21,
+          "name": "GEO_CITY",
+          "comment": null
+        },
+        "GEO_ZIPCODE": {
+          "type": "NUMBER",
+          "index": 22,
+          "name": "GEO_ZIPCODE",
+          "comment": null
+        },
+        "GEO_LATITUDE": {
+          "type": "NUMBER",
+          "index": 23,
+          "name": "GEO_LATITUDE",
+          "comment": null
+        },
+        "GEO_LONGITUDE": {
+          "type": "NUMBER",
+          "index": 24,
+          "name": "GEO_LONGITUDE",
+          "comment": null
+        },
+        "GEO_REGION_NAME": {
+          "type": "NUMBER",
+          "index": 25,
+          "name": "GEO_REGION_NAME",
+          "comment": null
+        },
+        "IP_ISP": {
+          "type": "TEXT",
+          "index": 26,
+          "name": "IP_ISP",
+          "comment": null
+        },
+        "IP_ORGANIZATION": {
+          "type": "TEXT",
+          "index": 27,
+          "name": "IP_ORGANIZATION",
+          "comment": null
+        },
+        "IP_DOMAIN": {
+          "type": "TEXT",
+          "index": 28,
+          "name": "IP_DOMAIN",
+          "comment": null
+        },
+        "IP_NETSPEED": {
+          "type": "TEXT",
+          "index": 29,
+          "name": "IP_NETSPEED",
+          "comment": null
+        },
+        "PAGE_URL": {
+          "type": "TEXT",
+          "index": 30,
+          "name": "PAGE_URL",
+          "comment": null
+        },
+        "PAGE_TITLE": {
+          "type": "TEXT",
+          "index": 31,
+          "name": "PAGE_TITLE",
+          "comment": null
+        },
+        "PAGE_REFERRER": {
+          "type": "NUMBER",
+          "index": 32,
+          "name": "PAGE_REFERRER",
+          "comment": null
+        },
+        "PAGE_URLSCHEME": {
+          "type": "TEXT",
+          "index": 33,
+          "name": "PAGE_URLSCHEME",
+          "comment": null
+        },
+        "PAGE_URLHOST": {
+          "type": "TEXT",
+          "index": 34,
+          "name": "PAGE_URLHOST",
+          "comment": null
+        },
+        "PAGE_URLPORT": {
+          "type": "NUMBER",
+          "index": 35,
+          "name": "PAGE_URLPORT",
+          "comment": null
+        },
+        "PAGE_URLPATH": {
+          "type": "TEXT",
+          "index": 36,
+          "name": "PAGE_URLPATH",
+          "comment": null
+        },
+        "PAGE_URLQUERY": {
+          "type": "NUMBER",
+          "index": 37,
+          "name": "PAGE_URLQUERY",
+          "comment": null
+        },
+        "PAGE_URLFRAGMENT": {
+          "type": "TEXT",
+          "index": 38,
+          "name": "PAGE_URLFRAGMENT",
+          "comment": null
+        },
+        "REFR_URLSCHEME": {
+          "type": "NUMBER",
+          "index": 39,
+          "name": "REFR_URLSCHEME",
+          "comment": null
+        },
+        "REFR_URLHOST": {
+          "type": "NUMBER",
+          "index": 40,
+          "name": "REFR_URLHOST",
+          "comment": null
+        },
+        "REFR_URLPORT": {
+          "type": "NUMBER",
+          "index": 41,
+          "name": "REFR_URLPORT",
+          "comment": null
+        },
+        "REFR_URLPATH": {
+          "type": "NUMBER",
+          "index": 42,
+          "name": "REFR_URLPATH",
+          "comment": null
+        },
+        "REFR_URLQUERY": {
+          "type": "NUMBER",
+          "index": 43,
+          "name": "REFR_URLQUERY",
+          "comment": null
+        },
+        "REFR_URLFRAGMENT": {
+          "type": "TEXT",
+          "index": 44,
+          "name": "REFR_URLFRAGMENT",
+          "comment": null
+        },
+        "REFR_MEDIUM": {
+          "type": "TEXT",
+          "index": 45,
+          "name": "REFR_MEDIUM",
+          "comment": null
+        },
+        "REFR_SOURCE": {
+          "type": "TEXT",
+          "index": 46,
+          "name": "REFR_SOURCE",
+          "comment": null
+        },
+        "REFR_TERM": {
+          "type": "TEXT",
+          "index": 47,
+          "name": "REFR_TERM",
+          "comment": null
+        },
+        "MKT_MEDIUM": {
+          "type": "NUMBER",
+          "index": 48,
+          "name": "MKT_MEDIUM",
+          "comment": null
+        },
+        "MKT_SOURCE": {
+          "type": "NUMBER",
+          "index": 49,
+          "name": "MKT_SOURCE",
+          "comment": null
+        },
+        "MKT_TERM": {
+          "type": "TEXT",
+          "index": 50,
+          "name": "MKT_TERM",
+          "comment": null
+        },
+        "MKT_CONTENT": {
+          "type": "TEXT",
+          "index": 51,
+          "name": "MKT_CONTENT",
+          "comment": null
+        },
+        "MKT_CAMPAIGN": {
+          "type": "NUMBER",
+          "index": 52,
+          "name": "MKT_CAMPAIGN",
+          "comment": null
+        },
+        "SE_CATEGORY": {
+          "type": "NUMBER",
+          "index": 53,
+          "name": "SE_CATEGORY",
+          "comment": null
+        },
+        "SE_ACTION": {
+          "type": "NUMBER",
+          "index": 54,
+          "name": "SE_ACTION",
+          "comment": null
+        },
+        "SE_LABEL": {
+          "type": "TEXT",
+          "index": 55,
+          "name": "SE_LABEL",
+          "comment": null
+        },
+        "SE_PROPERTY": {
+          "type": "TEXT",
+          "index": 56,
+          "name": "SE_PROPERTY",
+          "comment": null
+        },
+        "SE_VALUE": {
+          "type": "FLOAT",
+          "index": 57,
+          "name": "SE_VALUE",
+          "comment": null
+        },
+        "TR_ORDERID": {
+          "type": "TEXT",
+          "index": 58,
+          "name": "TR_ORDERID",
+          "comment": null
+        },
+        "TR_AFFILIATION": {
+          "type": "TEXT",
+          "index": 59,
+          "name": "TR_AFFILIATION",
+          "comment": null
+        },
+        "TR_TOTAL": {
+          "type": "FLOAT",
+          "index": 60,
+          "name": "TR_TOTAL",
+          "comment": null
+        },
+        "TR_TAX": {
+          "type": "FLOAT",
+          "index": 61,
+          "name": "TR_TAX",
+          "comment": null
+        },
+        "TR_SHIPPING": {
+          "type": "FLOAT",
+          "index": 62,
+          "name": "TR_SHIPPING",
+          "comment": null
+        },
+        "TR_CITY": {
+          "type": "TEXT",
+          "index": 63,
+          "name": "TR_CITY",
+          "comment": null
+        },
+        "TR_STATE": {
+          "type": "TEXT",
+          "index": 64,
+          "name": "TR_STATE",
+          "comment": null
+        },
+        "TR_COUNTRY": {
+          "type": "TEXT",
+          "index": 65,
+          "name": "TR_COUNTRY",
+          "comment": null
+        },
+        "TI_ORDERID": {
+          "type": "TEXT",
+          "index": 66,
+          "name": "TI_ORDERID",
+          "comment": null
+        },
+        "TI_SKU": {
+          "type": "TEXT",
+          "index": 67,
+          "name": "TI_SKU",
+          "comment": null
+        },
+        "TI_NAME": {
+          "type": "TEXT",
+          "index": 68,
+          "name": "TI_NAME",
+          "comment": null
+        },
+        "TI_CATEGORY": {
+          "type": "TEXT",
+          "index": 69,
+          "name": "TI_CATEGORY",
+          "comment": null
+        },
+        "TI_PRICE": {
+          "type": "FLOAT",
+          "index": 70,
+          "name": "TI_PRICE",
+          "comment": null
+        },
+        "TI_QUANTITY": {
+          "type": "NUMBER",
+          "index": 71,
+          "name": "TI_QUANTITY",
+          "comment": null
+        },
+        "PP_XOFFSET_MIN": {
+          "type": "NUMBER",
+          "index": 72,
+          "name": "PP_XOFFSET_MIN",
+          "comment": null
+        },
+        "PP_XOFFSET_MAX": {
+          "type": "NUMBER",
+          "index": 73,
+          "name": "PP_XOFFSET_MAX",
+          "comment": null
+        },
+        "PP_YOFFSET_MIN": {
+          "type": "NUMBER",
+          "index": 74,
+          "name": "PP_YOFFSET_MIN",
+          "comment": null
+        },
+        "PP_YOFFSET_MAX": {
+          "type": "NUMBER",
+          "index": 75,
+          "name": "PP_YOFFSET_MAX",
+          "comment": null
+        },
+        "USERAGENT": {
+          "type": "TEXT",
+          "index": 76,
+          "name": "USERAGENT",
+          "comment": null
+        },
+        "BR_NAME": {
+          "type": "TEXT",
+          "index": 77,
+          "name": "BR_NAME",
+          "comment": null
+        },
+        "BR_FAMILY": {
+          "type": "TEXT",
+          "index": 78,
+          "name": "BR_FAMILY",
+          "comment": null
+        },
+        "BR_VERSION": {
+          "type": "TEXT",
+          "index": 79,
+          "name": "BR_VERSION",
+          "comment": null
+        },
+        "BR_TYPE": {
+          "type": "TEXT",
+          "index": 80,
+          "name": "BR_TYPE",
+          "comment": null
+        },
+        "BR_RENDERENGINE": {
+          "type": "TEXT",
+          "index": 81,
+          "name": "BR_RENDERENGINE",
+          "comment": null
+        },
+        "BR_LANG": {
+          "type": "TEXT",
+          "index": 82,
+          "name": "BR_LANG",
+          "comment": null
+        },
+        "BR_FEATURES_PDF": {
+          "type": "NUMBER",
+          "index": 83,
+          "name": "BR_FEATURES_PDF",
+          "comment": null
+        },
+        "BR_FEATURES_FLASH": {
+          "type": "NUMBER",
+          "index": 84,
+          "name": "BR_FEATURES_FLASH",
+          "comment": null
+        },
+        "BR_FEATURES_JAVA": {
+          "type": "NUMBER",
+          "index": 85,
+          "name": "BR_FEATURES_JAVA",
+          "comment": null
+        },
+        "BR_FEATURES_DIRECTOR": {
+          "type": "NUMBER",
+          "index": 86,
+          "name": "BR_FEATURES_DIRECTOR",
+          "comment": null
+        },
+        "BR_FEATURES_QUICKTIME": {
+          "type": "NUMBER",
+          "index": 87,
+          "name": "BR_FEATURES_QUICKTIME",
+          "comment": null
+        },
+        "BR_FEATURES_REALPLAYER": {
+          "type": "NUMBER",
+          "index": 88,
+          "name": "BR_FEATURES_REALPLAYER",
+          "comment": null
+        },
+        "BR_FEATURES_WINDOWSMEDIA": {
+          "type": "NUMBER",
+          "index": 89,
+          "name": "BR_FEATURES_WINDOWSMEDIA",
+          "comment": null
+        },
+        "BR_FEATURES_GEARS": {
+          "type": "NUMBER",
+          "index": 90,
+          "name": "BR_FEATURES_GEARS",
+          "comment": null
+        },
+        "BR_FEATURES_SILVERLIGHT": {
+          "type": "NUMBER",
+          "index": 91,
+          "name": "BR_FEATURES_SILVERLIGHT",
+          "comment": null
+        },
+        "BR_COOKIES": {
+          "type": "BOOLEAN",
+          "index": 92,
+          "name": "BR_COOKIES",
+          "comment": null
+        },
+        "BR_COLORDEPTH": {
+          "type": "TEXT",
+          "index": 93,
+          "name": "BR_COLORDEPTH",
+          "comment": null
+        },
+        "BR_VIEWWIDTH": {
+          "type": "NUMBER",
+          "index": 94,
+          "name": "BR_VIEWWIDTH",
+          "comment": null
+        },
+        "BR_VIEWHEIGHT": {
+          "type": "NUMBER",
+          "index": 95,
+          "name": "BR_VIEWHEIGHT",
+          "comment": null
+        },
+        "OS_NAME": {
+          "type": "TEXT",
+          "index": 96,
+          "name": "OS_NAME",
+          "comment": null
+        },
+        "OS_FAMILY": {
+          "type": "TEXT",
+          "index": 97,
+          "name": "OS_FAMILY",
+          "comment": null
+        },
+        "OS_MANUFACTURER": {
+          "type": "TEXT",
+          "index": 98,
+          "name": "OS_MANUFACTURER",
+          "comment": null
+        },
+        "OS_TIMEZONE": {
+          "type": "TEXT",
+          "index": 99,
+          "name": "OS_TIMEZONE",
+          "comment": null
+        },
+        "DVCE_TYPE": {
+          "type": "TEXT",
+          "index": 100,
+          "name": "DVCE_TYPE",
+          "comment": null
+        },
+        "DVCE_ISMOBILE": {
+          "type": "BOOLEAN",
+          "index": 101,
+          "name": "DVCE_ISMOBILE",
+          "comment": null
+        },
+        "DVCE_SCREENWIDTH": {
+          "type": "NUMBER",
+          "index": 102,
+          "name": "DVCE_SCREENWIDTH",
+          "comment": null
+        },
+        "DVCE_SCREENHEIGHT": {
+          "type": "NUMBER",
+          "index": 103,
+          "name": "DVCE_SCREENHEIGHT",
+          "comment": null
+        },
+        "DOC_CHARSET": {
+          "type": "TEXT",
+          "index": 104,
+          "name": "DOC_CHARSET",
+          "comment": null
+        },
+        "DOC_WIDTH": {
+          "type": "NUMBER",
+          "index": 105,
+          "name": "DOC_WIDTH",
+          "comment": null
+        },
+        "DOC_HEIGHT": {
+          "type": "NUMBER",
+          "index": 106,
+          "name": "DOC_HEIGHT",
+          "comment": null
+        },
+        "TR_CURRENCY": {
+          "type": "TEXT",
+          "index": 107,
+          "name": "TR_CURRENCY",
+          "comment": null
+        },
+        "TR_TOTAL_BASE": {
+          "type": "FLOAT",
+          "index": 108,
+          "name": "TR_TOTAL_BASE",
+          "comment": null
+        },
+        "TR_TAX_BASE": {
+          "type": "FLOAT",
+          "index": 109,
+          "name": "TR_TAX_BASE",
+          "comment": null
+        },
+        "TR_SHIPPING_BASE": {
+          "type": "FLOAT",
+          "index": 110,
+          "name": "TR_SHIPPING_BASE",
+          "comment": null
+        },
+        "TI_CURRENCY": {
+          "type": "TEXT",
+          "index": 111,
+          "name": "TI_CURRENCY",
+          "comment": null
+        },
+        "TI_PRICE_BASE": {
+          "type": "FLOAT",
+          "index": 112,
+          "name": "TI_PRICE_BASE",
+          "comment": null
+        },
+        "BASE_CURRENCY": {
+          "type": "TEXT",
+          "index": 113,
+          "name": "BASE_CURRENCY",
+          "comment": null
+        },
+        "GEO_TIMEZONE": {
+          "type": "NUMBER",
+          "index": 114,
+          "name": "GEO_TIMEZONE",
+          "comment": null
+        },
+        "MKT_CLICKID": {
+          "type": "NUMBER",
+          "index": 115,
+          "name": "MKT_CLICKID",
+          "comment": null
+        },
+        "MKT_NETWORK": {
+          "type": "NUMBER",
+          "index": 116,
+          "name": "MKT_NETWORK",
+          "comment": null
+        },
+        "ETL_TAGS": {
+          "type": "TEXT",
+          "index": 117,
+          "name": "ETL_TAGS",
+          "comment": null
+        },
+        "DVCE_SENT_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 118,
+          "name": "DVCE_SENT_TSTAMP",
+          "comment": null
+        },
+        "REFR_DOMAIN_USERID": {
+          "type": "NUMBER",
+          "index": 119,
+          "name": "REFR_DOMAIN_USERID",
+          "comment": null
+        },
+        "REFR_DVCE_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 120,
+          "name": "REFR_DVCE_TSTAMP",
+          "comment": null
+        },
+        "DOMAIN_SESSIONID": {
+          "type": "TEXT",
+          "index": 121,
+          "name": "DOMAIN_SESSIONID",
+          "comment": null
+        },
+        "DERIVED_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 122,
+          "name": "DERIVED_TSTAMP",
+          "comment": null
+        },
+        "EVENT_VENDOR": {
+          "type": "TEXT",
+          "index": 123,
+          "name": "EVENT_VENDOR",
+          "comment": null
+        },
+        "EVENT_NAME": {
+          "type": "TEXT",
+          "index": 124,
+          "name": "EVENT_NAME",
+          "comment": null
+        },
+        "EVENT_FORMAT": {
+          "type": "TEXT",
+          "index": 125,
+          "name": "EVENT_FORMAT",
+          "comment": null
+        },
+        "EVENT_VERSION": {
+          "type": "TEXT",
+          "index": 126,
+          "name": "EVENT_VERSION",
+          "comment": null
+        },
+        "EVENT_FINGERPRINT": {
+          "type": "TEXT",
+          "index": 127,
+          "name": "EVENT_FINGERPRINT",
+          "comment": null
+        },
+        "TRUE_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 128,
+          "name": "TRUE_TSTAMP",
+          "comment": null
+        },
+        "LOAD_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 129,
+          "name": "LOAD_TSTAMP",
+          "comment": null
+        },
+        "CONTEXTS_NL_BASJES_YAUAA_CONTEXT_1": {
+          "type": "VARIANT",
+          "index": 130,
+          "name": "CONTEXTS_NL_BASJES_YAUAA_CONTEXT_1",
+          "comment": null
+        },
+        "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_AGENT_CLASSIFICATION_1": {
+          "type": "VARIANT",
+          "index": 131,
+          "name": "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_AGENT_CLASSIFICATION_1",
+          "comment": null
+        },
+        "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_BOT_DETECTION_1": {
+          "type": "VARIANT",
+          "index": 132,
+          "name": "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_BOT_DETECTION_1",
+          "comment": null
+        },
+        "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_UTM_REFERRER_1": {
+          "type": "VARIANT",
+          "index": 133,
+          "name": "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_UTM_REFERRER_1",
+          "comment": null
+        },
+        "IS_BOT": {
+          "type": "BOOLEAN",
+          "index": 134,
+          "name": "IS_BOT",
+          "comment": null
+        },
+        "RAW_SOURCE_CHANNEL": {
+          "type": "TEXT",
+          "index": 135,
+          "name": "RAW_SOURCE_CHANNEL",
+          "comment": null
+        },
+        "AGENT_NAME": {
+          "type": "TEXT",
+          "index": 136,
+          "name": "AGENT_NAME",
+          "comment": null
+        },
+        "AGENT_OPERATOR": {
+          "type": "TEXT",
+          "index": 137,
+          "name": "AGENT_OPERATOR",
+          "comment": null
+        },
+        "AGENT_PURPOSE": {
+          "type": "TEXT",
+          "index": 138,
+          "name": "AGENT_PURPOSE",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 1455,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:07UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 354816,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "model.snowplow_agent_analytics.base_events_this_run"
+    },
+    "model.snowplow_agent_analytics.human_pageviews_daily": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "HUMAN_PAGEVIEWS_DAILY",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "EVENT_DATE": {
+          "type": "DATE",
+          "index": 1,
+          "name": "EVENT_DATE",
+          "comment": null
+        },
+        "PAGE_URL_HOST_PATH": {
+          "type": "TEXT",
+          "index": 2,
+          "name": "PAGE_URL_HOST_PATH",
+          "comment": null
+        },
+        "HUMAN_PAGEVIEWS": {
+          "type": "NUMBER",
+          "index": 3,
+          "name": "HUMAN_PAGEVIEWS",
+          "comment": null
+        },
+        "FIRST_SEEN_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 4,
+          "name": "FIRST_SEEN_TSTAMP",
+          "comment": null
+        },
+        "LAST_SEEN_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 5,
+          "name": "LAST_SEEN_TSTAMP",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 343,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "clustering_key": {
+          "id": "clustering_key",
+          "label": "Clustering Key",
+          "value": "LINEAR(page_url_host_path)",
+          "include": true,
+          "description": "The key used to cluster this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:07UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 8192,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "model.snowplow_agent_analytics.human_pageviews_daily"
+    },
+    "model.snowplow_agent_analytics.page_summary": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "PAGE_SUMMARY",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "PAGE_URL_HOST_PATH": {
+          "type": "TEXT",
+          "index": 1,
+          "name": "PAGE_URL_HOST_PATH",
+          "comment": null
+        },
+        "AS_OF_DATE": {
+          "type": "DATE",
+          "index": 2,
+          "name": "AS_OF_DATE",
+          "comment": null
+        },
+        "AGENT_HITS_7D": {
+          "type": "NUMBER",
+          "index": 3,
+          "name": "AGENT_HITS_7D",
+          "comment": null
+        },
+        "AGENT_HITS_30D": {
+          "type": "NUMBER",
+          "index": 4,
+          "name": "AGENT_HITS_30D",
+          "comment": null
+        },
+        "AGENT_HITS_90D": {
+          "type": "NUMBER",
+          "index": 5,
+          "name": "AGENT_HITS_90D",
+          "comment": null
+        },
+        "DISTINCT_AGENT_OPERATORS_30D": {
+          "type": "NUMBER",
+          "index": 6,
+          "name": "DISTINCT_AGENT_OPERATORS_30D",
+          "comment": null
+        },
+        "DISTINCT_AGENT_NAMES_30D": {
+          "type": "NUMBER",
+          "index": 7,
+          "name": "DISTINCT_AGENT_NAMES_30D",
+          "comment": null
+        },
+        "AI_TRAINING_HITS_30D": {
+          "type": "NUMBER",
+          "index": 8,
+          "name": "AI_TRAINING_HITS_30D",
+          "comment": null
+        },
+        "AI_USER_FETCH_HITS_30D": {
+          "type": "NUMBER",
+          "index": 9,
+          "name": "AI_USER_FETCH_HITS_30D",
+          "comment": null
+        },
+        "AI_SEARCH_INDEX_HITS_30D": {
+          "type": "NUMBER",
+          "index": 10,
+          "name": "AI_SEARCH_INDEX_HITS_30D",
+          "comment": null
+        },
+        "SEARCH_INDEX_HITS_30D": {
+          "type": "NUMBER",
+          "index": 11,
+          "name": "SEARCH_INDEX_HITS_30D",
+          "comment": null
+        },
+        "FIRST_AGENT_VISIT_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 12,
+          "name": "FIRST_AGENT_VISIT_TSTAMP",
+          "comment": null
+        },
+        "LAST_AGENT_VISIT_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 13,
+          "name": "LAST_AGENT_VISIT_TSTAMP",
+          "comment": null
+        },
+        "HUMAN_PAGEVIEWS_7D": {
+          "type": "NUMBER",
+          "index": 14,
+          "name": "HUMAN_PAGEVIEWS_7D",
+          "comment": null
+        },
+        "HUMAN_PAGEVIEWS_30D": {
+          "type": "NUMBER",
+          "index": 15,
+          "name": "HUMAN_PAGEVIEWS_30D",
+          "comment": null
+        },
+        "HUMAN_PAGEVIEWS_90D": {
+          "type": "NUMBER",
+          "index": 16,
+          "name": "HUMAN_PAGEVIEWS_90D",
+          "comment": null
+        },
+        "AI_REFERRAL_PAGEVIEWS_30D": {
+          "type": "NUMBER",
+          "index": 17,
+          "name": "AI_REFERRAL_PAGEVIEWS_30D",
+          "comment": null
+        },
+        "AI_REFERRAL_SESSIONS_30D": {
+          "type": "NUMBER",
+          "index": 18,
+          "name": "AI_REFERRAL_SESSIONS_30D",
+          "comment": null
+        },
+        "IS_ORPHANED_AGENT_INTEREST": {
+          "type": "BOOLEAN",
+          "index": 19,
+          "name": "IS_ORPHANED_AGENT_INTEREST",
+          "comment": null
+        },
+        "CITE_THROUGH_RATE_PROXY_30D": {
+          "type": "NUMBER",
+          "index": 20,
+          "name": "CITE_THROUGH_RATE_PROXY_30D",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 40,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:07UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 4096,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "model.snowplow_agent_analytics.page_summary"
+    },
+    "model.snowplow_agent_analytics.agent_pageviews_daily": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "AGENT_PAGEVIEWS_DAILY",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "EVENT_DATE": {
+          "type": "DATE",
+          "index": 1,
+          "name": "EVENT_DATE",
+          "comment": null
+        },
+        "AGENT_NAME": {
+          "type": "TEXT",
+          "index": 2,
+          "name": "AGENT_NAME",
+          "comment": null
+        },
+        "AGENT_OPERATOR": {
+          "type": "TEXT",
+          "index": 3,
+          "name": "AGENT_OPERATOR",
+          "comment": null
+        },
+        "AGENT_PURPOSE": {
+          "type": "TEXT",
+          "index": 4,
+          "name": "AGENT_PURPOSE",
+          "comment": null
+        },
+        "PURPOSE_GROUP": {
+          "type": "TEXT",
+          "index": 5,
+          "name": "PURPOSE_GROUP",
+          "comment": null
+        },
+        "SOURCE_CHANNEL": {
+          "type": "TEXT",
+          "index": 6,
+          "name": "SOURCE_CHANNEL",
+          "comment": null
+        },
+        "PAGE_URL_HOST_PATH": {
+          "type": "TEXT",
+          "index": 7,
+          "name": "PAGE_URL_HOST_PATH",
+          "comment": null
+        },
+        "HITS": {
+          "type": "NUMBER",
+          "index": 8,
+          "name": "HITS",
+          "comment": null
+        },
+        "FIRST_SEEN_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 9,
+          "name": "FIRST_SEEN_TSTAMP",
+          "comment": null
+        },
+        "LAST_SEEN_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 10,
+          "name": "LAST_SEEN_TSTAMP",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 387,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "clustering_key": {
+          "id": "clustering_key",
+          "label": "Clustering Key",
+          "value": "LINEAR(agent_operator, page_url_host_path)",
+          "include": true,
+          "description": "The key used to cluster this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:07UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 12288,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "model.snowplow_agent_analytics.agent_pageviews_daily"
+    },
+    "model.snowplow_agent_analytics.incremental_manifest": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "INCREMENTAL_MANIFEST",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "MODEL": {
+          "type": "TEXT",
+          "index": 1,
+          "name": "MODEL",
+          "comment": null
+        },
+        "FIRST_SUCCESS": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 2,
+          "name": "FIRST_SUCCESS",
+          "comment": null
+        },
+        "LAST_SUCCESS": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 3,
+          "name": "LAST_SUCCESS",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 5,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:07UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 1024,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "model.snowplow_agent_analytics.incremental_manifest"
+    },
+    "model.snowplow_agent_analytics.human_referrals_daily": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNOWPLOW_AGENT_ANALYTICS",
+        "name": "HUMAN_REFERRALS_DAILY",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "EVENT_DATE": {
+          "type": "DATE",
+          "index": 1,
+          "name": "EVENT_DATE",
+          "comment": null
+        },
+        "REFERRING_OPERATOR": {
+          "type": "TEXT",
+          "index": 2,
+          "name": "REFERRING_OPERATOR",
+          "comment": null
+        },
+        "PAGE_URL_HOST_PATH": {
+          "type": "TEXT",
+          "index": 3,
+          "name": "PAGE_URL_HOST_PATH",
+          "comment": null
+        },
+        "REFERRED_PAGEVIEWS": {
+          "type": "NUMBER",
+          "index": 4,
+          "name": "REFERRED_PAGEVIEWS",
+          "comment": null
+        },
+        "REFERRED_SESSIONS": {
+          "type": "NUMBER",
+          "index": 5,
+          "name": "REFERRED_SESSIONS",
+          "comment": null
+        },
+        "FIRST_SEEN_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 6,
+          "name": "FIRST_SEEN_TSTAMP",
+          "comment": null
+        },
+        "LAST_SEEN_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 7,
+          "name": "LAST_SEEN_TSTAMP",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 184,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "clustering_key": {
+          "id": "clustering_key",
+          "label": "Clustering Key",
+          "value": "LINEAR(referring_operator, page_url_host_path)",
+          "include": true,
+          "description": "The key used to cluster this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:07UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 5632,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "model.snowplow_agent_analytics.human_referrals_daily"
+    }
+  },
+  "sources": {
+    "source.snowplow_agent_analytics.snowplow.events": {
+      "metadata": {
+        "type": "BASE TABLE",
+        "schema": "AGENT_INTEL_SNPLW_AGENT_ANALYTICS_INT_TESTS",
+        "name": "SNOWPLOW_AGENT_ANALYTICS_EVENTS_STG",
+        "database": "STANCH_DB",
+        "comment": null,
+        "owner": "STANCH_DBT_INTEGRATION_TEST_ROLE"
+      },
+      "columns": {
+        "APP_ID": {
+          "type": "TEXT",
+          "index": 1,
+          "name": "APP_ID",
+          "comment": null
+        },
+        "PLATFORM": {
+          "type": "TEXT",
+          "index": 2,
+          "name": "PLATFORM",
+          "comment": null
+        },
+        "ETL_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 3,
+          "name": "ETL_TSTAMP",
+          "comment": null
+        },
+        "COLLECTOR_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 4,
+          "name": "COLLECTOR_TSTAMP",
+          "comment": null
+        },
+        "DVCE_CREATED_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 5,
+          "name": "DVCE_CREATED_TSTAMP",
+          "comment": null
+        },
+        "EVENT": {
+          "type": "TEXT",
+          "index": 6,
+          "name": "EVENT",
+          "comment": null
+        },
+        "EVENT_ID": {
+          "type": "TEXT",
+          "index": 7,
+          "name": "EVENT_ID",
+          "comment": null
+        },
+        "TXN_ID": {
+          "type": "NUMBER",
+          "index": 8,
+          "name": "TXN_ID",
+          "comment": null
+        },
+        "NAME_TRACKER": {
+          "type": "TEXT",
+          "index": 9,
+          "name": "NAME_TRACKER",
+          "comment": null
+        },
+        "V_TRACKER": {
+          "type": "TEXT",
+          "index": 10,
+          "name": "V_TRACKER",
+          "comment": null
+        },
+        "V_COLLECTOR": {
+          "type": "TEXT",
+          "index": 11,
+          "name": "V_COLLECTOR",
+          "comment": null
+        },
+        "V_ETL": {
+          "type": "TEXT",
+          "index": 12,
+          "name": "V_ETL",
+          "comment": null
+        },
+        "USER_ID": {
+          "type": "TEXT",
+          "index": 13,
+          "name": "USER_ID",
+          "comment": null
+        },
+        "USER_IPADDRESS": {
+          "type": "NUMBER",
+          "index": 14,
+          "name": "USER_IPADDRESS",
+          "comment": null
+        },
+        "USER_FINGERPRINT": {
+          "type": "TEXT",
+          "index": 15,
+          "name": "USER_FINGERPRINT",
+          "comment": null
+        },
+        "DOMAIN_USERID": {
+          "type": "NUMBER",
+          "index": 16,
+          "name": "DOMAIN_USERID",
+          "comment": null
+        },
+        "DOMAIN_SESSIONIDX": {
+          "type": "NUMBER",
+          "index": 17,
+          "name": "DOMAIN_SESSIONIDX",
+          "comment": null
+        },
+        "NETWORK_USERID": {
+          "type": "NUMBER",
+          "index": 18,
+          "name": "NETWORK_USERID",
+          "comment": null
+        },
+        "GEO_COUNTRY": {
+          "type": "TEXT",
+          "index": 19,
+          "name": "GEO_COUNTRY",
+          "comment": null
+        },
+        "GEO_REGION": {
+          "type": "NUMBER",
+          "index": 20,
+          "name": "GEO_REGION",
+          "comment": null
+        },
+        "GEO_CITY": {
+          "type": "NUMBER",
+          "index": 21,
+          "name": "GEO_CITY",
+          "comment": null
+        },
+        "GEO_ZIPCODE": {
+          "type": "NUMBER",
+          "index": 22,
+          "name": "GEO_ZIPCODE",
+          "comment": null
+        },
+        "GEO_LATITUDE": {
+          "type": "NUMBER",
+          "index": 23,
+          "name": "GEO_LATITUDE",
+          "comment": null
+        },
+        "GEO_LONGITUDE": {
+          "type": "NUMBER",
+          "index": 24,
+          "name": "GEO_LONGITUDE",
+          "comment": null
+        },
+        "GEO_REGION_NAME": {
+          "type": "NUMBER",
+          "index": 25,
+          "name": "GEO_REGION_NAME",
+          "comment": null
+        },
+        "IP_ISP": {
+          "type": "TEXT",
+          "index": 26,
+          "name": "IP_ISP",
+          "comment": null
+        },
+        "IP_ORGANIZATION": {
+          "type": "TEXT",
+          "index": 27,
+          "name": "IP_ORGANIZATION",
+          "comment": null
+        },
+        "IP_DOMAIN": {
+          "type": "TEXT",
+          "index": 28,
+          "name": "IP_DOMAIN",
+          "comment": null
+        },
+        "IP_NETSPEED": {
+          "type": "TEXT",
+          "index": 29,
+          "name": "IP_NETSPEED",
+          "comment": null
+        },
+        "PAGE_URL": {
+          "type": "TEXT",
+          "index": 30,
+          "name": "PAGE_URL",
+          "comment": null
+        },
+        "PAGE_TITLE": {
+          "type": "TEXT",
+          "index": 31,
+          "name": "PAGE_TITLE",
+          "comment": null
+        },
+        "PAGE_REFERRER": {
+          "type": "NUMBER",
+          "index": 32,
+          "name": "PAGE_REFERRER",
+          "comment": null
+        },
+        "PAGE_URLSCHEME": {
+          "type": "TEXT",
+          "index": 33,
+          "name": "PAGE_URLSCHEME",
+          "comment": null
+        },
+        "PAGE_URLHOST": {
+          "type": "TEXT",
+          "index": 34,
+          "name": "PAGE_URLHOST",
+          "comment": null
+        },
+        "PAGE_URLPORT": {
+          "type": "NUMBER",
+          "index": 35,
+          "name": "PAGE_URLPORT",
+          "comment": null
+        },
+        "PAGE_URLPATH": {
+          "type": "TEXT",
+          "index": 36,
+          "name": "PAGE_URLPATH",
+          "comment": null
+        },
+        "PAGE_URLQUERY": {
+          "type": "NUMBER",
+          "index": 37,
+          "name": "PAGE_URLQUERY",
+          "comment": null
+        },
+        "PAGE_URLFRAGMENT": {
+          "type": "TEXT",
+          "index": 38,
+          "name": "PAGE_URLFRAGMENT",
+          "comment": null
+        },
+        "REFR_URLSCHEME": {
+          "type": "NUMBER",
+          "index": 39,
+          "name": "REFR_URLSCHEME",
+          "comment": null
+        },
+        "REFR_URLHOST": {
+          "type": "NUMBER",
+          "index": 40,
+          "name": "REFR_URLHOST",
+          "comment": null
+        },
+        "REFR_URLPORT": {
+          "type": "NUMBER",
+          "index": 41,
+          "name": "REFR_URLPORT",
+          "comment": null
+        },
+        "REFR_URLPATH": {
+          "type": "NUMBER",
+          "index": 42,
+          "name": "REFR_URLPATH",
+          "comment": null
+        },
+        "REFR_URLQUERY": {
+          "type": "NUMBER",
+          "index": 43,
+          "name": "REFR_URLQUERY",
+          "comment": null
+        },
+        "REFR_URLFRAGMENT": {
+          "type": "TEXT",
+          "index": 44,
+          "name": "REFR_URLFRAGMENT",
+          "comment": null
+        },
+        "REFR_MEDIUM": {
+          "type": "TEXT",
+          "index": 45,
+          "name": "REFR_MEDIUM",
+          "comment": null
+        },
+        "REFR_SOURCE": {
+          "type": "TEXT",
+          "index": 46,
+          "name": "REFR_SOURCE",
+          "comment": null
+        },
+        "REFR_TERM": {
+          "type": "TEXT",
+          "index": 47,
+          "name": "REFR_TERM",
+          "comment": null
+        },
+        "MKT_MEDIUM": {
+          "type": "NUMBER",
+          "index": 48,
+          "name": "MKT_MEDIUM",
+          "comment": null
+        },
+        "MKT_SOURCE": {
+          "type": "NUMBER",
+          "index": 49,
+          "name": "MKT_SOURCE",
+          "comment": null
+        },
+        "MKT_TERM": {
+          "type": "TEXT",
+          "index": 50,
+          "name": "MKT_TERM",
+          "comment": null
+        },
+        "MKT_CONTENT": {
+          "type": "TEXT",
+          "index": 51,
+          "name": "MKT_CONTENT",
+          "comment": null
+        },
+        "MKT_CAMPAIGN": {
+          "type": "NUMBER",
+          "index": 52,
+          "name": "MKT_CAMPAIGN",
+          "comment": null
+        },
+        "SE_CATEGORY": {
+          "type": "NUMBER",
+          "index": 53,
+          "name": "SE_CATEGORY",
+          "comment": null
+        },
+        "SE_ACTION": {
+          "type": "NUMBER",
+          "index": 54,
+          "name": "SE_ACTION",
+          "comment": null
+        },
+        "SE_LABEL": {
+          "type": "TEXT",
+          "index": 55,
+          "name": "SE_LABEL",
+          "comment": null
+        },
+        "SE_PROPERTY": {
+          "type": "TEXT",
+          "index": 56,
+          "name": "SE_PROPERTY",
+          "comment": null
+        },
+        "SE_VALUE": {
+          "type": "FLOAT",
+          "index": 57,
+          "name": "SE_VALUE",
+          "comment": null
+        },
+        "TR_ORDERID": {
+          "type": "TEXT",
+          "index": 58,
+          "name": "TR_ORDERID",
+          "comment": null
+        },
+        "TR_AFFILIATION": {
+          "type": "TEXT",
+          "index": 59,
+          "name": "TR_AFFILIATION",
+          "comment": null
+        },
+        "TR_TOTAL": {
+          "type": "FLOAT",
+          "index": 60,
+          "name": "TR_TOTAL",
+          "comment": null
+        },
+        "TR_TAX": {
+          "type": "FLOAT",
+          "index": 61,
+          "name": "TR_TAX",
+          "comment": null
+        },
+        "TR_SHIPPING": {
+          "type": "FLOAT",
+          "index": 62,
+          "name": "TR_SHIPPING",
+          "comment": null
+        },
+        "TR_CITY": {
+          "type": "TEXT",
+          "index": 63,
+          "name": "TR_CITY",
+          "comment": null
+        },
+        "TR_STATE": {
+          "type": "TEXT",
+          "index": 64,
+          "name": "TR_STATE",
+          "comment": null
+        },
+        "TR_COUNTRY": {
+          "type": "TEXT",
+          "index": 65,
+          "name": "TR_COUNTRY",
+          "comment": null
+        },
+        "TI_ORDERID": {
+          "type": "TEXT",
+          "index": 66,
+          "name": "TI_ORDERID",
+          "comment": null
+        },
+        "TI_SKU": {
+          "type": "TEXT",
+          "index": 67,
+          "name": "TI_SKU",
+          "comment": null
+        },
+        "TI_NAME": {
+          "type": "TEXT",
+          "index": 68,
+          "name": "TI_NAME",
+          "comment": null
+        },
+        "TI_CATEGORY": {
+          "type": "TEXT",
+          "index": 69,
+          "name": "TI_CATEGORY",
+          "comment": null
+        },
+        "TI_PRICE": {
+          "type": "FLOAT",
+          "index": 70,
+          "name": "TI_PRICE",
+          "comment": null
+        },
+        "TI_QUANTITY": {
+          "type": "NUMBER",
+          "index": 71,
+          "name": "TI_QUANTITY",
+          "comment": null
+        },
+        "PP_XOFFSET_MIN": {
+          "type": "NUMBER",
+          "index": 72,
+          "name": "PP_XOFFSET_MIN",
+          "comment": null
+        },
+        "PP_XOFFSET_MAX": {
+          "type": "NUMBER",
+          "index": 73,
+          "name": "PP_XOFFSET_MAX",
+          "comment": null
+        },
+        "PP_YOFFSET_MIN": {
+          "type": "NUMBER",
+          "index": 74,
+          "name": "PP_YOFFSET_MIN",
+          "comment": null
+        },
+        "PP_YOFFSET_MAX": {
+          "type": "NUMBER",
+          "index": 75,
+          "name": "PP_YOFFSET_MAX",
+          "comment": null
+        },
+        "USERAGENT": {
+          "type": "TEXT",
+          "index": 76,
+          "name": "USERAGENT",
+          "comment": null
+        },
+        "BR_NAME": {
+          "type": "TEXT",
+          "index": 77,
+          "name": "BR_NAME",
+          "comment": null
+        },
+        "BR_FAMILY": {
+          "type": "TEXT",
+          "index": 78,
+          "name": "BR_FAMILY",
+          "comment": null
+        },
+        "BR_VERSION": {
+          "type": "TEXT",
+          "index": 79,
+          "name": "BR_VERSION",
+          "comment": null
+        },
+        "BR_TYPE": {
+          "type": "TEXT",
+          "index": 80,
+          "name": "BR_TYPE",
+          "comment": null
+        },
+        "BR_RENDERENGINE": {
+          "type": "TEXT",
+          "index": 81,
+          "name": "BR_RENDERENGINE",
+          "comment": null
+        },
+        "BR_LANG": {
+          "type": "TEXT",
+          "index": 82,
+          "name": "BR_LANG",
+          "comment": null
+        },
+        "BR_FEATURES_PDF": {
+          "type": "NUMBER",
+          "index": 83,
+          "name": "BR_FEATURES_PDF",
+          "comment": null
+        },
+        "BR_FEATURES_FLASH": {
+          "type": "NUMBER",
+          "index": 84,
+          "name": "BR_FEATURES_FLASH",
+          "comment": null
+        },
+        "BR_FEATURES_JAVA": {
+          "type": "NUMBER",
+          "index": 85,
+          "name": "BR_FEATURES_JAVA",
+          "comment": null
+        },
+        "BR_FEATURES_DIRECTOR": {
+          "type": "NUMBER",
+          "index": 86,
+          "name": "BR_FEATURES_DIRECTOR",
+          "comment": null
+        },
+        "BR_FEATURES_QUICKTIME": {
+          "type": "NUMBER",
+          "index": 87,
+          "name": "BR_FEATURES_QUICKTIME",
+          "comment": null
+        },
+        "BR_FEATURES_REALPLAYER": {
+          "type": "NUMBER",
+          "index": 88,
+          "name": "BR_FEATURES_REALPLAYER",
+          "comment": null
+        },
+        "BR_FEATURES_WINDOWSMEDIA": {
+          "type": "NUMBER",
+          "index": 89,
+          "name": "BR_FEATURES_WINDOWSMEDIA",
+          "comment": null
+        },
+        "BR_FEATURES_GEARS": {
+          "type": "NUMBER",
+          "index": 90,
+          "name": "BR_FEATURES_GEARS",
+          "comment": null
+        },
+        "BR_FEATURES_SILVERLIGHT": {
+          "type": "NUMBER",
+          "index": 91,
+          "name": "BR_FEATURES_SILVERLIGHT",
+          "comment": null
+        },
+        "BR_COOKIES": {
+          "type": "BOOLEAN",
+          "index": 92,
+          "name": "BR_COOKIES",
+          "comment": null
+        },
+        "BR_COLORDEPTH": {
+          "type": "TEXT",
+          "index": 93,
+          "name": "BR_COLORDEPTH",
+          "comment": null
+        },
+        "BR_VIEWWIDTH": {
+          "type": "NUMBER",
+          "index": 94,
+          "name": "BR_VIEWWIDTH",
+          "comment": null
+        },
+        "BR_VIEWHEIGHT": {
+          "type": "NUMBER",
+          "index": 95,
+          "name": "BR_VIEWHEIGHT",
+          "comment": null
+        },
+        "OS_NAME": {
+          "type": "TEXT",
+          "index": 96,
+          "name": "OS_NAME",
+          "comment": null
+        },
+        "OS_FAMILY": {
+          "type": "TEXT",
+          "index": 97,
+          "name": "OS_FAMILY",
+          "comment": null
+        },
+        "OS_MANUFACTURER": {
+          "type": "TEXT",
+          "index": 98,
+          "name": "OS_MANUFACTURER",
+          "comment": null
+        },
+        "OS_TIMEZONE": {
+          "type": "TEXT",
+          "index": 99,
+          "name": "OS_TIMEZONE",
+          "comment": null
+        },
+        "DVCE_TYPE": {
+          "type": "TEXT",
+          "index": 100,
+          "name": "DVCE_TYPE",
+          "comment": null
+        },
+        "DVCE_ISMOBILE": {
+          "type": "BOOLEAN",
+          "index": 101,
+          "name": "DVCE_ISMOBILE",
+          "comment": null
+        },
+        "DVCE_SCREENWIDTH": {
+          "type": "NUMBER",
+          "index": 102,
+          "name": "DVCE_SCREENWIDTH",
+          "comment": null
+        },
+        "DVCE_SCREENHEIGHT": {
+          "type": "NUMBER",
+          "index": 103,
+          "name": "DVCE_SCREENHEIGHT",
+          "comment": null
+        },
+        "DOC_CHARSET": {
+          "type": "TEXT",
+          "index": 104,
+          "name": "DOC_CHARSET",
+          "comment": null
+        },
+        "DOC_WIDTH": {
+          "type": "NUMBER",
+          "index": 105,
+          "name": "DOC_WIDTH",
+          "comment": null
+        },
+        "DOC_HEIGHT": {
+          "type": "NUMBER",
+          "index": 106,
+          "name": "DOC_HEIGHT",
+          "comment": null
+        },
+        "TR_CURRENCY": {
+          "type": "TEXT",
+          "index": 107,
+          "name": "TR_CURRENCY",
+          "comment": null
+        },
+        "TR_TOTAL_BASE": {
+          "type": "FLOAT",
+          "index": 108,
+          "name": "TR_TOTAL_BASE",
+          "comment": null
+        },
+        "TR_TAX_BASE": {
+          "type": "FLOAT",
+          "index": 109,
+          "name": "TR_TAX_BASE",
+          "comment": null
+        },
+        "TR_SHIPPING_BASE": {
+          "type": "FLOAT",
+          "index": 110,
+          "name": "TR_SHIPPING_BASE",
+          "comment": null
+        },
+        "TI_CURRENCY": {
+          "type": "TEXT",
+          "index": 111,
+          "name": "TI_CURRENCY",
+          "comment": null
+        },
+        "TI_PRICE_BASE": {
+          "type": "FLOAT",
+          "index": 112,
+          "name": "TI_PRICE_BASE",
+          "comment": null
+        },
+        "BASE_CURRENCY": {
+          "type": "TEXT",
+          "index": 113,
+          "name": "BASE_CURRENCY",
+          "comment": null
+        },
+        "GEO_TIMEZONE": {
+          "type": "NUMBER",
+          "index": 114,
+          "name": "GEO_TIMEZONE",
+          "comment": null
+        },
+        "MKT_CLICKID": {
+          "type": "NUMBER",
+          "index": 115,
+          "name": "MKT_CLICKID",
+          "comment": null
+        },
+        "MKT_NETWORK": {
+          "type": "NUMBER",
+          "index": 116,
+          "name": "MKT_NETWORK",
+          "comment": null
+        },
+        "ETL_TAGS": {
+          "type": "TEXT",
+          "index": 117,
+          "name": "ETL_TAGS",
+          "comment": null
+        },
+        "DVCE_SENT_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 118,
+          "name": "DVCE_SENT_TSTAMP",
+          "comment": null
+        },
+        "REFR_DOMAIN_USERID": {
+          "type": "NUMBER",
+          "index": 119,
+          "name": "REFR_DOMAIN_USERID",
+          "comment": null
+        },
+        "REFR_DVCE_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 120,
+          "name": "REFR_DVCE_TSTAMP",
+          "comment": null
+        },
+        "DOMAIN_SESSIONID": {
+          "type": "TEXT",
+          "index": 121,
+          "name": "DOMAIN_SESSIONID",
+          "comment": null
+        },
+        "DERIVED_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 122,
+          "name": "DERIVED_TSTAMP",
+          "comment": null
+        },
+        "EVENT_VENDOR": {
+          "type": "TEXT",
+          "index": 123,
+          "name": "EVENT_VENDOR",
+          "comment": null
+        },
+        "EVENT_NAME": {
+          "type": "TEXT",
+          "index": 124,
+          "name": "EVENT_NAME",
+          "comment": null
+        },
+        "EVENT_FORMAT": {
+          "type": "TEXT",
+          "index": 125,
+          "name": "EVENT_FORMAT",
+          "comment": null
+        },
+        "EVENT_VERSION": {
+          "type": "TEXT",
+          "index": 126,
+          "name": "EVENT_VERSION",
+          "comment": null
+        },
+        "EVENT_FINGERPRINT": {
+          "type": "TEXT",
+          "index": 127,
+          "name": "EVENT_FINGERPRINT",
+          "comment": null
+        },
+        "TRUE_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 128,
+          "name": "TRUE_TSTAMP",
+          "comment": null
+        },
+        "LOAD_TSTAMP": {
+          "type": "TIMESTAMP_NTZ",
+          "index": 129,
+          "name": "LOAD_TSTAMP",
+          "comment": null
+        },
+        "CONTEXTS_NL_BASJES_YAUAA_CONTEXT_1": {
+          "type": "VARIANT",
+          "index": 130,
+          "name": "CONTEXTS_NL_BASJES_YAUAA_CONTEXT_1",
+          "comment": null
+        },
+        "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_AGENT_CLASSIFICATION_1": {
+          "type": "VARIANT",
+          "index": 131,
+          "name": "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_AGENT_CLASSIFICATION_1",
+          "comment": null
+        },
+        "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_BOT_DETECTION_1": {
+          "type": "VARIANT",
+          "index": 132,
+          "name": "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_BOT_DETECTION_1",
+          "comment": null
+        },
+        "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_UTM_REFERRER_1": {
+          "type": "VARIANT",
+          "index": 133,
+          "name": "CONTEXTS_COM_SNOWPLOWANALYTICS_SNOWPLOW_UTM_REFERRER_1",
+          "comment": null
+        }
+      },
+      "stats": {
+        "row_count": {
+          "id": "row_count",
+          "label": "Row Count",
+          "value": 1476,
+          "include": true,
+          "description": "An approximate count of rows in this table"
+        },
+        "last_modified": {
+          "id": "last_modified",
+          "label": "Last Modified",
+          "value": "2026-09-29 13:06UTC",
+          "include": true,
+          "description": "The timestamp for last update/change"
+        },
+        "bytes": {
+          "id": "bytes",
+          "label": "Approximate Size",
+          "value": 335360,
+          "include": true,
+          "description": "Approximate size of the table as reported by Snowflake"
+        },
+        "has_stats": {
+          "id": "has_stats",
+          "label": "Has Stats?",
+          "value": true,
+          "include": false,
+          "description": "Indicates whether there are statistics for this table"
+        }
+      },
+      "unique_id": "source.snowplow_agent_analytics.snowplow.events"
+    }
+  },
+  "errors": null
+}
