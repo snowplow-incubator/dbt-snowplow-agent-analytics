@@ -14,6 +14,9 @@ operators behind them send human pageviews back.
 | `page_summary` | `page_url_host_path × as_of_date` | Page-centric scorecard: "how is this URL doing with AI?" |
 | `operator_summary` | `operator × as_of_date` | Operator-centric scorecard: "are they crawling more than they refer?" |
 
+Model and column docs are published as a dbt docs site on GitHub Pages, rebuilt from the
+integration test fixture on every push to `main` (`.github/workflows/publish-gh-pages.yml`).
+
 ## Requirements
 
 - **Warehouse:** Snowflake (v1 supports Snowflake only)
