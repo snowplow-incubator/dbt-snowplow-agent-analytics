@@ -73,26 +73,10 @@ jobs:
         pip install dbt-${{ matrix.warehouse }}==${{ matrix.dbt_version }} --upgrade
         dbt deps
 
-    # A single run with the backfill limit raised past the fixture's 100-day span builds
-    # every model; the catalog only needs the tables to exist, not the incremental sequence.
     - name: Create dbt docs
       run: |
         dbt run-operation post_ci_cleanup --target ${{ matrix.warehouse }}
-        dbt seed --target ${{ matrix.warehouse }} --full-refresh
-        # The stg model is read through source(), not ref(), so dbt can't order it -- build it first
-        dbt run --target ${{ matrix.warehouse }} --select snowplow_agent_analytics_events_stg
-        dbt run --target ${{ matrix.warehouse }} --full-refresh --exclude snowplow_agent_analytics_events_stg --vars '{snowplow__backfill_limit_days: 120}'
-        dbt docs generate --target ${{ matrix.warehouse }} --vars '{snowplow__backfill_limit_days: 120}'
-        mkdir -p ../docs
-        rm -f ../docs/catalog.json ../docs/manifest.json ../docs/run_results.json ../docs/index.html
-        # Drop the integration test project's own nodes (fixture seeds, *_actual/*_expected
-        # models, equality tests) so the site documents only the package.
-        jq 'walk(if type == "object" then with_entries(select(.key | contains("snowplow_agent_analytics_integration_tests") | not)) else . end)' target/manifest.json > target/new_manifest.json
-        jq 'walk(if type == "object" then with_entries(select(.key | contains("snowplow_agent_analytics_integration_tests") | not)) else . end)' target/catalog.json > target/new_catalog.json
-        cp target/new_catalog.json ../docs/catalog.json
-        cp target/new_manifest.json ../docs/manifest.json
-        cp target/run_results.json ../docs/run_results.json
-        cp target/index.html ../docs/index.html
+        bash .scripts/generate_docs.sh -d ${{ matrix.warehouse }}
 
     - name: Cleanup
       if: always()

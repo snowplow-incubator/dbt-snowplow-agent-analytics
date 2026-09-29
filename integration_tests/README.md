@@ -14,6 +14,7 @@ A standalone dbt project that installs the package from `../`, seeds a fixed eve
 | `models/actual/actual_vs_expected.yml` | `dbt_utils.equal_rowcount` + `dbt_utils.equality` per model. |
 | `.scripts/integration_tests.sh` | Seed, run 6×, test. |
 | `.scripts/bootstrap_expected.sh` | Regenerate `data/expected/` from a built run. |
+| `.scripts/generate_docs.sh` | Build once and generate the dbt docs site; `-p` force-pushes it to `gh_pages`. |
 | `.scripts/verify_fixture.py` | Reimplements the marts in Python and prints the coverage the fixture is designed for. |
 
 ## Running
