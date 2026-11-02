@@ -3,15 +3,15 @@
 {{
   config(
     materialized='table',
-    enabled=var('enable_semantic_views', false)
+    enabled=(var('enable_semantic_views', false) and target.type == 'snowflake')
   )
 }}
 
 with pages as (
   select page_url_host_path from {{ ref('agent_pageviews_daily') }}
-  union
+  union distinct
   select page_url_host_path from {{ ref('human_pageviews_daily') }}
-  union
+  union distinct
   select page_url_host_path from {{ ref('human_referrals_daily') }}
 )
 

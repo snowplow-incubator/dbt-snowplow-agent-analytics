@@ -7,8 +7,8 @@
 with bot_agents as (
   select
     e.agent_name,
-    boolor_agg(e.raw_source_channel = 'cdn') as seen_in_cdn,
-    boolor_agg(e.raw_source_channel = 'client') as seen_in_client
+    (max(case when e.raw_source_channel = 'cdn' then 1 else 0 end) = 1) as seen_in_cdn,
+    (max(case when e.raw_source_channel = 'client' then 1 else 0 end) = 1) as seen_in_client
   from {{ ref('base_events') }} e
   where e.is_bot = true
     and e.agent_name is not null
@@ -32,7 +32,7 @@ lookup_rows as (
   select
     agent_name,
     count(*) as row_count,
-    count_if(source_channel in ('cdn', 'client')) as valid_channel_count
+    sum(case when source_channel in ('cdn', 'client') then 1 else 0 end) as valid_channel_count
   from {{ ref('int_agent_source_lookup') }}
   group by 1
 )

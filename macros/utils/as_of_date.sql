@@ -10,9 +10,13 @@
 {% macro as_of_date() -%}
     {%- set pinned = var('snowplow__as_of_date', none) -%}
     {%- if pinned -%}
-        to_date('{{ pinned }}')
+        cast('{{ pinned }}' as date)
     {%- elif var('summary_snapshot_mode', 'weekly') == 'weekly' -%}
-        date_trunc('week', current_date)
+        {% if target.type == 'bigquery' %}
+          date_trunc(current_date(), week(monday))
+        {% else %}
+          cast({{ dbt.date_trunc('week', 'current_date') }} as date)
+        {% endif %}
     {%- else -%}
         current_date
     {%- endif -%}

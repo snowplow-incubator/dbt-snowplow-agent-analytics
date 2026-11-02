@@ -5,7 +5,7 @@
    The var() test is required: dbt renders the body of disabled models at parse time,
    so checking package presence alone would fire for consumers who never opted in. #}
 {% macro require_semantic_view_package() -%}
-  {%- if var('enable_semantic_views', false) and dbt_semantic_view is not defined -%}
+  {%- if target.type == 'snowflake' and var('enable_semantic_views', false) and dbt_semantic_view is not defined -%}
     {{ exceptions.raise_compiler_error(
         "enable_semantic_views is true, but the Snowflake-Labs/dbt_semantic_view package "
         ~ "is not installed. It supplies the `semantic_view` materialization. Add it to "

@@ -2,5 +2,5 @@
    NULL when the enrichment did not attach a context; such rows are excluded from both
    the agent (is_bot = true) and human (is_bot = false) subsets downstream. #}
 {% macro bot_flag(table_alias) -%}
-    {{ table_alias }}.contexts_com_snowplowanalytics_snowplow_bot_detection_1[0]:bot::boolean
+    {{ snowplow_agent_analytics.entity_field(table_alias, 'com_snowplowanalytics_snowplow_bot_detection_1', 'bot', 'bot', 'boolean') }}
 {%- endmacro %}

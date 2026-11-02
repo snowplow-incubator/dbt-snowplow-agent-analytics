@@ -1,13 +1,14 @@
-{# delete+insert on event_date gives partition-overwrite semantics on Snowflake:
-   each batch recomputes complete trailing days from base_events, deletes those
-   dates from the target, and inserts the fresh aggregates. #}
+{# Recompute complete dates from the durable base. BigQuery replaces date
+   partitions; other adapters delete+insert by event_date. This also removes
+   obsolete groups when an agent changes source channel. #}
 {{
   config(
     materialized='incremental',
-    incremental_strategy='delete+insert',
+    incremental_strategy=('insert_overwrite' if target.type == 'bigquery' else 'delete+insert'),
+    partition_by=({'field': 'event_date', 'data_type': 'date'} if target.type == 'bigquery' else none),
     unique_key='event_date',
     meta={'upsert_date_key': 'event_date', 'snowplow_optimize': true},
-    cluster_by=['page_url_host_path'],
+    cluster_by=(['page_url_host_path'] if target.type in ['snowflake', 'bigquery'] else none),
     on_schema_change='append_new_columns',
     tags=['snowplow_agent_analytics_incremental']
   )
@@ -33,7 +34,7 @@ where e.is_bot = false
     -- days far older than the trailing window, and anchoring on current_date alone
     -- would silently drop them from this table.
     and date(e.derived_tstamp) >= least(
-      dateadd(day, -{{ var("late_data_window_days", 3) }}, current_date),
+      cast({{ dbt.dateadd('day', -(var('late_data_window_days', 3) | int), 'current_date') }} as date),
       coalesce((select min(date(derived_tstamp)) from {{ base_events_this_run }}), current_date)
     )
   {% endif %}

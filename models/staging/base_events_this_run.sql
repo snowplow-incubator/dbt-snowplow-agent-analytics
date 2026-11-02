@@ -47,7 +47,24 @@ with raw_events as (
 
 source_events as (
   select
-    e.*,
+    e.event_id,
+    e.event_fingerprint,
+    e.app_id,
+    e.collector_tstamp,
+    e.derived_tstamp,
+    e.load_tstamp,
+    cast(e.load_tstamp as date) as load_tstamp_date,
+    e.domain_sessionid,
+    e.page_urlhost,
+    e.page_urlpath,
+    e.refr_source,
+    e.refr_medium,
+    e.useragent,
+    {{ agent_name('e') }} as raw_agent_name,
+    {{ agent_operator('e') }} as raw_agent_operator,
+    {{ agent_purpose('e') }} as raw_agent_purpose,
+    {{ utm_source_from_entity('e') }} as utm_source,
+    {{ utm_medium_from_entity('e') }} as utm_medium,
     {{ bot_flag('e') }} as is_bot,
     case
       when {{ snowplow_agent_analytics.app_id_filter('e.app_id', cdn_app_ids) or 'false' }} then 'cdn'
@@ -103,12 +120,12 @@ overrides as (
 resolved as (
   select
     d.*,
-    coalesce(o.agent_name, {{ agent_name('d') }}) as agent_name,
-    coalesce({{ agent_operator('d') }}, o.agent_operator) as agent_operator,
-    coalesce({{ agent_purpose('d') }}, o.agent_purpose) as agent_purpose
+    coalesce(o.agent_name, d.raw_agent_name) as agent_name,
+    coalesce(d.raw_agent_operator, o.agent_operator) as agent_operator,
+    coalesce(d.raw_agent_purpose, o.agent_purpose) as agent_purpose
   from deduped d
   left join overrides o
-    on d.useragent ilike o.ua_pattern
+    on lower(d.useragent) like lower(o.ua_pattern)
   {# A UA can match more than one pattern, and without this the left join would duplicate
      the event. event_id is unique here (the snowplow-utils macro dedups on it before the
      passes above), so this keeps exactly one override per row: most specific pattern
@@ -119,4 +136,24 @@ resolved as (
   ) = 1
 )
 
-select * from resolved
+select
+  event_id,
+  event_fingerprint,
+  app_id,
+  collector_tstamp,
+  derived_tstamp,
+  load_tstamp,
+  load_tstamp_date,
+  domain_sessionid,
+  page_urlhost,
+  page_urlpath,
+  refr_source,
+  refr_medium,
+  utm_source,
+  utm_medium,
+  is_bot,
+  raw_source_channel,
+  agent_name,
+  agent_operator,
+  agent_purpose
+from resolved

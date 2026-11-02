@@ -19,8 +19,9 @@ integration test fixture on every push to `main` (`.github/workflows/publish-gh-
 
 ## Requirements
 
-- **Warehouse:** Snowflake (v1 supports Snowflake only)
-- **dbt:** >= 1.10.6
+- **Warehouses:** Snowflake, BigQuery, and Databricks
+- **Databricks:** dbt-databricks >= 1.11 with a SQL warehouse or Runtime 12.2 LTS or later; incremental tables use Delta
+- **dbt:** >= 1.10.6, < 2.0.0
 - **Packages:** [snowplow-utils](https://github.com/snowplow/dbt-snowplow-utils) >= 1.0.1 (incremental manifest), dbt-utils
 - **Optional:** [Snowflake-Labs/dbt_semantic_view](https://github.com/Snowflake-Labs/dbt_semantic_view) >= 1.0.6 — only if you set `enable_semantic_views`; add it to your own `packages.yml`, see [Semantic views](#semantic-views-snowflake-opt-in)
 - **Snowplow enrichments:**
@@ -29,6 +30,30 @@ integration test fixture on every push to `main` (`.github/workflows/publish-gh-
   - Agent classification (`agent_classification/1-0-0`) — `operator`, `purpose`
   - `utm_referrer/1-0-0` entity — UTM-based referral attribution (falls back to `refr_*` fields)
   - [Event fingerprint](https://docs.snowplow.io/docs/pipeline/enrichments/available-enrichments/event-fingerprint-enrichment/) — strongly recommended for CDN-side dedup; without it CDN dedup falls back to `event_id` and `assert_cdn_event_fingerprint_populated` warns
+
+## Installation
+
+Add the package to your project's `packages.yml`, then run `dbt deps`:
+
+```yaml
+packages:
+  - git: "https://github.com/snowplow-incubator/dbt-snowplow-agent-analytics.git"
+    revision: "0.2.0"
+```
+
+Existing installations must follow the [upgrade instructions](#upgrade-existing-base-tables)
+before running this version.
+
+## Warehouse source formats
+
+Use the Snowplow loader's native events table, including `load_tstamp`:
+
+- Snowflake: VARIANT entity arrays with the existing field names.
+- BigQuery: repeated RECORD entities; snowplow-utils combines schema-version columns.
+- Databricks: typed arrays of structs with snake_case field names. Empty arrays return NULL.
+
+The optional semantic view and its conformed dimensions require Snowflake.
+`enable_semantic_views` has no effect on BigQuery or Databricks.
 
 ## Architecture
 
@@ -44,11 +69,10 @@ Raw `atomic.events` is scanned **exactly once per run**:
    (client: `event_id`; CDN: `coalesce(event_fingerprint, event_id)`), and tags rows with
    `is_bot` and `raw_source_channel`. It also resolves `agent_name` / `agent_operator` /
    `agent_purpose` (see [Agent identity](#agent-identity)).
-3. `base_events` (durable, idempotent `delete+insert` keyed on `event_id`) receives the batch.
-   Everything downstream reads from it or from its pre-aggregated daily descendants. Note the
-   spec's `insert_overwrite` is not used because on Snowflake it truncates the whole table rather
-   than replacing partitions; `delete+insert` (on `event_id` here, on `event_date` in the daily
-   tables) implements the intended partition-overwrite semantics.
+3. `base_events` receives the batch using `event_id` upserts (`merge` on BigQuery and
+   Databricks, `delete+insert` on Snowflake). Everything downstream reads from
+   it or its pre-aggregated daily descendants. Daily models replace complete `event_date`
+   groups: BigQuery uses partitioned `insert_overwrite`; the other adapters use `delete+insert`.
 4. The `on-run-end` hook advances the manifest **only for models that succeeded**, so a downstream
    failure causes automatic reprocessing on the next run rather than silent data loss.
 
@@ -74,7 +98,7 @@ recover the identity on its own. Two seeds handle this:
 
 | Seed | Purpose |
 |------|---------|
-| `agent_ua_overrides` | Repairs `agent_name` (and fills `operator` / `purpose`) by matching `useragent` with `ILIKE`. Add a row per misattributed crawler. |
+| `agent_ua_overrides` | Repairs `agent_name` (and fills `operator` / `purpose`) by matching `useragent` case-insensitively with `LIKE`. Add a row per misattributed crawler. |
 | `agent_name_ignore_list` | `agent_name` values too generic to identify anything. Excluded from `int_agent_source_lookup`, so they never reach the agent marts. |
 
 The ignore list is the failsafe for the override seed being incomplete: a masquerading UA
@@ -97,8 +121,19 @@ no-op by itself once the enrichment handles the agent.
 
 Set under `vars: snowplow_agent_analytics:` in your project:
 
+Set `snowplow__license_accepted: true` to confirm that you accept the
+[Snowplow Personal and Academic License](https://docs.snowplow.io/personal-and-academic-license-1.0/)
+or have a commercial agreement with Snowplow:
+
+```yaml
+vars:
+  snowplow_agent_analytics:
+    snowplow__license_accepted: true
+```
+
 | Var | Default | Description |
 |-----|---------|-------------|
+| `snowplow__license_accepted` | `false` | Accept the Snowplow license or confirm a commercial agreement before running the package |
 | `snowplow__atomic_schema` | `atomic` | Schema holding the Snowplow events table |
 | `snowplow__events_table` | `events` | Events table name |
 | `snowplow__database` | `target.database` | Database holding the events table |
@@ -129,7 +164,7 @@ to map; list those in `operators_without_referrals` to exempt them from the warn
 
 ```bash
 dbt deps
-dbt seed
+dbt seed --select snowplow_agent_analytics --full-refresh
 dbt run
 dbt test
 ```
@@ -270,9 +305,45 @@ which drops rows (an operator that refers but never crawls becomes unreachable) 
 the other side, whose row repeats for every row it matches. A shared dimension gives all three
 tables the same grouping key and lets each metric aggregate within its own table before the join.
 
-`dim_date`, `dim_page` and `dim_operator` are portable SQL. The semantic view is gated on
-`target.type == 'snowflake'` in its `config()`, so on any other warehouse it is excluded at parse
-time rather than failing at run time.
+`dim_date`, `dim_page`, `dim_operator`, and the semantic view are enabled only on Snowflake.
+Databricks metric views are a separate integration and are not provided by this package.
+
+## Upgrade existing base tables
+
+The base layer stores a fixed set of scalar fields, including extracted UTM source and
+medium. BigQuery partitions `base_events` by `load_tstamp`; Databricks partitions by
+`load_tstamp_date` and uses that date for its incremental target predicate. Adding fields
+to an upstream entity does not change the durable table's schema.
+
+If you have run an earlier revision that stored raw entity columns, migrate the existing
+Snowflake base table in place or rebuild the whole package to populate the extracted
+fields for historical events. An incremental run stops with an upgrade error until the
+base table has the required columns. New installations need no extra step.
+
+For existing Snowflake installations, the
+[Agent Analytics migration guide](https://docs.snowplow.io/docs/modeling-your-data/modeling-your-data-with-dbt/migration-guides/agent-analytics/)
+documents an in-place alternative that uses the retained entity values in `base_events`.
+Pause package runs, clone the table for backup, and rewrite its 19 scalar columns using
+the documented SQL. Verify the migrated data before resuming normal incremental runs.
+Keep the existing manifest and source lookup; this path does not require raw source
+history or a full refresh. The guide also covers table properties and rollback.
+
+Use the following whole-package rebuild as an alternative when source history is available.
+
+Before rebuilding, back up the existing outputs and confirm that the source retains all
+history from `snowplow__start_date`. If it does not, preserve the existing tables and plan
+a migration before upgrading. A rebuild cannot recover events removed from the source.
+
+```bash
+dbt run --select snowplow_agent_analytics --full-refresh --vars '{snowplow__allow_refresh: true}'
+dbt run --select snowplow_agent_analytics
+dbt test --select snowplow_agent_analytics
+```
+
+Repeat the normal run until the manifest catches up: each run processes at most
+`snowplow__backfill_limit_days`. Validate the complete outputs before resuming downstream
+jobs. Never refresh `base_events` alone while retaining the old manifest or source lookup.
+The refresh permission is passed only to the rebuild command above.
 
 ## Known limitations
 

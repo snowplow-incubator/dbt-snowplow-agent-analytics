@@ -2,7 +2,7 @@
 set -o pipefail
 
 # Expected input:
-# -d (database) target database for dbt. Only snowflake is supported for now.
+# -d (database) target database for dbt. snowflake, bigquery, or databricks.
 
 while getopts 'd:' opt
 do
@@ -11,7 +11,7 @@ do
   esac
 done
 
-declare -a SUPPORTED_DATABASES=("snowflake")
+declare -a SUPPORTED_DATABASES=("snowflake" "bigquery" "databricks")
 
 DATABASE="$(echo "$DATABASE" | tr '[:upper:]' '[:lower:]')"
 
@@ -36,6 +36,12 @@ for db in "${DATABASES[@]}"; do
   echo "snowplow_agent_analytics integration tests: Execute models - run 1/4 (full refresh)"
 
   eval "dbt run --target $db --full-refresh --exclude $STG" || exit 1;
+
+  # Evolve a nested entity after the first batch. The durable scalar schema and
+  # all committed output expectations must remain unchanged on subsequent runs.
+  if [[ "$db" == "bigquery" || "$db" == "databricks" ]]; then
+    dbt run --target "$db" --select "$STG" --vars '{test_entity_schema_evolution: true}' || exit 1
+  fi
 
   # Test dataset spans 100 days, backfill limit is 30 days => 4 runs needed for full backfill
   for i in {2..4}

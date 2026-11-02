@@ -3,23 +3,23 @@
 {{
   config(
     materialized='table',
-    enabled=var('enable_semantic_views', false)
+    enabled=(var('enable_semantic_views', false) and target.type == 'snowflake')
   )
 }}
 
 with dates as (
   select event_date from {{ ref('agent_pageviews_daily') }}
-  union
+  union distinct
   select event_date from {{ ref('human_pageviews_daily') }}
-  union
+  union distinct
   select event_date from {{ ref('human_referrals_daily') }}
 )
 
 select
   event_date,
-  {{ dbt.date_trunc('week', 'event_date') }} as week_start_date,
-  {{ dbt.date_trunc('month', 'event_date') }} as month_start_date,
-  {{ dbt.date_trunc('quarter', 'event_date') }} as quarter_start_date,
-  {{ dbt.date_trunc('year', 'event_date') }} as year_start_date
+  {% if target.type == 'bigquery' %}date_trunc(event_date, week(monday)){% else %}cast({{ dbt.date_trunc('week', 'event_date') }} as date){% endif %} as week_start_date,
+  cast({{ dbt.date_trunc('month', 'event_date') }} as date) as month_start_date,
+  cast({{ dbt.date_trunc('quarter', 'event_date') }} as date) as quarter_start_date,
+  cast({{ dbt.date_trunc('year', 'event_date') }} as date) as year_start_date
 from dates
 where event_date is not null

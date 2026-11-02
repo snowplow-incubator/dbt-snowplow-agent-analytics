@@ -1,0 +1,42 @@
+snowplow_agent_analytics 0.2.0 (2026-11-02)
+----------------------------------------
+## Summary
+Add BigQuery and Databricks support alongside Snowflake. This is the first tagged
+release; existing installations of the untagged 0.1.0 package require a base-table
+migration before upgrading.
+
+## Features
+- Read native Snowplow entity records on BigQuery and typed arrays of structs on
+  Databricks, with safe handling of null and empty entity arrays.
+- Use warehouse-specific incremental updates and date partitioning while retaining
+  the existing attribution rules and expected Snowflake outputs.
+- Keep conformed dimensions and the optional semantic view available on Snowflake
+  only.
+
+## Fixes
+- Persist 19 scalar columns in `base_events` so changes to nested event entities do
+  not change the stored base schema.
+- Accept numeric window settings supplied as strings and preserve Monday-based
+  weekly snapshots across the supported warehouses.
+
+## Requirements
+- dbt Core >=1.10.6 and <2.0.0; snowplow-utils >=1.0.1 and <2.0.0.
+- Databricks requires dbt-databricks >=1.11 and a SQL warehouse or Runtime 12.2 LTS
+  or later. Incremental tables use Delta.
+- Set `snowplow__license_accepted: true` after accepting the Snowplow Personal and
+  Academic License or confirming your commercial agreement with Snowplow.
+- Redshift and standalone Spark are not supported in this release.
+
+## Upgrading
+Existing Snowflake installations with raw entity columns in `base_events` must
+migrate that table before running the new version. The schema guard rejects an
+unmigrated table.
+
+Follow the [Agent Analytics migration guide](https://docs.snowplow.io/docs/modeling-your-data/modeling-your-data-with-dbt/migration-guides/agent-analytics/)
+to back up the existing base and rewrite its 19 scalar columns in place, preserving
+the incremental manifest and agent source lookup. This avoids reprocessing the
+atomic history. The guide covers grants, table properties, validation and rollback.
+
+A coordinated whole-package rebuild is an alternative when the required atomic
+history is retained. Do not rebuild the base alone while retaining an advanced
+manifest. New installations need no migration.

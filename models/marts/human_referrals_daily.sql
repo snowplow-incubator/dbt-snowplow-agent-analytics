@@ -1,14 +1,14 @@
-{# delete+insert on event_date gives partition-overwrite semantics on Snowflake:
-   each batch recomputes complete trailing days from base_events, deletes those
-   dates from the target, and inserts the fresh aggregates. COUNT(DISTINCT
-   domain_sessionid) is therefore always recomputed exactly for affected days. #}
+{# Recompute complete dates from the durable base. BigQuery replaces date
+   partitions; other adapters delete+insert by event_date. This also removes
+   obsolete groups when an agent changes source channel. #}
 {{
   config(
     materialized='incremental',
-    incremental_strategy='delete+insert',
+    incremental_strategy=('insert_overwrite' if target.type == 'bigquery' else 'delete+insert'),
+    partition_by=({'field': 'event_date', 'data_type': 'date'} if target.type == 'bigquery' else none),
     unique_key='event_date',
     meta={'upsert_date_key': 'event_date', 'snowplow_optimize': true},
-    cluster_by=['referring_operator', 'page_url_host_path'],
+    cluster_by=(['referring_operator', 'page_url_host_path'] if target.type in ['snowflake', 'bigquery'] else none),
     on_schema_change='append_new_columns',
     tags=['snowplow_agent_analytics_incremental']
   )
@@ -31,9 +31,9 @@ select
   max(e.derived_tstamp) as last_seen_tstamp
 from {{ ref('base_events') }} e
 join {{ ref('operator_referral_sources') }} s
-  on lower(coalesce({{ utm_source_from_entity('e') }}, e.refr_source)) = lower(s.source_value)
+  on lower(coalesce(e.utm_source, e.refr_source)) = lower(s.source_value)
  and (s.medium_value is null
-      or lower(coalesce({{ utm_medium_from_entity('e') }}, e.refr_medium)) = lower(s.medium_value))
+      or lower(coalesce(e.utm_medium, e.refr_medium)) = lower(s.medium_value))
 where e.is_bot = false
   and e.raw_source_channel = 'client'
   and date(e.derived_tstamp) >= {{ dbt_start_date() }}
@@ -43,7 +43,7 @@ where e.is_bot = false
     -- days far older than the trailing window, and anchoring on current_date alone
     -- would silently drop them from this table.
     and date(e.derived_tstamp) >= least(
-      dateadd(day, -{{ var("late_data_window_days", 3) }}, current_date),
+      cast({{ dbt.dateadd('day', -(var('late_data_window_days', 3) | int), 'current_date') }} as date),
       coalesce((select min(date(derived_tstamp)) from {{ base_events_this_run }}), current_date)
     )
   {% endif %}

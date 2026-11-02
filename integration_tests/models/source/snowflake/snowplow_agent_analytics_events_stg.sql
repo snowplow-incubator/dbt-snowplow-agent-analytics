@@ -6,8 +6,7 @@
    fields seed as NULL and parse_json(NULL) is NULL, matching production rows where the
    enrichment attached no context.
 
-   Snowflake-only for now; add sibling folders under models/source/ (and the matching
-   +enabled flag in dbt_project.yml) to support other warehouses.
+   Sibling folders stage the same fixture using the other loaders' native types.
 #}
 
 with prep as (

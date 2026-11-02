@@ -4,17 +4,17 @@
 {{
   config(
     materialized='table',
-    enabled=var('enable_semantic_views', false)
+    enabled=(var('enable_semantic_views', false) and target.type == 'snowflake')
   )
 }}
 
 with operators as (
   select agent_operator as operator from {{ ref('agent_pageviews_daily') }}
-  union
+  union distinct
   select referring_operator from {{ ref('human_referrals_daily') }}
-  union
+  union distinct
   select operator from {{ ref('operator_referral_sources') }}
-  union
+  union distinct
   select operator from {{ ref('operators_without_referrals') }}
 ),
 

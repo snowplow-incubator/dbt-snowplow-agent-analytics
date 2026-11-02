@@ -29,6 +29,10 @@ models:
     source:
       snowflake:
         +enabled: '{{ (target.type == "snowflake") | as_bool() }}'
+      bigquery:
+        +enabled: '{{ (target.type == "bigquery") | as_bool() }}'
+      databricks:
+        +enabled: '{{ (target.type == "databricks") | as_bool() }}'
     +bind: false
 
 seeds:
@@ -106,12 +110,12 @@ seeds:
       agent_pageviews_daily_expected:
         +column_types:
           event_date: date
-          agent_name: varchar
-          agent_operator: varchar
-          agent_purpose: varchar
-          purpose_group: varchar
-          source_channel: varchar
-          page_url_host_path: varchar
+          agent_name: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
+          agent_operator: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
+          agent_purpose: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
+          purpose_group: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
+          source_channel: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
+          page_url_host_path: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
           hits: integer
           first_seen_tstamp: timestamp
           last_seen_tstamp: timestamp
@@ -119,7 +123,7 @@ seeds:
       human_pageviews_daily_expected:
         +column_types:
           event_date: date
-          page_url_host_path: varchar
+          page_url_host_path: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
           human_pageviews: integer
           first_seen_tstamp: timestamp
           last_seen_tstamp: timestamp
@@ -127,8 +131,8 @@ seeds:
       human_referrals_daily_expected:
         +column_types:
           event_date: date
-          referring_operator: varchar
-          page_url_host_path: varchar
+          referring_operator: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
+          page_url_host_path: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
           referred_pageviews: integer
           referred_sessions: integer
           first_seen_tstamp: timestamp
@@ -136,14 +140,14 @@ seeds:
 
       int_agent_source_lookup_expected:
         +column_types:
-          agent_name: varchar
+          agent_name: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
           agent_runs_js: boolean
-          source_channel: varchar
+          source_channel: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
           last_seen_tstamp: timestamp
 
       page_summary_expected:
         +column_types:
-          page_url_host_path: varchar
+          page_url_host_path: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
           as_of_date: date
           agent_hits_7d: integer
           agent_hits_30d: integer
@@ -162,11 +166,11 @@ seeds:
           ai_referral_pageviews_30d: integer
           ai_referral_sessions_30d: integer
           is_orphaned_agent_interest: boolean
-          cite_through_rate_proxy_30d: float
+          cite_through_rate_proxy_30d: '{{ "float64" if target.type == "bigquery" else "float" }}'
 
       operator_summary_expected:
         +column_types:
-          agent_operator: varchar
+          agent_operator: '{{ "string" if target.type in ["bigquery", "databricks"] else "varchar" }}'
           as_of_date: date
           crawl_hits_7d: integer
           crawl_hits_30d: integer
@@ -184,7 +188,7 @@ seeds:
           referred_sessions_30d: integer
           referred_sessions_90d: integer
           distinct_referred_pages_30d: integer
-          crawl_to_referral_ratio_30d: float
+          crawl_to_referral_ratio_30d: '{{ "float64" if target.type == "bigquery" else "float" }}'
           first_crawl_tstamp: timestamp
           last_crawl_tstamp: timestamp
           first_referral_tstamp: timestamp
@@ -193,6 +197,8 @@ seeds:
 
 vars:
   snowplow_agent_analytics:
+    snowplow__license_accepted: true
+
     # The redirect to the seeded + parse_json'd stg model is NOT done here. The package's
     # sources.yml branches on project_name and composes target.schema inline, because var()
     # substitutes a variable's raw text without re-rendering the Jinja inside it -- passing
@@ -219,7 +225,7 @@ vars:
     # device-clock skew (derived_tstamp months before collector_tstamp) are kept and
     # exercise the daily tables' lower bound.
     dbt_start_date: '2024-01-01'
-    late_data_window_days: 3
+    late_data_window_days: '3'
 
     # Determinism. page_summary / operator_summary compute their 7/30/90d windows from
     # as_of_date(), which is normally date_trunc('week', current_date) -- so expected
@@ -229,7 +235,7 @@ vars:
     snowplow__as_of_date: '2026-08-17'
     # The post-hook prune compares as_of_date against current_date, so a pinned
     # as_of_date would be pruned once real time moves 26 weeks past it.
-    summary_snapshot_retention_weeks: 99999
+    summary_snapshot_retention_weeks: '99999'
 
     orphan_agent_hits_threshold: 10
     orphan_human_pageviews_threshold: 5

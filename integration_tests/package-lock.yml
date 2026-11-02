@@ -1,10 +1,13 @@
 packages:
   - local: ../
     name: snowplow_agent_analytics
+  - name: dbt_semantic_view
+    package: Snowflake-Labs/dbt_semantic_view
+    version: 1.0.6
   - name: snowplow_utils
     package: snowplow/snowplow_utils
     version: 1.0.1
   - name: dbt_utils
     package: dbt-labs/dbt_utils
     version: 1.4.1
-sha1_hash: de2deba3d66ce03d8c02949013650cc9b94f6030
+sha1_hash: c440b1131b83b2f8946023f9666b5c8b2f21c992

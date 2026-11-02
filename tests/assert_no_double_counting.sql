@@ -10,7 +10,7 @@ with expected as (
     u.agent_name,
     count(*) as expected_hits
   from {{ ref('int_agent_pageviews_unified') }} u
-  where date(u.derived_tstamp) >= dateadd(day, -{{ var('late_data_window_days', 3) }}, current_date)
+  where date(u.derived_tstamp) >= cast({{ dbt.dateadd('day', -(var('late_data_window_days', 3) | int), 'current_date') }} as date)
   group by 1, 2
 ),
 
@@ -20,7 +20,7 @@ actual as (
     agent_name,
     sum(hits) as actual_hits
   from {{ ref('agent_pageviews_daily') }}
-  where event_date >= dateadd(day, -{{ var('late_data_window_days', 3) }}, current_date)
+  where event_date >= cast({{ dbt.dateadd('day', -(var('late_data_window_days', 3) | int), 'current_date') }} as date)
   group by 1, 2
 )
 

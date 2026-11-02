@@ -7,4 +7,4 @@ select event_id, app_id, load_tstamp
 from {{ ref('base_events') }}
 where raw_source_channel = 'cdn'
   and event_fingerprint is null
-  and load_tstamp >= dateadd(day, -7, current_timestamp)
+  and load_tstamp >= {{ snowplow_utils.timestamp_add('day', -7, dbt.current_timestamp()) }}

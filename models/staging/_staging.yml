@@ -42,7 +42,9 @@ models:
   - name: base_events
     description: >
       Durable base table. Receives inserts from base_events_this_run; single source of
-      truth for all downstream models. No model downstream of this point reads raw events.
+      truth for all downstream models. Stores only the required scalar columns, including
+      extracted UTM fields; nested entity schema changes do not alter this table.
+      No model downstream of this point reads raw events.
     data_tests:
       - dbt_utils.unique_combination_of_columns:
           arguments:
@@ -61,7 +63,7 @@ models:
         description: >
           Inherited from raw events. Used by the base_create_snowplow_events_this_run_t
           macro for scan filtering (modern loaders partition/cluster on this column).
-          Retained for diagnostics.
+          Used for partition pruning and incremental target filtering.
 
   - name: int_agent_source_lookup
     description: >

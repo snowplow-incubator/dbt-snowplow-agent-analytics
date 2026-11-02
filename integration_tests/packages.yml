@@ -1,3 +1,5 @@
 
 packages:
   - local: ../
+  - package: Snowflake-Labs/dbt_semantic_view
+    version: 1.0.6
