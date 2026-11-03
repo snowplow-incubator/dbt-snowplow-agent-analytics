@@ -1,4 +1,4 @@
-snowplow_agent_analytics 0.2.0 (2026-11-02)
+snowplow_agent_analytics 0.2.0 (2026-11-03)
 ----------------------------------------
 ## Summary
 Add BigQuery and Databricks support alongside Snowflake. This is the first tagged
